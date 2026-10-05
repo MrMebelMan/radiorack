@@ -98,7 +98,7 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
         return;
       }
       if (prev === 'off' && this.ctx.state !== 'running') this.ctx.resume();
-      const vol = radio.s.vol / 100;
+      const vol = (radio.s.vol ?? 100) / 100;
       const now = this.ctx.currentTime;
       const hearingRx = a.src === 'act' || a.src === 'stb';
 
@@ -110,7 +110,16 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
       }
       this.clipGain.gain.setTargetAtTime(vol, now, 0.02);
 
-      // NAV ident (NAV/COM units only)
+      // altitude monitor alert (TT31): two short beeps per second while active
+    if (radio.alertAudio?.()) {
+      if (now >= (this.alertNext || 0)) {
+        const g = this.morseGain.gain, t = now + 0.02;
+        for (const k of [0, 0.25]) { g.setValueAtTime(0.2, t + k); g.setValueAtTime(0, t + k + 0.12); }
+        this.alertNext = now + 1;
+      }
+    } else this.alertNext = 0;
+
+    // NAV ident (NAV/COM units only)
     const nav = radio.navAudio?.();
     if (nav) {
       if (now >= this.morseNext) this.morseNext = scheduleMorse(this.morseGain.gain, nav.ident, now + 0.05, 0.25 * nav.vol / 100) + MORSE_REPEAT;

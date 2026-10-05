@@ -142,7 +142,37 @@ Legend: **Sim:** what the simulator does now · **Why:** where it comes from · 
 
 - [ ] **Bezel layout** scaled from Garmin's front-view render (labels beside the knobs, 880×228). Real:
 
-## 4. Simulator-only (no device check needed)
+## 4. Trig TT31 transponder
+Sources:
+- Operating Manual 00454-00-AF;
+- Installation Manual 00455-00-AR;
+- photos of a real unit: boot screen, main screen, FLIGHT TIME, TIMER, ALTITUDE MONITOR, squawk entry.
+
+Everything below is **not** shown or stated there.
+
+- [ ] **Altitude monitor threshold.** Sim: 250 ft, from Installation Manual AR (2017, SW 3.16) and AP (2014); the Operating Manual and the 2009/2012 Installation Manuals say 200 ft. Real (SW 3.18):
+- [ ] **Start-up screen duration.** Sim: 2 s. Real:
+- [ ] **FUNC page order and exit.** Sim: FUNC steps FLIGHT TIME → TIMER → ADS-B monitor (only if installed) → ALTITUDE MONITOR → back to the main screen. Real (order; is there a timeout back to the main screen?):
+- [ ] **ADS-B monitor page.** Sim: "ADS-B" / "MONITOR" + latitude / longitude (N50°07.88 / E014°31.54), dashes when the GPS position is invalid. Real:
+- [ ] **BACK on FUNC pages.** Sim: does nothing there. Both manuals document BACK only as "goes back to the previous digit in the code selector" (and for configuration items). Real (does it step back a page or return to the main screen?):
+- [ ] **IDENT indication.** Sim: "IDENT" next to the mode text for 18 s. Real (where, and does it flash?):
+- [ ] **Reply indicator.** Shape from photos of the unit (bell on a thin base, two dimmer arrows above pointing inwards, top-centre). Sim: lit for 180 ms about once a second while replying. Real (blink rate, or steady while replying?):
+- [ ] **Display cross-fade.** Sim: when the display changes, the old frame fades out while the new one fades in, both over 150 ms (user observation; the duration is a guess). Real (duration):
+- [ ] **ON mode altitude.** Sim: the flight level is still shown (only reporting is suppressed). Real:
+- [ ] **Altitude monitor pointer.** Sim: ▲ / ▼ / ◆ next to the flight level (climb back / descend back / within limits). Real (shape):
+- [ ] **Code entry details.**
+  - BACK at the first digit does nothing.
+  - The knob does nothing on FUNC pages.
+  - Flight ID characters: blank, A–Z, 0–9.
+
+  Real:
+- [ ] **Warning texts and timing.** ADS-B: "WARNING – NO ADSB POSN" (Installation Manual §12.6), raised after about 2 s without valid GPS and cleared only by ENT, even once GPS is valid again (Trig support, quoted on vansairforce.net). Sim shows "WARNING" / "NO ADSB POSN" with ENT inverted. Antenna: "WARNING" / "CHECK ANTENNA" (text not documented). After ENT, a warning whose problem is still present reappears 10 s later (not documented). Real (antenna text, repeat timing, exact layout):
+- [ ] **Fault text.** Sim: "FAULT" / "INTERNAL FAULT"; recoverable ones clear on switching off and on. Real:
+- [ ] **Power-up resets.** Sim: flight timer and timer reset at power-up, and the altitude monitor stays as set. Real:
+- [ ] **Default Flight ID.** Sim: "OKABC" placeholder (set by the installer as the aircraft registration). Real:
+- [ ] **Configuration mode** (FUNC held while switching on) is not simulated; the installation options are switches in the Simulation panel.
+
+## 5. Simulator-only (no device check needed)
 These exist only to make practice possible:
 - Incoming-call sound clips, static levels, the "Audio" status line.
 - GPS start positions, the Flight panel (ground speed/track; track converted to true with a fixed 5°E variation).

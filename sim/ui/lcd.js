@@ -1,3 +1,5 @@
+import { TRIG_LOGO } from './logos.js';
+
 // LCD renderer: turns a device view() model into the display's HTML.
 const esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 // graphic CDI (GNC 255 manual 2.3): 5 dots each side, TO/FROM triangle, deflection bar
@@ -34,8 +36,30 @@ function wrapText(text, width) {
   return lines;
 }
 
+// Trig TT31 layout (photos of the unit): top row mode / reply / small value,
+// bottom row flight level, then big squawk or Flight ID, or a FUNC page label + value.
+// reply indicator as in the photos of the unit: a bell on a thin base, two dimmer horizontal arrows above pointing inwards
+const REPLY_SVG = '<svg viewBox="0 0 14 10" width="18" height="13" aria-hidden="true"><path d="M5.3 3.8h3.4l1.3 4.4H4zM1 8.6h12v1.1H1z" fill="currentColor"/>'
+  + '<path d="M.6 1.6H4.4M3.2.4l1.2 1.2-1.2 1.2M13.4 1.6H9.6M10.8.4 9.6 1.6l1.2 1.2" fill="none" stroke="currentColor" stroke-width=".9" opacity=".45"/></svg>';
+const cell = (c, h, key = c) => `<span class="${c} cell" data-c="${key}"><span class="cl">${h}</span></span>`;
+// text one character per cell, so only a changed character fades; digits get a fixed slot (the font's 4 and 5 are narrower)
+const charCells = a => (a || []).flatMap(sg => [...(sg.t || '')].map(ch => ({ ...sg, t: ch }))).map((sg, i) => cell(/[0-9]/.test(sg.t) ? 'ch dg' : 'ch', seg(sg), `ch${i}`)).join('');
+const xpdrLayout = x => x.boot ? 'boot' : x.alert ? 'alert' : 'main';
+function xpdrHtml(x) {
+  if (x.boot) return `<div class="xboot"><div class="xlogo">${x.boot.logo === 'TRIG' ? TRIG_LOGO : esc(x.boot.logo)}</div><div class="xlines">${x.boot.lines.map(l => `<div>${esc(l)}</div>`).join('')}</div></div>`;
+  if (x.alert) return `<div class="xalert"><div>${esc(x.alert.title)}</div><div>${esc(x.alert.text)}${x.alert.key ? ` <span class="inv">${esc(x.alert.key)}</span>` : ''}</div></div>`;
+  const ptr = x.pointer === 'up' ? '&#9650;' : x.pointer === 'down' ? '&#9660;' : x.pointer === 'level' ? '&#9670;' : '';
+  let right;
+  if (x.lines) right = `<div class="xlabel">${x.label.map(l => `<div>${segs(l)}</div>`).join('')}</div><div class="xlines2">${x.lines.map(l => `<div>${segs(l)}</div>`).join('')}</div>`;
+  else if (x.label) right = `<div class="xlabel${x.wide ? ' wide' : ''}">${x.label.map(l => `<div>${segs(l)}</div>`).join('')}</div>${x.big ? `<div class="xbig">${charCells(x.big)}</div>` : ''}`;
+  else right = `<div class="xbig">${charCells(x.big)}</div>`;
+  return `<div class="xtop">${cell('xmode', charCells([{ t: x.mode }]))}<span class="xc">${cell('xreply', x.reply ? REPLY_SVG : '')}${cell('xid', x.ident ? 'IDENT' : '')}</span>${cell('xsmall', charCells(x.small))}</div>`
+    + `<div class="xbot">${cell('xfl', charCells([{ t: x.fl }]) + cell('xptr', ptr))}${cell('xr', right)}</div>`;
+}
+
 export function lcdHtml(v) {
   if (v.off) return '';
+  if (v.xpdr) return xpdrHtml(v.xpdr);
   if (v.splash) return `<div class="splash">${v.splash[0] ? `<div class="logo">${esc(v.splash[0])}</div>` : ''}${v.splash.slice(1).map(l => `<div class="mid">${esc(l)}</div>`).join('')}</div>`;
   if (v.message !== undefined) {
     const lines = wrapText(v.message, 34).slice(0, 2);
@@ -68,12 +92,56 @@ export function lcdHtml(v) {
 
 
 // Renders into the .lcd element; returns render(view).
+// TT31: what changed fades in while the old content fades out, both at once; unchanged text stays.
+// Same layout: only the cells whose content changed fade. New layout (boot, warning): the whole frame.
+// Layers add up (plus-lighter), so pixels lit in both stay at full brightness.
+export const XFADE_MS = 150;
+function fadeIn(box, cls, html) {
+  for (const old of box.querySelectorAll(`:scope > .${cls}:not(.gone)`)) {
+    old.classList.add('gone');
+    const from = +getComputedStyle(old).opacity;
+    old.getAnimations().forEach(a => a.cancel());
+    old.style.opacity = '0';
+    old.animate([{ opacity: from }, { opacity: 0 }], { duration: XFADE_MS * from }).onfinish = () => old.remove();
+  }
+  const el = document.createElement(box.tagName === 'SPAN' ? 'span' : 'div');
+  el.className = cls;
+  el.innerHTML = html;
+  box.appendChild(el);
+  el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: XFADE_MS });
+  return el;
+}
+// cells directly under root (not nested in another cell)
+const topCells = root => [...root.querySelectorAll('[data-c]')].filter(c => c.parentElement.closest('[data-c]') === root.closest('[data-c]'));
+// a cell's markup with its nested cells emptied: same skeleton -> only the nested cells that changed fade
+function skeleton(cl) { const c = cl.cloneNode(true); c.querySelectorAll('[data-c]').forEach(k => { k.innerHTML = ''; }); return c.innerHTML; }
+function syncCell(oc, nc) {
+  const want = nc.firstChild, have = oc.querySelector(':scope > .cl:not(.gone)');
+  if (have && have.innerHTML === want.innerHTML) return;
+  if (!have || skeleton(have) !== skeleton(want) || !want.querySelector('[data-c]')) { fadeIn(oc, 'cl', want.innerHTML); return; }
+  for (const k of topCells(want)) syncCell(have.querySelector(`[data-c="${k.dataset.c}"]`), k);
+}
+function xpdrRender(lcd, x, fade) {
+  const html = xpdrHtml(x), layout = xpdrLayout(x);
+  let stack = lcd.querySelector(':scope > .xs');
+  if (!stack) { lcd.innerHTML = '<div class="xs"></div>'; stack = lcd.firstChild; fade = false; }
+  const cur = stack.querySelector(':scope > .xl:not(.gone)');
+  if (!fade || !cur) { stack.innerHTML = ''; const el = document.createElement('div'); el.className = 'xl'; el.dataset.l = layout; el.innerHTML = html; stack.appendChild(el); return; }
+  if (cur.dataset.l !== layout) { fadeIn(stack, 'xl', html).dataset.l = layout; return; }
+  const tmp = document.createElement('div'); tmp.innerHTML = html;
+  for (const nc of topCells(tmp)) syncCell(cur.querySelector(`[data-c="${nc.dataset.c}"]`), nc);
+}
+
 export function createLcd(lcd) {
   let lastHtml = null;
   return function render(v) {
     // when switching off keep the last frame so it fades out with the backlight
     const html = v.off ? lastHtml : lcdHtml(v);
-    if (html !== null && html !== lastHtml) { lcd.innerHTML = html; lastHtml = html; }
+    if (html !== null && html !== lastHtml) {
+      if (v.xpdr) xpdrRender(lcd, v.xpdr, !lcd.classList.contains('off'));   // no fade at power-up
+      else lcd.innerHTML = html;
+      lastHtml = html;
+    }
     lcd.classList.toggle('off', !!v.off);
     if (v.off) return; // keep the last frame's layout untouched while it fades out
     lcd.classList.toggle('splashing', !!v.splash);
@@ -81,7 +149,9 @@ export function createLcd(lcd) {
     lcd.classList.toggle('cg', com);
     lcd.classList.toggle('pg', !!v.right && !com);
     lcd.classList.toggle('mg', v.message !== undefined);
-    const b = v.brt ?? 0, c = v.contrast ?? 0;
+    lcd.classList.toggle('xp', !!v.xpdr);
+    if (v.brt === undefined) { lcd.style.filter = ''; return; }   // units without brightness / contrast settings
+    const b = v.brt, c = v.contrast ?? 0;
     lcd.style.filter = `brightness(${(0.75 + (b + 10) / 110 * 0.5).toFixed(2)}) contrast(${(1 + c / 100).toFixed(2)})`;
   };
 }

@@ -1,0 +1,38 @@
+/* Trig TT31 bezel (880 x 240), scaled from the handbook photo and front-panel drawing. */
+.bezel.tt31 { height: 240px; background: var(--bezel-grain), linear-gradient(#1b1b1c, #141415 50%, #101011); }
+.bezel.tt31 .key.pill {          /* soft matte rubber keys */
+  width: 84px; height: 32px; border-radius: 16px;
+  background: radial-gradient(ellipse 75% 85% at 50% 30%, #e6e8e1 0%, #d2d5cd 40%, #b4b7af 75%, #8e918a 100%);
+  color: #262725; border: 1px solid #6f726c;
+  box-shadow: 0 3px 5px rgba(0,0,0,.6), 0 1px 1px rgba(0,0,0,.5),
+    inset 0 -4px 6px rgba(0,0,0,.28), inset 0 3px 4px rgba(255,255,255,.35), inset 3px 0 5px rgba(0,0,0,.08), inset -3px 0 5px rgba(0,0,0,.08);
+  font: 700 14px Arial, Helvetica, sans-serif; text-shadow: 0 1px 0 rgba(255,255,255,.25);
+}
+.bezel.tt31 .key.pill.sm { width: 60px; height: 34px; font-size: 13px; }
+.bezel.tt31 .key.pill.wide { width: 92px; }
+.bezel.tt31 .key.pill:active, .bezel.tt31 .key.pill.down { background: radial-gradient(ellipse 75% 85% at 50% 40%, #d2d5cd, #b0b3ab 70%, #8e918a); box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 2px 4px rgba(0,0,0,.3), inset 0 -2px 3px rgba(0,0,0,.15); transform: translateY(1px); }
+.bezel.tt31 .key.pill:hover { border-color: #8d9089; }
+.bezel.tt31 .lbl.mk { font: 700 13px Arial, sans-serif; color: #dfe79a; transform: translate(-50%, -50%); }   /* positioned by centre, round the knob (photo) */
+.bezel.tt31 .knob.modesel { left: 48px; top: 107px; width: 86px; height: 86px; border: 3px solid #b8c4b0; }
+.bezel.tt31 .knob.modesel .grip { -webkit-mask: none; mask: none; background: none; }
+.bezel.tt31 .knob.modesel .ptr { position: absolute; left: 50%; top: 6px; width: 4px; height: 38%; margin-left: -2px; background: #f2f2f2; border-radius: 2px; }
+.bezel.tt31 .knob.code { left: 729px; top: 99px; width: 94px; height: 94px; border: 3px solid #b8c4b0; }
+.bezel.tt31 .lcd-frame {
+  left: 190px; top: 24px; width: 472px; height: 104px;
+  border-width: 8px 12px 10px; border-color: #0b0b0b #121212 #2b2b2a #121212;
+}
+.bezel.tt31 .lcd-recess { padding: 6px 10px; }
+.bezel.tt31 .tstrip {           /* light grey panel under the display, logo printed on it (photo) */
+  position: absolute; left: 196px; top: 128px; width: 460px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0 0 14px 14px / 0 0 10px 10px;
+  background: linear-gradient(#7a7c79, #696b68 55%, #5a5c59);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 1px 2px rgba(0,0,0,.6);
+}
+.bezel.tt31 .trig { width: 30px; color: #2a2b2a; pointer-events: none; }
+.bezel.tt31 .trig .trig-logo { display: block; width: 100%; height: auto; }
+.bezel.tt31 .sensor.tt { left: 358px; top: 168px; width: 24px; height: 24px; background: radial-gradient(circle at 45% 40%, #3a2a24, #1f1714 70%); }
+.bezel.tt31 .hole { position: absolute; left: 413px; top: 188px; width: 11px; height: 11px; border-radius: 50%; background: #050505; box-shadow: inset 0 1px 2px #000; }
+.bezel.tt31 .tt31mark { position: absolute; left: 806px; top: 214px; color: #bdbdbd; font: italic 700 11px Arial, sans-serif; pointer-events: none; }
+.lamp { display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: #3a2a10; border: 1px solid #555; vertical-align: middle; }
+.lamp.on { background: #ffb02e; box-shadow: 0 0 10px #ffb02e; }

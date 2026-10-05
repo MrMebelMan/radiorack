@@ -84,15 +84,18 @@ export function bindControls(radio, after, cfg) {
     el.addEventListener('pointercancel', end);
   }
 
-  // volume pot: click = PUSH SQ, hold 2 s without dragging = 121.5
+  // COM volume pot (radios only): click = PUSH SQ, hold 2 s without dragging = 121.5
   const vol = cfg.vol;
-  vol.el.addEventListener('wheel', wheelHandler('vol'), { passive: false });
-  dragKnob(vol.el, 'vol', {
-    onPress: () => send('sqDown'),
-    onDragStart: () => { radio.hold.sq = null; },
-    onClick: () => send('sqUp'),
-  });
-  const volGrip = vol.el.querySelector('.grip');
+  let volGrip = null;
+  if (vol) {
+    vol.el.addEventListener('wheel', wheelHandler('vol'), { passive: false });
+    dragKnob(vol.el, 'vol', {
+      onPress: () => send('sqDown'),
+      onDragStart: () => { radio.hold.sq = null; },
+      onClick: () => send('sqUp'),
+    });
+    volGrip = vol.el.querySelector('.grip');
+  }
   for (const pot of cfg.pots || []) {
     pot.el.addEventListener('wheel', wheelHandler(pot.evt), { passive: false });
     dragKnob(pot.el, pot.evt, {
@@ -102,13 +105,15 @@ export function bindControls(radio, after, cfg) {
     pot.grip = pot.el.querySelector('.grip');
   }
 
-  // encoders; the inner knob sits inside the outer one
+  // encoders; the inner knob sits inside the outer one (a single knob has only `inner`)
   const { outer, inner } = cfg.encoders;
   inner.addEventListener('wheel', wheelHandler('inner'), { passive: false });
-  const outerWheel = wheelHandler('outer');
-  outer.addEventListener('wheel', e => { if (!inner.contains(e.target)) outerWheel(e); }, { passive: false });
-  dragKnob(inner, 'inner', { onClick: () => send(cfg.innerPush || 'push') });
-  dragKnob(outer, 'outer');
+  dragKnob(inner, 'inner', { onClick: () => cfg.innerPush && send(cfg.innerPush) });
+  if (outer) {
+    const outerWheel = wheelHandler('outer');
+    outer.addEventListener('wheel', e => { if (!inner.contains(e.target)) outerWheel(e); }, { passive: false });
+    dragKnob(outer, 'outer');
+  }
 
   cfg.keys.forEach(b => b.addEventListener('click', () => send(b.dataset.key)));
 
@@ -146,7 +151,7 @@ export function bindControls(radio, after, cfg) {
     send, turn,
     // the volume pot's angle follows the radio state (end stops)
     renderKnobs() {
-      volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`;
+      if (volGrip) volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`;
       for (const pot of cfg.pots || []) pot.grip.style.transform = `rotate(${pot.angle(radio)}deg)`;
     },
   };

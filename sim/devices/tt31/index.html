@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TT31 Simulator</title>
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="tt31.css">
+</head>
+<body>
+
+<main>
+  <section class="unit-col">
+    <header>
+      <a class="back" href="../../">&larr; All simulators</a>
+      <h1>Trig TT31 Mode S transponder simulator</h1>
+      <span class="sub">Practice trainer based on the TT31 Operating Manual (00454-00-AF) and Installation Manual (00455-00-AR), software 3.18.</span>
+      <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. The left knob is the mode switch (OFF, SBY, GND, ON, ALT); the right knob sets the code.</span>
+    </header>
+    <div class="bezel-wrap" id="bezelWrap">
+      <div class="bezel tt31" id="bezel">
+        <button class="key pill" data-key="IDENT" style="left:66px;top:30px" title="IDENT: press when ATC instructs you to &quot;Ident&quot; or &quot;Squawk Ident&quot;. Activates the SPI pulse in the replies for 18 seconds; IDENT appears in the display.">IDENT</button>
+
+        <div class="lbl mk" style="left:44px;top:109px" title="SBY: on, no replies to interrogations">SBY</div>
+        <div class="lbl mk" style="left:91px;top:90px" title="GND: replies to Mode S ground interrogations from surface movement radar">GND</div>
+        <div class="lbl mk" style="left:147px;top:109px" title="ON: replies to all interrogations, altitude reporting suppressed">ON</div>
+        <div class="lbl mk" style="left:23px;top:150px" title="OFF: power removed">OFF</div>
+        <div class="lbl mk" style="left:165px;top:150px" title="ALT: replies to all interrogations">ALT</div>
+        <div class="knob modesel" id="modeKnob" title="Mode selector knob: controls the power and the operating mode (OFF, SBY, GND, ON, ALT). Drag up/down or scroll. When airborne use ALT unless ATC directs otherwise; GND when taxiing (automatic with a squat switch)."><div class="grip"><i class="ptr"></i></div></div>
+
+        <div class="lcd-frame" title="Display: operating mode, reported pressure altitude (flight level), squawk code and Flight ID. The reply indicator is active when the transponder replies to interrogations."><div class="lcd-recess"><div class="lcd amber off" id="lcd"></div></div></div>
+        <div class="tstrip" title="Trig Avionics"><div class="trig" id="trigMark"></div></div>
+
+        <button class="key pill" data-key="FUNC" style="left:206px;top:166px" title="FUNC: access to the flight timer, stopwatch, ADS-B monitor (depending on installation) and altitude monitor.">FUNC</button>
+        <div class="sensor tt" title="Light sensor: the display dims automatically with the cockpit light"></div>
+        <div class="hole" title="Light sensor aperture"></div>
+        <button class="key pill" data-key="VFR" style="left:454px;top:166px" title="VFR: sets the pre-programmed conspicuity code; press again to restore the previous squawk code.">VFR</button>
+        <button class="key pill wide" data-key="FLTSQ" style="left:578px;top:166px" title="FLT/SQ: alternates the primary display between squawk code and Flight ID (and selects which one the code knob changes).">FLT/SQ</button>
+
+        <button class="key pill sm" data-key="ENT" style="left:700px;top:36px" title="ENT: enters a digit in the code selector (advances to the next digit; on the last digit the new code replaces the old one). Also clears warnings and operates the FUNC pages.">ENT</button>
+        <button class="key pill sm" data-key="BACK" style="left:790px;top:36px" title="BACK: goes back to the previous digit in the code selector.">BACK</button>
+        <div class="knob code" id="codeKnob" title="Code selector knob: sets the squawk code or Flight ID (FLT/SQ chooses which). Turning highlights the first digit and changes it; ENT advances. Not completed within 7 seconds: changes ignored."><div class="grip"></div></div>
+        <div class="tt31mark">TT31</div>
+      </div>
+    </div>
+
+    <div class="card status" id="statusBar" data-state="off">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="status-text">
+        <div id="hint" class="hint"></div>
+        <div id="hearingRow"><span id="hearing"></span></div>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel-col">
+        <section class="card">
+          <h2>Flight</h2>
+          <div class="field">
+            <label class="lbl-t" for="altSl">Pressure altitude</label>
+            <div class="ctl-row"><input type="range" id="altSl" min="-500" max="15000" step="50"><span id="altVal" class="val"></span></div>
+            <label class="lbl-t" for="gndSw">On ground</label>
+            <div><input type="checkbox" id="gndSw" class="switch"></div>
+            <label class="lbl-t" for="radarSw">Radar coverage</label>
+            <div><input type="checkbox" id="radarSw" class="switch"></div>
+          </div>
+        </section>
+        <nav class="manuals">
+          <a class="manual-btn" href="../../manuals/tt31-operating-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Operating Manual (00454-00-AF) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="manual-btn" href="../../manuals/tt31-installation-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Installation Manual (00455-00-AR) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
+      </div>
+
+      <section class="card">
+        <h2>Installation</h2>
+        <div class="field">
+          <label class="lbl-t" for="squatSw">Squat switch</label>
+          <div><input type="checkbox" id="squatSw" class="switch"></div>
+          <label class="lbl-t" for="adsbSw">ADS-B GPS source</label>
+          <div><input type="checkbox" id="adsbSw" class="switch"></div>
+          <label class="lbl-t" for="gpsSw">GPS position valid</label>
+          <div><input type="checkbox" id="gpsSw" class="switch"></div>
+          <label class="lbl-t" for="audioOn">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Aircraft &amp; faults</h2>
+        <div class="field">
+          <label class="lbl-t" for="busSw">Aircraft power</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked></div>
+          <span class="lbl-t">Antenna</span>
+          <div class="btn-row"><button id="antWarn">Raise warning</button></div>
+          <span class="lbl-t">Fault</span>
+          <div class="btn-row"><button id="faultRec" title="Clears when the transponder is switched off and on">Recoverable</button><button id="faultHard">Permanent</button></div>
+          <span class="lbl-t">Alt monitor</span>
+          <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light"></span></div>
+        </div>
+        <div class="card-foot">
+          <button id="factory" class="btn-danger-quiet">Reset to factory settings</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <aside class="help-col">
+    <div class="card procs">
+      <h2>Procedures</h2>
+      <details open><summary>Mode selector knob</summary>
+        <ul><li><b>OFF</b> power removed · <b>SBY</b> on, no replies · <b>GND</b> replies to Mode S ground interrogations · <b>ON</b> replies, altitude suppressed · <b>ALT</b> replies to all.</li>
+        <li>Airborne: ALT unless ATC directs otherwise. Taxiing: GND. With a squat switch it switches automatically.</li></ul></details>
+      <details><summary>Squawk code / Flight ID</summary>
+        <ol><li><b>FLT/SQ</b> selects which one is shown big and changed.</li>
+        <li>Turn the code knob: the first digit is highlighted and changes.</li>
+        <li><b>ENT</b> advances to the next digit, <b>BACK</b> goes back.</li>
+        <li><b>ENT</b> on the last digit replaces the value. Not completed within 7 s: changes ignored.</li>
+        <li>Flight ID: letters and digits only; enter a blank to end it if shorter than 8.</li>
+        <li>1200 VFR (USA) · 7000 VFR (Europe) · 7500 hijack · 7600 loss of communications · 7700 emergency.</li></ol></details>
+      <details><summary>IDENT / VFR</summary>
+        <ul><li><b>IDENT</b> when ATC asks to "Ident" / "Squawk Ident": SPI for 18 s, IDENT on the display.</li>
+        <li><b>VFR</b> sets the pre-programmed code; press again to restore the previous code.</li></ul></details>
+      <details><summary>FUNC: flight timer, timer, altitude monitor</summary>
+        <ul><li><b>FUNC</b> steps through the pages: FLIGHT TIME, TIMER, ADS-B monitor (if installed), ALTITUDE MONITOR.</li>
+        <li>Flight time: time powered on in ON or ALT.</li>
+        <li>Timer: <b>ENT</b> resets and starts, <b>ENT</b> again stops.</li>
+        <li>Altitude monitor: <b>ENT</b> toggles it at the current altitude; alert when more than 250 ft off. A small pointer appears next to the altitude.</li></ul></details>
+      <details><summary>Warnings / faults</summary>
+        <ul><li>WARNING + statement: note it, <b>ENT</b> clears; it reappears if the problem is still present.</li>
+        <li>FAULT + statement: no replies. Some faults clear by switching off and on.</li></ul></details>
+    </div>
+  </aside>
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
