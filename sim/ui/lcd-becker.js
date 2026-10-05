@@ -2,18 +2,19 @@
 // second line (preset / battery / channel / storage / message) below; menus, setup pages and
 // the WAIT / FAILURE / PASSWORD screens (Operating Instructions and Installation Manual figures).
 const esc = t => String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-// digits as on the unit's LCD (photo): thin strokes with 45° chamfered corners, on a 10 x 18 grid
+// digits as on the unit's LCD, traced from a close-up photo (1, 3, 5, 6, 7, 8, 9, 0) on a 10 x 18 grid:
+// straight verticals, chamfered corners, hooked ends on 3 / 5 / 6 / 9. No photo shows 2 or 4: drawn in the same style
 const GLYPH = {
   0: 'M2.6 0H7.4L10 2.6V15.4L7.4 18H2.6L0 15.4V2.6Z',
   1: 'M1.8 3.9 4.4 0H5.6V18M1.3 18H9.7',   // flag with a flat (cut-off) top, foot
-  2: 'M0 2.5 2 0H8L10 2V7.5L0 15.5V18H10',
-  3: 'M0 2 2 0H8L10 2V7L8 9H3.5M8 9 10 11V16L8 18H2L0 16',
+  2: 'M0 3 3 0H7L10 3V7.5L0 15.5V18H10',
+  3: 'M0 3 3 0H7L10 2.8V6.8L8 8.4H1.8M8 8.4 10 10.3V15.3L7 18H2.7L0 14.5',
   4: 'M7.5 18V0L0 12.5H10',
-  5: 'M10 0H1L0 8.5H8L10 10.5V16L8 18H2L0 16',
-  6: 'M9.5 0H4L0 5V16L2 18H8L10 16V10.5L8 8.5H0',
+  5: 'M10 0H0V7.6H7.3L10 10.3V15.6L7.6 18H2.4L0 14.6',
+  6: 'M10 3.9 7.3 0H3.2L0 4.7V15.6L2.4 18H7.6L10 15.6V10.2L7.6 7.8H0',
   7: 'M0 0H10V2.5L4 18',
   8: 'M2.8 0H7.2L9 1.8V6.8L7.2 8.6H2.8L1 6.8V1.8ZM2.2 8.6H7.8L10 10.8V15.8L7.8 18H2.2L0 15.8V10.8Z',
-  9: 'M10 9.5H2L0 7.5V2L2 0H8L10 2V13L5.5 18H0.5',
+  9: 'M0 14 2.8 18H7.2L10 14.6V3.2L7.2 0H2.8L0 3.2V7L2.4 9.4H10',
   '-': 'M1 9H9',
   _: 'M0 18H10',
 };
