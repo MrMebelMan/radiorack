@@ -57,7 +57,10 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
     this.morseNext = 0;
       // recorded incoming transmissions
       this.clipGain = ctx.createGain(); this.clipGain.gain.value = 0;
-      this.clipGain.connect(out);
+      // signal quality (units that report one): weak signals sound band-limited and muffled
+      this.clipHp = ctx.createBiquadFilter(); this.clipHp.type = 'highpass'; this.clipHp.frequency.value = 80;
+      this.clipLp = ctx.createBiquadFilter(); this.clipLp.type = 'lowpass'; this.clipLp.frequency.value = 9000;
+      this.clipGain.connect(this.clipHp).connect(this.clipLp).connect(out);
       clipData.forEach((p, i) => p.then(ab => ab && ctx.decodeAudioData(ab.slice(0))).then(b => {
         if (!b) return;
         this.buffers[i] = b;
@@ -108,7 +111,19 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
       } else {
         this.stopClip();
       }
-      this.clipGain.gain.setTargetAtTime(vol, now, 0.02);
+      // reception quality: strong = clean; good = a little muffled and noisier;
+      // poor = narrow band, heavy static and a level that fades in and out
+      const qual = hearingRx ? a.quality : undefined;
+      const lp = qual === 'poor' ? 2200 : qual === 'good' ? 3800 : 9000, hp = qual === 'poor' ? 550 : qual === 'good' ? 250 : 80;
+      this.clipLp.frequency.setTargetAtTime(lp, now, 0.05);
+      this.clipHp.frequency.setTargetAtTime(hp, now, 0.05);
+      // poor: the voice breaks up in short drop-outs (noise surges in the gaps); good: slight fading
+      if (qual === 'poor') {
+        if (now >= (this.dropUntil || 0) && Math.random() < 0.14) this.dropUntil = now + 0.08 + Math.random() * 0.25;
+      } else this.dropUntil = 0;
+      this.dropping = qual === 'poor' && now < this.dropUntil;
+      const fade = this.dropping ? 0.03 : qual === 'poor' ? 0.45 + 0.45 * Math.random() : qual === 'good' ? 0.85 + 0.15 * Math.random() : 1;
+      this.clipGain.gain.setTargetAtTime(vol * fade, now, this.dropping ? 0.01 : qual === 'poor' ? 0.05 : 0.02);
 
       // altitude monitor alert (TT31): two short beeps per second while active
     if (radio.alertAudio?.()) {
@@ -118,6 +133,16 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
         this.alertNext = now + 1;
       }
     } else this.alertNext = 0;
+
+    // short beep (AR6201 scan / frequency change beep): one per count step
+    const beeps = radio.beepAudio?.();
+    if (beeps !== undefined) {
+      if (this.beeps !== undefined && beeps > this.beeps) {
+        const g = this.morseGain.gain, t = now + 0.02;
+        g.setValueAtTime(0.2, t); g.setValueAtTime(0, t + 0.08);
+      }
+      this.beeps = beeps;
+    }
 
     // NAV ident (NAV/COM units only)
     const nav = radio.navAudio?.();
@@ -132,7 +157,7 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
     // static levels / colour per source (tune here)
       let n = 0, fc = 1800, q = 0.6;
       if (a.src === 'static') n = 0.12 * vol;                  // squelch override
-      if (hearingRx) n = 0.12 * vol;                           // background under incoming calls
+      if (hearingRx) n = (a.quality === 'poor' ? (this.dropping ? 0.5 : 0.3) : a.quality === 'good' ? 0.18 : 0.12) * vol;   // background under incoming calls
       if (a.src === 'tx') { n = 0.2 * vol; fc = 3500; q = 0.4; } // own PTT: louder, crisper
       this.filt.frequency.setValueAtTime(fc, now);
       this.filt.Q.setValueAtTime(q, now);

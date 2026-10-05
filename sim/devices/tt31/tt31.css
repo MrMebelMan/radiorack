@@ -11,8 +11,11 @@
 .bezel.tt31 .key.pill.sm { width: 60px; height: 34px; font-size: 13px; }
 .bezel.tt31 .key.pill.wide { width: 92px; }
 .bezel.tt31 .key.pill:active, .bezel.tt31 .key.pill.down { background: radial-gradient(ellipse 75% 85% at 50% 40%, #d2d5cd, #b0b3ab 70%, #8e918a); box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 2px 4px rgba(0,0,0,.3), inset 0 -2px 3px rgba(0,0,0,.15); transform: translateY(1px); }
-.bezel.tt31 .key.pill:hover { border-color: #8d9089; }
-.bezel.tt31 .lbl.mk { font: 700 13px Arial, sans-serif; color: #dfe79a; transform: translate(-50%, -50%); }   /* positioned by centre, round the knob (photo) */
+.bezel.tt31 .lbl.mk { font: 700 13px Arial, sans-serif; color: #dfe79a; white-space: nowrap; }
+/* round the mode knob (centre 94,153): each label anchored by the edge facing the knob, all 8 px from the ring */
+.bezel.tt31 .lbl.mk.l { transform: translate(-100%, -50%); }
+.bezel.tt31 .lbl.mk.r { transform: translate(0, -50%); }
+.bezel.tt31 .lbl.mk.t { transform: translate(-50%, -100%); }
 .bezel.tt31 .knob.modesel { left: 48px; top: 107px; width: 86px; height: 86px; border: 3px solid #b8c4b0; }
 .bezel.tt31 .knob.modesel .grip { -webkit-mask: none; mask: none; background: none; }
 .bezel.tt31 .knob.modesel .ptr { position: absolute; left: 50%; top: 6px; width: 4px; height: 38%; margin-left: -2px; background: #f2f2f2; border-radius: 2px; }

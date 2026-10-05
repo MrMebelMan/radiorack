@@ -4,6 +4,7 @@ A local web app with simulators of Garmin radios, so the owner can practise oper
 - Landing page: `sim/index.html`, one card per simulator.
 - **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
 - **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
+- **Becker AR6201** (57 mm VHF COM): source of truth `sim/manuals/ar6201-operating-instructions.pdf` (Issue 5 2013, same file as `AR6201_OI.pdf`) and `ar6201-installation-manual.pdf` (DV 14300.03 Issue 5, has the Installation Setup). Gaps filled from the newer AR620X family manual are listed in ASSUMPTIONS.md. The bezel is laid out from user photos of a real unit (unlit and lit).
 - **Trig TT31** (Mode S transponder): source of truth `sim/manuals/tt31-operating-manual.pdf` (00454-00-AF, same file as `XPDR TT31 Operating Handbook.pdf`) and `tt31-installation-manual.pdf` (00455-00-AR). Its screens are copied from user photos of the real unit (boot, main, FLIGHT TIME, TIMER, ALTITUDE MONITOR, squawk entry).
 
 ## Run / test
@@ -49,7 +50,8 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
   - `panel.js` (status line, yoke/simulation panels, Flight block when present)
 - `data/lk.js` (COM frequencies, positions, DB info) and `data/lk-nav.js` (VOR/DME/ILS from ENR 4.1 / AD 2.19).
 - `manuals/`: both Pilot's Guides and the shared TSO Installation Manual (190-01182-02 Rev L, public copy with highlights; Garmin doesn't publish it), linked from the landing page and the simulator pages.
-- `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs`, `test/manual-tt31.test.mjs` (literal manual procedure replays).
+- `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs`, `test/manual-tt31.test.mjs`, `test/manual-ar6201.test.mjs` (literal manual procedure replays).
+- `devices/ar6201/`: standalone `AR6201` class (`device.js`), Installation Setup page table (`setup.js`), preloaded AIP channels (`channels.js`). LCD view type `bk` rendered by `ui/lcd-becker.js` (positive LCD theme `.lcd.pos`, font Barlow Semi Condensed in `fonts/`, OFL). Keys are bound as holds (`down:KEY` / `up:KEY`); the device times short / long (2 s) presses.
 - `devices/tt31/`: standalone `TT31` class (not a `ComRadio`, same `input` / `tick` / `view` shape). The LCD view type is `xpdr` (amber theme `.lcd.amber`). It has its own small panel binding in `main.js`.
 - Adding a device: create `devices/<name>/` (class, page, `main.js`), add a card and preview to the landing page, and add tests, including a manual replay suite.
 

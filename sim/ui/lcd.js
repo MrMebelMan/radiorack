@@ -1,4 +1,5 @@
 import { TRIG_LOGO } from './logos.js';
+import { beckerHtml } from './lcd-becker.js';
 
 // LCD renderer: turns a device view() model into the display's HTML.
 const esc = t => t.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -60,6 +61,7 @@ function xpdrHtml(x) {
 export function lcdHtml(v) {
   if (v.off) return '';
   if (v.xpdr) return xpdrHtml(v.xpdr);
+  if (v.bk) return beckerHtml(v.bk);
   if (v.splash) return `<div class="splash">${v.splash[0] ? `<div class="logo">${esc(v.splash[0])}</div>` : ''}${v.splash.slice(1).map(l => `<div class="mid">${esc(l)}</div>`).join('')}</div>`;
   if (v.message !== undefined) {
     const lines = wrapText(v.message, 34).slice(0, 2);
@@ -150,6 +152,11 @@ export function createLcd(lcd) {
     lcd.classList.toggle('pg', !!v.right && !com);
     lcd.classList.toggle('mg', v.message !== undefined);
     lcd.classList.toggle('xp', !!v.xpdr);
+    lcd.classList.toggle('bk', !!v.bk);
+    if (v.bk) {   // Becker: backlight level and the short whole-display inversion
+      lcd.style.setProperty('--lit', v.bk.lit.toFixed(2));
+      lcd.classList.toggle('flash', !!v.bk.flash);
+    }
     if (v.brt === undefined) { lcd.style.filter = ''; return; }   // units without brightness / contrast settings
     const b = v.brt, c = v.contrast ?? 0;
     lcd.style.filter = `brightness(${(0.75 + (b + 10) / 110 * 0.5).toFixed(2)}) contrast(${(1 + c / 100).toFixed(2)})`;

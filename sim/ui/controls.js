@@ -13,7 +13,7 @@ const WHEEL_STEP = 50;
  *   innerPush: 'push',                       event when the inner knob is clicked
  *   vol: { el, angle: radio => deg },        COM volume pot with end stops (angle from state);
  *                                            click = PUSH SQ, hold without dragging = 121.5
- *   pots: [{ el, evt, pushDown, pushUp, angle }]  further pots (e.g. GNC NAV VOL / PUSH ID)
+ *   pots: [{ el, evt, pushDown, pushUp, angle, dragPx, wheelSteps }]  further pots (e.g. GNC NAV VOL / PUSH ID)
  *   keys: NodeList of [data-key] buttons,
  *   holds: [[el, downEvt, upEvt]],
  *   keyboard: { keys: {code: evt}, holds: {code: [down, up]}, turns: {code: [knob, dir]}, presses: {code: [evt…]} }
@@ -35,20 +35,20 @@ export function bindControls(radio, after, cfg) {
     send(knob, dir);
   };
 
-  function wheelHandler(knob) {
+  function wheelHandler(knob, mult = 1) {
     let acc = 0;
     return e => {
       e.preventDefault(); e.stopPropagation();
       const dy = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
-      if (Math.abs(dy) >= WHEEL_STEP) { turn(knob, dy < 0 ? 1 : -1); acc = 0; return; }
+      if (Math.abs(dy) >= WHEEL_STEP) { turn(knob, (dy < 0 ? 1 : -1) * mult); acc = 0; return; }
       acc += dy;
-      while (Math.abs(acc) >= WHEEL_STEP) { const d = acc < 0 ? 1 : -1; turn(knob, d); acc += d * WHEEL_STEP; }
+      while (Math.abs(acc) >= WHEEL_STEP) { const d = acc < 0 ? 1 : -1; turn(knob, d * mult); acc += d * WHEEL_STEP; }
     };
   }
 
   // Knob drag: press and drag up (clockwise) / down (counter-clockwise).
   // A press without movement is a click.
-  function dragKnob(el, knob, { onPress, onClick, onDragStart } = {}) {
+  function dragKnob(el, knob, { onPress, onClick, onDragStart, stepPx = DRAG_STEP_PX } = {}) {
     let st = null;
     el.addEventListener('pointerdown', e => {
       if (e.button !== 0) return;
@@ -66,9 +66,9 @@ export function bindControls(radio, after, cfg) {
         onDragStart?.();
       }
       if (!st.dragging) return;
-      while (Math.abs(e.clientY - st.last) >= DRAG_STEP_PX) {
+      while (Math.abs(e.clientY - st.last) >= stepPx) {
         const dir = e.clientY < st.last ? 1 : -1;
-        st.last -= dir * DRAG_STEP_PX;
+        st.last -= dir * stepPx;
         turn(knob, dir);
       }
     });
@@ -97,10 +97,11 @@ export function bindControls(radio, after, cfg) {
     volGrip = vol.el.querySelector('.grip');
   }
   for (const pot of cfg.pots || []) {
-    pot.el.addEventListener('wheel', wheelHandler(pot.evt), { passive: false });
+    pot.el.addEventListener('wheel', wheelHandler(pot.evt, pot.wheelSteps || 1), { passive: false });
     dragKnob(pot.el, pot.evt, {
       onPress: () => pot.pushDown && send(pot.pushDown),
       onClick: () => pot.pushUp && send(pot.pushUp),
+      stepPx: pot.dragPx,   // optional: pixels of drag per step (fine-stepped pots)
     });
     pot.grip = pot.el.querySelector('.grip');
   }
@@ -147,12 +148,20 @@ export function bindControls(radio, after, cfg) {
     window.addEventListener('blur', () => { for (const k of held) send(kb.holds[k][1]); held.clear(); });
   }
 
+  let knobsPlaced = false;
   return {
     send, turn,
     // the volume pot's angle follows the radio state (end stops)
     renderKnobs() {
-      if (volGrip) volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`;
-      for (const pot of cfg.pots || []) pot.grip.style.transform = `rotate(${pot.angle(radio)}deg)`;
+      const grips = [];
+      if (volGrip) { volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`; grips.push(volGrip); }
+      for (const pot of cfg.pots || []) { pot.grip.style.transform = `rotate(${pot.angle(radio)}deg)`; grips.push(pot.grip); }
+      // first frame: jump to the start position without the turning animation
+      if (!knobsPlaced) {
+        knobsPlaced = true;
+        for (const g of grips) { g.style.transition = 'none'; g.getBoundingClientRect(); }
+        requestAnimationFrame(() => grips.forEach(g => { g.style.transition = ''; }));
+      }
     },
   };
 }

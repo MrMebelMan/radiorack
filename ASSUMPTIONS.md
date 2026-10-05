@@ -5,6 +5,7 @@ This file covers everything the simulators do that the Pilot's Guides **don't sp
 - GTR 225: Pilot's Guide 190-01182-00 Rev D (SW 2.10), `sim/manuals/gtr225-pilots-guide.pdf`
 - GNC 255: Pilot's Guide 190-01182-01 Rev E, `sim/manuals/gnc255-pilots-guide.pdf`
 - Both: TSO Installation Manual 190-01182-02 Rev L, `sim/manuals/gtr225-gnc255-installation-manual.pdf`
+- Trig TT31 and Becker AR6201: see their sections.
 
 **Rule:** screen text that isn't in a manual screenshot or photo has been **removed**. Where a screen has to show *something* but its look is undocumented, it is kept to the bare minimum and listed here.
 
@@ -171,6 +172,50 @@ Everything below is **not** shown or stated there.
 - [ ] **Power-up resets.** Sim: flight timer and timer reset at power-up, and the altitude monitor stays as set. Real:
 - [ ] **Default Flight ID.** Sim: "OKABC" placeholder (set by the installer as the aircraft registration). Real:
 - [ ] **Configuration mode** (FUNC held while switching on) is not simulated; the installation options are switches in the Simulation panel.
+
+## 4b. Becker AR6201 transceiver
+Sources:
+- Operating Instructions AR6201-(X0X), Issue 5 / Nov 2013 (`sim/manuals/ar6201-operating-instructions.pdf`);
+- Installation and Operation Manual DV 14300.03 Issue 5 (`sim/manuals/ar6201-installation-manual.pdf`), same software (CH 3.05 / CM 1.49);
+- for gaps only: the newer AR620X family manual DV14307.03 Issue 05 (2016, SW 4.06 / 2.06), marked FAM;
+- photos of a real unit (front, lit display).
+
+Everything below is **not** stated in the two X0X manuals.
+
+- [ ] **WAIT duration.** Sim: 3 s (FAM: "a few seconds"). Real:
+- [ ] **FAILURE / PRESS ANY KEY.** Sim: any key continues to normal operation. Real:
+- [ ] **Display inversion** ("inverted for a short time"). Sim: 300 ms. Real:
+- [ ] **Frequency editing.**
+  - Sim: a 4th push ends editing; no timeout.
+  - The MHz field wraps 118–136; the 100 kHz and the 25/8.33 kHz fields wrap inside their block (no carry).
+  - In 25 kHz mode the last field covers both decimals (figure "129.[00]") and steps 25 kHz through the MHz.
+  - Turning without a field selected inverts the display (not allowed).
+
+  Real:
+- [ ] **Channel Mode selection.** Sim: the first clockwise turn only inverts the number (no step); turning steps through stored channels only and wraps; from CH-- the first stored channel is tuned. Real:
+- [ ] **LAST database.** Sim: a frequency already in the list moves to LAST1 (no duplicates). Real:
+- [ ] **STO page.** Sim: channel 1–99 wraps; the cursor wraps after the 10th character; a 7 s timeout also applies on the channel step. Real:
+- [ ] **Label characters.** Sim: blank, A–Z, 0–9, -, / (OI: "blank → A → B → C"; FAM: "A…Z 0…9 — / blank"). Real:
+- [ ] **Scan.** Sim: preset blink 1 Hz; SCAN HOLD TIME keeps the preset audible for that time after its signal ends; the beep comes once per preset transmission. Real:
+- [ ] **Simulated signal levels.** Sim: poor −95, good −85, strong −75 dBm against the squelch threshold (6…26 ≈ −105…−87 dBm, linear). Poor and good also sound distorted (narrow band, more noise, poor fades). Real:
+- [ ] **Warnings.** Sim: shown in the bottom line for 2 s of every 5 s (OI table: "every 5 seconds"; OI 3.1 and FAM: 3 s for LOW BATT); priority FAILURE > STUCK PTT > TX HOT > LOW BATT. A failure in operation lasts until switched off. Real:
+- [ ] **Symbols.** Sim: the speaker symbol is drawn next to TX / IC / VOX-disabled in the top-left; VOX-disabled is "IC" crossed out. Real (position):
+- [ ] **Menus.** Sim: the Pilots Menu leaves after 5 s (OI: "a few seconds"; FAM: 5 s); keys other than the documented ones invert the display. With VOX forced off by the speaker, turning on IC VOX inverts the display. Real:
+- [ ] **TX blocking.** Sim: blocked in TX are mode change, spacing, swap, active-frequency change, channel selection and STO; squelch and menus stay allowed. Real:
+- [ ] **Power-up state.** Sim: squelch ON, Scan off, menus closed; frequencies, mode, spacing, settings and databases are kept. Real:
+- [ ] **Factory defaults (FAM 2.8).** Brightness 50, SQUELCH THR 12, sidetone 6 dB, scan hold 1 s, dimming NONE, memory options on, all MDE pages on, only AUTO ISOL IN TX checked, SPKR VOL SRC BOTH; IC volume 37 and VOX −15 (IM recommended values). IN/OUT CFG 1 / 2 as in the IM figures (CFG 1: STD1 MIKE, BOTH MIKES, HEADPHONE 1; CFG 2: DYN MIKE, SPEAKER). Real:
+- [ ] **Installation Setup details.**
+  - Password digits start at 0000; a wrong password keeps the dialog.
+  - Paging stops at the first / last page.
+  - ERASE / RECALL go back to NO after STO.
+  - ILLUM CURVE defaults (14 V: start 1.5 V, 10 %, 10 %/V, max at 12 V; 28 V: 4 V, 10 %, 5 %/V, 24 V) and steps.
+  - Mike / aux sensitivity steps.
+  - Only IN/OUT CFG 1 is active (no MIKE_SW input).
+  - RECALL DEF. resets only installation settings.
+
+  Real:
+- [ ] **Volume knob.** Sim: OFF (pointer at the OFF print, -57° from the top) plus 100 steps of 1 % up to about +78° (user observation). Real:
+- [ ] **Not simulated:** aux audio input, TANDEM / RCU6201 second controller, PC database upload, SWAP MIKE IC / MIKE_SW, sidetone level.
 
 ## 5. Simulator-only (no device check needed)
 These exist only to make practice possible:

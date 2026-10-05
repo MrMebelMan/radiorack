@@ -178,7 +178,14 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
   box-shadow: 0 3px 4px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.10);
   font: 400 14px Arial, Helvetica, sans-serif;
 }
-.key:hover { border-color: #555; }
+/* hover, the same on every unit: a faint lift on keys and knobs (dark or light caps) */
+.bezel .key:hover { filter: brightness(1.12); }
+.bezel .knob:hover, .bezel .dual .inner:hover { filter: brightness(1.12); }
+/* the inner knob sits inside the outer one: light only the outer ring (an overlay under the inner knob) */
+.bezel .dual .outer::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.07); opacity: 0; pointer-events: none; }
+.bezel .dual .outer:hover:not(:has(.inner:hover))::after { opacity: 1; }
+.bezel .dual .inner { z-index: 1; }
+.bezel .key:active, .bezel .key.down { filter: none; }
 .key:active, .key.down { transform: translateY(1px); box-shadow: 0 1px 2px rgba(0,0,0,.7); background: #1e1d1b; }
 .key.flip { display: flex; align-items: center; justify-content: center; }
 .key.flip svg { display: block; }
@@ -358,3 +365,104 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .lcd .lockbadge { position: absolute; right: 4px; top: 2px; }
 .lcd .splash { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
 .lcd .splash .logo { font: 700 24px Arial, sans-serif; letter-spacing: 3px; text-transform: none; }
+
+/* ---------- Becker AR6201: positive LCD (blue-white backlight, slate violet text; photos of the unit) ---------- */
+.lcd.pos {
+  --bk-fg: #4f5296; --bk-bg: #dfe6f3;
+  position: absolute; inset: 0; display: block; padding: 4px 6px 4px 4px;
+  color: var(--bk-fg); background: transparent; box-shadow: none; outline: 0;
+  font-family: "BLCD", "Arial Narrow", sans-serif; font-weight: 400; text-transform: none;
+  transition: opacity .12s ease-out;   /* power on: quick */
+  -webkit-font-smoothing: auto; font-smooth: auto;
+}
+.lcd.pos::before {   /* backlight over the grey-green glass: pilot brightness / dimming bus */
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: var(--lit, 1);
+  background: radial-gradient(ellipse 75% 85% at 50% 48%, #eef3fb, #dbe3f2 60%, #c9d3e8);
+}
+.lcd.pos { z-index: 0; }
+.lcd.pos.off { transition-duration: .03s; }   /* power off: almost instant */
+.lcd.pos.flash { color: var(--bk-bg); }   /* whole display inverted (operation not allowed): text and background swap */
+.lcd.pos.flash::before { background: var(--bk-fg); opacity: 1; }
+.lcd.pos.flash .inv, .lcd.pos.flash .blabelbar, .lcd.pos.flash .bbar i { background: var(--bk-bg); color: var(--bk-fg); }
+.lcd.pos.flash .inv svg.dg { stroke: var(--bk-fg); }
+.lcd.pos.flash .inv svg.dg.dot { fill: var(--bk-fg); }
+.lcd.pos .inv { background: var(--bk-fg); color: var(--bk-bg); padding: 0 1px; }
+.lcd.pos .bmain { display: grid; grid-template-rows: 60px 1fr; height: 100%; }
+.lcd.pos .brow { display: grid; grid-template-columns: 36px 9px minmax(0, 1fr); align-items: center; }
+.lcd.pos .bcol { display: flex; align-items: center; gap: 2px; font-weight: 600; font-size: 20px; }
+.lcd.pos .bcol.stack { flex-direction: column; align-items: flex-start; gap: 0; line-height: 1.05; }
+.lcd.pos .bann { font-weight: 600; font-size: 20px; letter-spacing: 0; }
+.lcd.pos .bsym { width: 26px; height: 21px; }
+.lcd.pos .bsym.spk { width: 9px; }
+.lcd.pos .btri { width: 9px; height: 12px; }
+.lcd.pos .bf { text-align: right; white-space: nowrap; line-height: 1; letter-spacing: -1px; }
+.lcd.pos .bf .inv { display: inline-block; line-height: .82; }
+/* chamfered LCD digits (ui/lcd-becker.js): height = digit height of the font size, thin strokes */
+/* proportions from a close-up of the unit: active digits 38 % of the window height, second line 31 %,
+   width about half the height, close together; the active line has the thicker stroke */
+.lcd.pos svg.dg { display: inline-block; height: .8em; width: .4em; margin: 0 .035em; vertical-align: baseline; fill: none; stroke: currentColor; stroke-width: 2px; stroke-linejoin: miter; stroke-miterlimit: 1.5; overflow: visible; }   /* sharp joins cut off, no spikes */
+.lcd.pos svg.dg.dot { width: .1em; margin: 0 .02em; fill: currentColor; stroke: none; }
+.lcd.pos .b1 svg.dg { height: 52px; width: 23.5px; margin: 0 1.85px; stroke-width: 3.4px; }   /* digit 0.49 h wide, gap 0.09 h (photo) */
+.lcd.pos .b2 svg.dg { height: 43px; width: 19.8px; margin: 0 1.2px; stroke-width: 2.3px; }
+.lcd.pos .b1 svg.dg.dot { width: 4px; margin: 0 1px; }
+.lcd.pos .b2 svg.dg.dot { width: 3.5px; margin: 0 1px; }
+.lcd.pos .b1, .lcd.pos .b2 { font-size: 0; line-height: 0; padding-right: 13px; }   /* right margin as on the unit */
+.lcd.pos .b1 { align-self: end; padding-bottom: 2px; }
+.lcd.pos .b2 { align-self: start; padding-top: 3px; }
+.lcd.pos .b1 .inv, .lcd.pos .b2 .inv { display: inline-block; line-height: 0; padding: 0 1px 0 0; }
+.lcd.pos .inv svg.dg { stroke: var(--bk-bg); }
+.lcd.pos .inv svg.dg.dot { fill: var(--bk-bg); }
+.lcd.pos .b1 { font-size: 64px; }
+.lcd.pos .b2 { font-size: 57px; }
+.lcd.pos .bsmall.bat { text-align: right; font-weight: 600; font-size: 15px; align-self: end; padding-bottom: 6px; }
+.lcd.pos .bmsg { text-align: center; font-weight: 600; font-size: 30px; letter-spacing: .5px; }
+.lcd.pos .bchan { display: flex; justify-content: flex-end; align-items: center; gap: 4px; }
+.lcd.pos .bst { display: flex; flex-direction: column; align-items: flex-end; font-weight: 600; font-size: 12px; line-height: 1.1; }
+.lcd.pos .bst i { font-style: normal; }
+.lcd.pos .bst.one { align-self: flex-end; padding-bottom: 8px; }
+.lcd.pos .bch { font-weight: 600; font-size: 34px; }
+.lcd.pos .bnum { font-weight: 600; font-size: 46px; line-height: 1; letter-spacing: -.5px; }
+.lcd.pos .blabel { text-align: right; font-weight: 400; font-size: 27px; letter-spacing: .5px; white-space: nowrap; }
+.lcd.pos .menu { grid-template-rows: 62px auto 1fr; }
+.lcd.pos .blabelbar { background: var(--bk-fg); color: var(--bk-bg); font-weight: 600; font-size: 14px; line-height: 17px; text-align: center; letter-spacing: .5px; }
+.lcd.pos .bmenu { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px; padding: 0 2px; }
+.lcd.pos .bbar { display: block; height: 11px; border: 1.5px solid currentColor; }
+.lcd.pos .bbar i { display: block; height: 100%; background: currentColor; }
+.lcd.pos .bval { font-weight: 600; font-size: 22px; min-width: 32px; text-align: right; }
+.lcd.pos .bfull { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; line-height: 1.2; }
+.lcd.pos .bfull .big { font-size: 40px; line-height: 1; letter-spacing: 1px; }
+.lcd.pos .bfull .pwd { font-size: 40px; letter-spacing: 2px; }
+/* Installation Setup pages (Installation Manual 2.8.5 figures) */
+.lcd.pos .bsetup { height: 100%; display: flex; flex-direction: column; font-weight: 600; }
+.lcd.pos .stitle { text-align: center; font-size: 20px; line-height: 1.1; font-weight: 400; letter-spacing: .3px; margin-bottom: 4px; }
+.lcd.pos .skv div { display: flex; justify-content: space-between; font-size: 13px; line-height: 1.5; padding: 0 3px; }
+.lcd.pos .skv .boxed { outline: 1px solid currentColor; }
+.lcd.pos .slist { position: relative; font-size: 13px; line-height: 1.45; padding-right: 10px; }
+.lcd.pos .slist div { display: flex; gap: 6px; align-items: center; }
+.lcd.pos .slist .mk { width: 10px; text-align: center; }
+.lcd.pos .slist .inv { flex: 1; }
+.lcd.pos .slist.fl div { justify-content: space-between; font-size: 12px; line-height: 1.35; }
+.lcd.pos .cb { display: inline-block; width: 9px; height: 9px; border: 1.2px solid currentColor; position: relative; flex: none; }
+.lcd.pos .cb.on::after { content: ""; position: absolute; left: 2px; top: -1px; width: 3px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.lcd.pos .bscroll { position: absolute; right: 0; top: 2px; bottom: 2px; width: 6px; border: 1px solid currentColor; }
+.lcd.pos .bscroll i { position: absolute; left: 0; right: 0; background: currentColor; }
+.lcd.pos .sval { text-align: center; font-size: 32px; font-weight: 400; line-height: 1.1; }
+.lcd.pos .sbar { margin: 6px 14px 0; }
+.lcd.pos .sbar.thick { height: 16px; margin: 4px 6px 0; }
+.lcd.pos .snoyes { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 16px; margin-top: 8px; }
+.lcd.pos .snoyes span { padding: 0 4px; }
+.lcd.pos .snoyes .boxed { outline: 1px solid currentColor; }
+.lcd.pos .svu { padding: 0 6px; font-size: 11px; }
+.lcd.pos .svu .vu { display: flex; align-items: center; gap: 4px; }
+.lcd.pos .svu .vu .bbar { flex: 1; }
+.lcd.pos .svu .vu b { font-weight: 400; font-size: 22px; }
+.lcd.pos .svu .vul { display: flex; justify-content: space-between; }
+.lcd.pos .svu .vul i { font-style: normal; }
+.lcd.pos .sio { position: relative; font-size: 8px; line-height: .98; padding-right: 10px; margin-top: -4px; }
+.lcd.pos .sio .ig { font-size: 8.5px; }
+.lcd.pos .sio .ii { display: flex; gap: 4px; align-items: center; padding-left: 3px; font-size: 7.5px; }
+.lcd.pos .sio .cb { width: 7px; height: 7px; }
+.lcd.pos .sio .bscroll.tall { top: 0; bottom: 0; }
+.lcd.pos .scurve { display: flex; align-items: center; gap: 2px; }
+.lcd.pos .scurve .ax { writing-mode: vertical-rl; font-size: 8px; letter-spacing: 1px; }
+.lcd.pos .scurve svg { flex: 1; height: 86px; }

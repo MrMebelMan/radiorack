@@ -12,7 +12,7 @@
 <main>
   <section class="unit-col">
     <header>
-      <a class="back" href="../../">&larr; All simulators</a>
+      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
       <h1>Trig TT31 Mode S transponder simulator</h1>
       <span class="sub">Practice trainer based on the TT31 Operating Manual (00454-00-AF) and Installation Manual (00455-00-AR), software 3.18.</span>
       <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. The left knob is the mode switch (OFF, SBY, GND, ON, ALT); the right knob sets the code.</span>
@@ -21,11 +21,11 @@
       <div class="bezel tt31" id="bezel">
         <button class="key pill" data-key="IDENT" style="left:66px;top:30px" title="IDENT: press when ATC instructs you to &quot;Ident&quot; or &quot;Squawk Ident&quot;. Activates the SPI pulse in the replies for 18 seconds; IDENT appears in the display.">IDENT</button>
 
-        <div class="lbl mk" style="left:44px;top:109px" title="SBY: on, no replies to interrogations">SBY</div>
-        <div class="lbl mk" style="left:91px;top:90px" title="GND: replies to Mode S ground interrogations from surface movement radar">GND</div>
-        <div class="lbl mk" style="left:147px;top:109px" title="ON: replies to all interrogations, altitude reporting suppressed">ON</div>
-        <div class="lbl mk" style="left:23px;top:150px" title="OFF: power removed">OFF</div>
-        <div class="lbl mk" style="left:165px;top:150px" title="ALT: replies to all interrogations">ALT</div>
+        <div class="lbl mk l" style="left:51px;top:110px" title="SBY: on, no replies to interrogations">SBY</div>
+        <div class="lbl mk t" style="left:94px;top:99px" title="GND: replies to Mode S ground interrogations from surface movement radar">GND</div>
+        <div class="lbl mk r" style="left:133px;top:114px" title="ON: replies to all interrogations, altitude reporting suppressed">ON</div>
+        <div class="lbl mk l" style="left:40px;top:153px" title="OFF: power removed">OFF</div>
+        <div class="lbl mk r" style="left:142px;top:153px" title="ALT: replies to all interrogations">ALT</div>
         <div class="knob modesel" id="modeKnob" title="Mode selector knob: controls the power and the operating mode (OFF, SBY, GND, ON, ALT). Drag up/down or scroll. When airborne use ALT unless ATC directs otherwise; GND when taxiing (automatic with a squat switch)."><div class="grip"><i class="ptr"></i></div></div>
 
         <div class="lcd-frame" title="Display: operating mode, reported pressure altitude (flight level), squawk code and Flight ID. The reply indicator is active when the transponder replies to interrogations."><div class="lcd-recess"><div class="lcd amber off" id="lcd"></div></div></div>
@@ -57,12 +57,12 @@
         <section class="card">
           <h2>Flight</h2>
           <div class="field">
-            <label class="lbl-t" for="altSl">Pressure altitude</label>
-            <div class="ctl-row"><input type="range" id="altSl" min="-500" max="15000" step="50"><span id="altVal" class="val"></span></div>
-            <label class="lbl-t" for="gndSw">On ground</label>
-            <div><input type="checkbox" id="gndSw" class="switch"></div>
-            <label class="lbl-t" for="radarSw">Radar coverage</label>
-            <div><input type="checkbox" id="radarSw" class="switch"></div>
+            <label class="lbl-t" for="altSl" title="Simulated pressure altitude (shown and reported as the flight level)">Pressure altitude</label>
+            <div class="ctl-row"><input type="range" id="altSl" min="-500" max="15000" step="50" title="Simulated pressure altitude (shown and reported as the flight level)"><span id="altVal" class="val"></span></div>
+            <label class="lbl-t" for="gndSw" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)">On ground</label>
+            <div><input type="checkbox" id="gndSw" class="switch" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)"></div>
+            <label class="lbl-t" for="radarSw" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)">Radar coverage</label>
+            <div><input type="checkbox" id="radarSw" class="switch" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)"></div>
           </div>
         </section>
         <nav class="manuals">
@@ -74,31 +74,31 @@
       <section class="card">
         <h2>Installation</h2>
         <div class="field">
-          <label class="lbl-t" for="squatSw">Squat switch</label>
-          <div><input type="checkbox" id="squatSw" class="switch"></div>
-          <label class="lbl-t" for="adsbSw">ADS-B GPS source</label>
-          <div><input type="checkbox" id="adsbSw" class="switch"></div>
-          <label class="lbl-t" for="gpsSw">GPS position valid</label>
-          <div><input type="checkbox" id="gpsSw" class="switch"></div>
-          <label class="lbl-t" for="audioOn">Sound</label>
-          <div><input type="checkbox" id="audioOn" class="switch" checked></div>
+          <label class="lbl-t" for="squatSw" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)">Squat switch</label>
+          <div><input type="checkbox" id="squatSw" class="switch" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)"></div>
+          <label class="lbl-t" for="adsbSw" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)">ADS-B GPS source</label>
+          <div><input type="checkbox" id="adsbSw" class="switch" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)"></div>
+          <label class="lbl-t" for="gpsSw" title="The GPS position is valid">GPS position valid</label>
+          <div><input type="checkbox" id="gpsSw" class="switch" title="The GPS position is valid"></div>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)"></div>
         </div>
       </section>
 
       <section class="card">
         <h2>Aircraft &amp; faults</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw">Aircraft power</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked></div>
-          <span class="lbl-t">Antenna</span>
-          <div class="btn-row"><button id="antWarn">Raise warning</button></div>
-          <span class="lbl-t">Fault</span>
-          <div class="btn-row"><button id="faultRec" title="Clears when the transponder is switched off and on">Recoverable</button><button id="faultHard">Permanent</button></div>
-          <span class="lbl-t">Alt monitor</span>
+          <label class="lbl-t" for="busSw" title="Aircraft avionics power: the unit works only with power on">Aircraft power</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Aircraft avionics power: the unit works only with power on"></div>
+          <span class="lbl-t" title="Simulated antenna problem">Antenna</span>
+          <div class="btn-row"><button id="antWarn" title="Raise the antenna warning (the transponder detected a problem with the antenna)">Raise warning</button></div>
+          <span class="lbl-t" title="Simulated transponder faults">Fault</span>
+          <div class="btn-row"><button id="faultRec" title="Clears when the transponder is switched off and on">Recoverable</button><button id="faultHard" title="Raise a permanent fault (stays after switching off and on)">Permanent</button></div>
+          <span class="lbl-t" title="Altitude alert annunciator light (altitude monitor)">Alt monitor</span>
           <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light"></span></div>
         </div>
         <div class="card-foot">
-          <button id="factory" class="btn-danger-quiet">Reset to factory settings</button>
+          <button id="factory" class="btn-danger-quiet" title="Reset all settings to factory defaults">Reset to factory settings</button>
         </div>
       </section>
     </div>
