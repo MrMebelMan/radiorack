@@ -2,7 +2,7 @@
 
 Avionics simulators you can practise on before you get in the aircraft.
 
-Every unit here behaves the way its manual says it does: the same keys, the same knob pushes, the same menus, the same screens. You turn knobs with the mouse, hear the radio, and work through the real procedures until your fingers know them. No headset, no master switch, no Hobbs time.
+Every unit here behaves the way its manual says it does: the same keys, the same knob pushes, the same menus, the same screens. You turn knobs with the mouse, hear the radio, and work through the real procedures until your fingers know them.
 
 ## The units
 
@@ -16,7 +16,7 @@ Every unit here behaves the way its manual says it does: the same keys, the same
 
 ![GNC 255A](sim/previews/gnc255.png)
 
-Everything the GTR does, plus the NAV side: VOR/LOC tuning, OBS and CDI, TO/FROM, distance, and Morse ident you can actually listen to. A small flight simulation moves you across the map so the needle has something to do. Built from the Pilot's Guide 190-01182-01 Rev E.
+Everything the GTR does, plus the NAV side: VOR/LOC tuning, OBS and CDI, TO/FROM, distance, and Morse ident. A simple flight simulation moves the aircraft along a track. Built from the Pilot's Guide 190-01182-01 Rev E.
 
 ### Trig TT31 — Mode S transponder
 
@@ -32,15 +32,13 @@ Standard, Direct Tune and Channel modes, scan with priority, 99 labelled user ch
 
 ## Running it
 
-You need Python 3 and a browser. That's it — no build, no npm install.
+You need Python 3 and a browser.
 
 ```sh
 python3 sim/serve.py
 ```
 
 Open <http://localhost:8225> and pick a unit.
-
-(It has to be served over HTTP; opening the HTML file directly won't load the modules.)
 
 ## How to use a simulator
 
@@ -51,15 +49,15 @@ Open <http://localhost:8225> and pick a unit.
 
 Under each unit there are panels for the things that happen *outside* the radio: hold PTT, make a station call you on the active or standby frequency, pull aircraft power, set the GPS position, fly a track, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
 
-Settings, frequencies and stored channels are kept in your browser, just like the unit would keep them.
+Settings, frequencies and stored channels are kept in your browser.
 
 ## How faithful is it?
 
-As faithful as the paperwork allows. The rule is simple: the manual is the spec. Procedures are implemented step by step as written, and every one of them is replayed as an automated test. Nothing appears on a screen unless it's in a manual figure or a photo of the real unit.
+The manual is the spec. Procedures are implemented step by step as written, and every one of them is replayed as an automated test. Nothing appears on a screen unless it's in a manual figure or a photo of the real unit.
 
-Where a manual is silent — how long a splash screen stays up, what a key does on a page the manual never mentions — the simulator makes a minimal, sensible choice and writes it down in [ASSUMPTIONS.md](ASSUMPTIONS.md), with a checkbox to tick once someone checks it on a real unit. If you have access to one of these units, that file is the most useful thing you can help with.
+Where a manual is silent — how long a splash screen stays up, what a key does on a page the manual never mentions — the simulator makes a minimal, sensible choice and writes it down in [ASSUMPTIONS.md](ASSUMPTIONS.md), with a checkbox to tick once someone checks it on a real unit.
 
-Frequencies and navaids come from the Czech AIP (aim.rlp.cz) for a specific AIRAC cycle, so they're real but they age. The cycle is noted in `sim/data/lk.js`.
+Frequencies and navaids come from the Czech AIP (aim.rlp.cz) for a specific AIRAC cycle; the cycle is noted in `sim/data/lk.js`.
 
 ## Tests
 
