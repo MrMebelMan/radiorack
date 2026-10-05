@@ -405,9 +405,9 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
    width about half the height, close together; the active line has the thicker stroke */
 .lcd.pos svg.dg { display: inline-block; height: .8em; width: .4em; margin: 0 .035em; vertical-align: baseline; fill: none; stroke: currentColor; stroke-width: 2px; stroke-linejoin: miter; stroke-miterlimit: 1.5; overflow: visible; }   /* sharp joins cut off, no spikes */
 .lcd.pos svg.dg.dot { width: .1em; margin: 0 .02em; fill: currentColor; stroke: none; }
-.lcd.pos .b1 svg.dg { height: 52px; width: 23.5px; margin: 0 1.85px; stroke-width: 3.4px; }   /* digit 0.49 h wide, gap 0.09 h (photo) */
-.lcd.pos .b2 svg.dg { height: 43px; width: 19.8px; margin: 0 1.2px; stroke-width: 2.3px; }
-.lcd.pos .b1 svg.dg.dot { width: 4px; margin: 0 1px; }
+.lcd.pos .b1 svg.dg { height: 52px; width: 23.5px; margin: 0 1.85px; stroke-width: 4.2px; }   /* digit 0.49 h wide, gap 0.09 h; bold: stroke 0.08 h (photo) */
+.lcd.pos .b2 svg.dg { height: 43px; width: 19.8px; margin: 0 1.2px; stroke-width: 2.5px; }   /* stroke 0.058 h (photo) */
+.lcd.pos .b1 svg.dg.dot { width: 5px; margin: 0 1px; }
 .lcd.pos .b2 svg.dg.dot { width: 3.5px; margin: 0 1px; }
 .lcd.pos .b1, .lcd.pos .b2 { font-size: 0; line-height: 0; padding-right: 13px; }   /* right margin as on the unit */
 .lcd.pos .b1 { align-self: end; padding-bottom: 2px; }
