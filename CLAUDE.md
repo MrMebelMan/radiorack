@@ -74,11 +74,21 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
   - MON works only in COM mode.
 
 ## Rules
-- **Follow the manual exactly.** Implement the manual's step sequences literally, with no "convenient" shortcuts. Where the manual is silent or contradicts itself, say so and ask; don't guess quietly.
+- **Follow the manual exactly.** Implement the manual's step sequences literally, with no "convenient" shortcuts. Where the manual is silent or contradicts itself, say so and ask; don't guess quietly. The simulators are for practicing the real unit, so any deviation trains a wrong habit for the cockpit (e.g. ENT jumping to the next field when the manual says to turn the outer knob).
 - **The procedure steps are the spec.** `test/manual-*.test.mjs` replay every numbered procedure of both Pilot's Guides literally, one input per step, on a radio used elsewhere first. Any behavior change must keep them green. Before calling something an assumption, check whether a procedure's step sequence already decides it.
 - **No invented screen text.** Anything on the display that isn't in a manual screenshot or a photo of the unit is removed, not guessed. Assumptions go in `ASSUMPTIONS.md` for checking on a real unit.
-- **Don't add anything that wasn't asked for.** That covers UI helpers, extra controls, decorations, duplicated status and sounds. Offer the idea in one line instead.
+- **Don't add anything that wasn't asked for.** That covers UI helpers, extra controls, decorations, duplicated status, keyboard shortcuts, knob position markers and sounds. Offer the idea in one line instead.
 - **Frequencies must be real.** Check them against the Czech AIP at aim.rlp.cz (eAIP AD 2.18, VFR Manual, ENR 2.1, GEN 3.5), never from memory. They are stored in kHz using 8.33 channel names (120.335 → `120335`). The current data was verified for AIRAC 01 OCT 2026.
 - Saved state lives in localStorage under `PERSIST_KEY` in `devices/gtr225/device.js`. Bump it when the defaults change in a way that old saved state would hide.
 - **American English** in all text (UI, docs, comments): color, center, behavior, gray, practice, labeled. Quotes from manuals stay verbatim.
 - MON and squelch override are operating states. They reset at every power-up. Frequencies, lists and ICS/SYS settings persist.
+
+## Commits
+- The owner commits. Don't run `git add` / `git commit` yourself.
+- When asked for a commit message (`/commit-msg`), give **one message per distinct change**, e.g. a `docs:` one and a `feat:` one, never one message covering both. One-line conventional commits, no emojis, no co-author line.
+- With each message, give a copy-paste command that stages only that change's files:
+  ```
+  git add README.md && git commit -m "docs: ..."
+  git add sim/devices/gnc255/device.js sim/test/gnc255.test.mjs && git commit -m "feat: ..."
+  ```
+  Check `git status` first so the file lists are exact, and leave out untracked files that aren't part of the change (e.g. the manual PDFs in the repo root).
