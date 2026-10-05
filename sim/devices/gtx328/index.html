@@ -86,10 +86,8 @@
       <section class="card">
         <h2>Aircraft &amp; lighting</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Aircraft avionics power: the unit works only with power on">Aircraft power</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Aircraft avionics power: the unit works only with power on"></div>
-          <label class="lbl-t" for="masterSw" title="Installation: the unit is wired to the avionics master. It switches on and off with aircraft power (the Aircraft power switch), in the last mode used.">Avionics master turn-on</label>
-          <div><input type="checkbox" id="masterSw" class="switch" title="Installation: the unit is wired to the avionics master. It switches on and off with aircraft power (the Aircraft power switch), in the last mode used."></div>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
           <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight">Cockpit light</label>
           <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight"><span id="ambVal" class="val"></span></div>
           <label class="lbl-t" for="busV" title="Aircraft panel lighting bus (dimmer); used when the backlight source is set to a lighting bus">Lighting bus</label>
@@ -104,6 +102,8 @@
       <section class="card">
         <h2>Installation &amp; faults</h2>
         <div class="field">
+          <label class="lbl-t" for="masterSw" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way.">Turns on with the master</label>
+          <div><input type="checkbox" id="masterSw" class="switch" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way."></div>
           <label class="lbl-t" for="encSw" title="An altitude encoder is connected and supplies pressure altitude">Altitude encoder</label>
           <div><input type="checkbox" id="encSw" class="switch" title="An altitude encoder is connected and supplies pressure altitude"></div>
           <span class="lbl-t" title="Remote IDENT switch (e.g. on the yoke), wired to the EXTERNAL IDENT input">External IDENT</span>

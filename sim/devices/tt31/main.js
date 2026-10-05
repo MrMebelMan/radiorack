@@ -57,7 +57,7 @@ $('factory').onclick = () => { if (confirm('Reset all settings to factory defaul
 
 function renderPanel() {
   const m = MODES[xpdr.mode];
-  $('hint').textContent = !xpdr.bus ? 'No aircraft power.' : m === 'OFF' ? 'Transponder OFF. Turn the mode knob clockwise (drag up or scroll up) to SBY.' : '';
+  $('hint').textContent = !xpdr.bus ? 'Avionics master off.' : m === 'OFF' ? 'Transponder OFF. Turn the mode knob clockwise (drag up or scroll up) to SBY.' : '';
   $('hearingRow').hidden = !xpdr.power;
   const reply = xpdr.replying ? 'replying to interrogations' : 'not replying';
   $('hearing').textContent = `${xpdr.opMode}${xpdr.opMode !== m ? ` (selected ${m}, squat switch: on ground)` : ''} · ${reply}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;

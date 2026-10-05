@@ -124,7 +124,7 @@ $('factory').onclick = () => { if (confirm('Reset the code and all configuration
 
 function renderPanel() {
   const m = xpdr.opMode;
-  $('hint').textContent = !xpdr.bus ? 'No aircraft power.' : !xpdr.power ? 'Transponder OFF. Press STBY, ON or ALT.' : xpdr.config ? 'Configuration mode: FUNC next page, START/STOP back, CRSR select / accept. Turn the power off to leave.' : '';
+  $('hint').textContent = !xpdr.bus ? 'Avionics master off.' : !xpdr.power ? 'Transponder OFF. Press STBY, ON or ALT.' : xpdr.config ? 'Configuration mode: FUNC next page, START/STOP back, CRSR select / accept. Turn the power off to leave.' : '';
   $('hearingRow').hidden = !xpdr.power;
   const reply = xpdr.replying ? 'replying to interrogations' : 'not replying';
   $('hearing').textContent = xpdr.booting ? 'self test' : `${m} · squawk ${xpdr.s.code} · ${reply}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;

@@ -77,7 +77,7 @@ $('factory').onclick = () => { if (confirm('Reset all settings, channels and lab
 
 function renderPanel() {
   const a = radio.audio();
-  $('hint').textContent = !radio.bus ? 'No aircraft power.' : !radio.switchOn ? 'Transceiver OFF. Turn the volume knob clockwise (drag up or scroll up).' : '';
+  $('hint').textContent = !radio.bus ? 'Avionics master off.' : !radio.switchOn ? 'Transceiver OFF. Turn the volume knob clockwise (drag up or scroll up).' : '';
   $('hearingRow').hidden = a.src === 'off';
   const txt = {
     tx: `transmitting on ${fmtFreq(a.freq || 0)}`,

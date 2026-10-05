@@ -186,7 +186,7 @@ The display fonts are copied dot by dot from the manual figures. Glyphs that app
 Everything below is **not** stated in the three manuals.
 
 - [ ] **Start-up page.** Sim: 3 s; layout of the three lines approximated from the Pilot's Guide render (not a native figure). Real:
-- [ ] **Avionics master turn-on.** Sim: when wired, the unit switches on and off with aircraft power, in the last mode selected with the keys (not stated which mode). Real:
+- [ ] **Avionics master turn-on.** Sim: when wired, the unit switches on and off with the avionics master, in the last mode selected with the keys (not stated which mode). Real:
 - [ ] **Hold STBY for GND.** Sim: 2 s. Real:
 - [ ] **IDENT position and font.** Sim: "IDENT" in the mode-annunciator font above the mode, top left. IDENT is ignored in STBY. Real:
 - [ ] **Reply symbol.** Sim: shown for 180 ms each second while replying in ON / ALT with radar coverage; not shown in GND. Real:

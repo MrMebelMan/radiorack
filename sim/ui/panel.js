@@ -65,7 +65,7 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
     const s = radio.s;
     $('hint').textContent = !radio.switchOn
       ? 'Radio is OFF. Turn the PWR/VOL knob clockwise (drag up or scroll up) to power on.'
-      : !radio.bus ? (radio.power ? 'Aircraft power removed: unit shuts down in a few seconds unless power is restored.' : 'No aircraft power. Restore aircraft power to bring the radio back.')
+      : !radio.bus ? (radio.power ? 'Avionics master off: the unit shuts down in a few seconds unless it is switched back on.' : 'Avionics master off. Switch it on to bring the radio back.')
       : radio.locked ? 'COM is locked to 121.5. Hold COM RMT XFR for 2 s to unlock.' : '';
     const a = radio.audio();
     // nothing to hear without power: the hint line says enough
