@@ -192,6 +192,7 @@ Everything below is **not** stated in the three manuals.
 - [ ] **Reply symbol.** Sim: shown for 180 ms each second while replying in ON / ALT with radar coverage; not shown in GND. Real:
 - [ ] **Code entry.** Sim: no timeout; while entering, the previous code stays active; CLR within 5 s shows the fourth digit as a dash. Real:
 - [ ] **VFR Key Disabled advisory.** Sim: "VFR KEY" / "DISABLED" on the right half of the display. Real (wording, position):
+- [ ] **Negative flight level.** Sim: below sea level the flight level keeps its three digits with a minus in front (-1000 ft: FL -010; feet and meters show a plain minus). The manuals show no negative altitude (Mode C range -1000 to 62,700 ft, IM 1.4). Real:
 - [ ] **PRESSURE ALT.** Sim: small trend arrow at |VS| ≥ VS RATE, large at ≥ 2 × VS RATE (arrow shapes drawn); no altitude source: dashes; meters with a small "m". Real:
 - [ ] **ALT MONITOR page.** Sim: blank under the title while off; deviation rounded to 100 ft; GTX330: ABOVE / BELOW flashes over the limit until back within 100 ft, monitoring stops beyond 1000 ft + deviation. The voice / tone sounds once per excursion. Real:
 - [ ] **COUNT DOWN entry.** Sim: CRSR, then six digits HHMMSS with a block cursor; CLR goes back a digit (on none it cancels); EXPIRED flashes 0.6 s on / 0.4 s off. Real:
