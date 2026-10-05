@@ -237,6 +237,19 @@ test('monitor: active transmission takes priority over standby, standby resumes'
   assert.equal(r.audio().src, 'quiet');
 });
 
+test('a call on the standby frequency is heard after the flip: the transmission stays on its frequency', () => {
+  const r = make();
+  const f = r.s.stb;
+  r.simulateRx('stb', 6000, 1);
+  assert.equal(r.audio().src, 'quiet', 'standby not monitored');
+  r.input('flipDown'); r.input('flipUp');
+  assert.equal(r.s.act, f);
+  assert.equal(r.audio().src, 'act');
+  assert.equal(r.audio().freq, f);
+  r.input('flipDown'); r.input('flipUp');
+  assert.equal(r.audio().src, 'quiet', 'flipped back to standby: not heard without MON');
+});
+
 test('MON and squelch override are reset at power-up (also after a page reload)', () => {
   let t = 0;
   const store = { d: {}, getItem(k) { return this.d[k] ?? null; }, setItem(k, v) { this.d[k] = v; } };

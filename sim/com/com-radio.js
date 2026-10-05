@@ -67,7 +67,7 @@ export class ComRadio {
     this.tx = false; this.txStart = 0; this.stuck = false; this.pttWarned = false;
     this.locked = false;
     // incoming transmissions, one per frequency: {which, start, until, clip}
-    this.rx = { act: null, stb: null };
+    this.rx = [];                        // simulated transmissions { f, start, until, clip }: on a frequency, not a display slot
     this.hold = {};
     this.msgs = [];
     this.volShowUntil = 0;
@@ -377,7 +377,7 @@ export class ComRadio {
       if (dur >= STUCK_WARN_MS && !this.pttWarned) { this.pttWarned = true; this.raise('PTT_STUCK'); }
       if (dur >= STUCK_MS) this.stuck = true;
     }
-    for (const k of ['act', 'stb']) if (this.rx[k] && now > this.rx[k].until) this.rx[k] = null;
+    this.rx = this.rx.filter(r => now <= r.until);
     this.pages[this.page.id]?.tick?.call(this, this.page);
     if (this.shutdownAt && now >= this.shutdownAt) this.powerOff();
   }
@@ -386,8 +386,12 @@ export class ComRadio {
   simulateRx(which, ms = 4000, clip = 0) {
     if (!this.power) return;
     const now = this.now();
-    this.rx[which] = { which, start: now, until: now + ms, clip };
+    const f = which === 'act' ? this.s.act : this.s.stb;
+    this.rx = this.rx.filter(r => r.f !== f);
+    this.rx.push({ f, start: now, until: now + ms, clip });
   }
+  // a transmission on frequency f right now (it stays on its frequency through a flip)
+  sig(f) { const now = this.now(); return this.rx.find(r => r.f === f && now <= r.until) || null; }
   // Losing aircraft power: POWER ALERT, then the unit shuts down after a short
   // hold-up time unless power returns. When power returns with the knob still on,
   // the unit powers back up by itself.
@@ -417,8 +421,9 @@ export class ComRadio {
     if (this.transmitting) return { src: 'tx', freq: this.s.act };
     // Manual 2.2: a signal on the active frequency takes priority over the
     // monitored standby; the standby is heard again once the active goes quiet.
-    if (this.rx.act) return { src: 'act', freq: this.s.act, call: this.rx.act };
-    if (this.rx.stb && this.s.mon) return { src: 'stb', freq: this.s.stb, call: this.rx.stb };
+    const act = this.sig(this.s.act), stb = this.sig(this.s.stb);
+    if (act) return { src: 'act', freq: this.s.act, call: act };
+    if (stb && this.s.mon) return { src: 'stb', freq: this.s.stb, call: stb };
     if (this.s.sq) return { src: 'static' };
     return { src: 'quiet' };
   }
