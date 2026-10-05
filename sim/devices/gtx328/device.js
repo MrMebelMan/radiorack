@@ -19,7 +19,6 @@ export const GPS_AIRBORNE_KT = 35;        // MM 5.11: airborne when 35 knots fro
 const FLT_LEN = 8;                        // Flight ID field: 8 characters (figures)
 const REPLY_PERIOD_MS = 1000, REPLY_SHOW_MS = 180;   // reply symbol shown per interrogation (rate not stated)
 
-const MODE_KEYS = ['OFF', 'STBY', 'ON', 'ALT'];
 const RIGHT_X = 123, RIGHT_W = 77;        // FUNC page area (figures: the right part of the display)
 const CODE_X = 42, CODE_Y = 5, CODE_PITCH = 18;   // squawk digits (PG main-screen figure)
 
