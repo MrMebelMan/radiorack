@@ -28,7 +28,7 @@ Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight t
 
 ![Garmin GTX 328](sim/previews/gtx328.png)
 
-The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. Built from the [Pilot's Guide 190-00420-03](https://static.garmin.com/pumac/GTX328Transponder_PilotsGuide.pdf), the Installation Manual 190-00420-04 (not published by Garmin) and the [Maintenance Manual 190-00420-05](https://static.garmin.com/pumac/GTX328Transponder_MaintenanceManual.pdf).
+The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. Built from the [Pilot's Guide 190-00420-03](https://static.garmin.com/pumac/GTX328Transponder_PilotsGuide.pdf), the [Installation Manual 190-00420-04](https://www.scribd.com/document/690272720/60004460-GTX328-InstallationManual) (not published by Garmin) and the [Maintenance Manual 190-00420-05](https://static.garmin.com/pumac/GTX328Transponder_MaintenanceManual.pdf).
 
 ### Becker AR6201 — 57 mm VHF COM
 
@@ -40,13 +40,13 @@ Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user cha
 
 ![King KMA 20 TSO](sim/previews/kma20.png)
 
-The microphone selector, a SPEAKER / OFF / PHONE toggle for every receiver, the AUTO switch that follows the transmitter you talk on, mic muting, and the marker lamps and tones (HI / LO / TEST) while you fly a real Czech ILS approach with outer and middle markers. Every input plays a real signal: COM calls and the Morse idents of the tuned VOR, ILS, NDB and DME. Built from the King brochure "Operating your KMA 20 Audio Control System" (006-8200-05) and the KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2); neither is published by Honeywell (Bendix/King), so they are only in `sim/manuals/`.
+The microphone selector, a SPEAKER / OFF / PHONE toggle for every receiver, the AUTO switch that follows the transmitter you talk on, mic muting, and the marker lamps and tones (HI / LO / TEST) while you fly a real Czech ILS approach with outer and middle markers. Every input plays a real signal: COM calls and the Morse idents of the tuned VOR, ILS, NDB and DME. Built from the King brochure "Operating your KMA 20 Audio Control System" (006-8200-05; the public copy is [another edition](https://www.wpaviation.com/pdfs/king_kma20_pilot_guide.pdf)) and the [KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2)](https://www.csobeech.com/files/KMA20-Manual.pdf).
 
 ### Bendix/King KN 64 — DME
 
 ![Bendix/King KN 64](sim/previews/kn64.png)
 
-The RMT / FREQ / GS/T function switch, the concentric knobs with the pull-out 0.05 MHz, the frequency hold in GS/T, dashes while searching, and slant range, ground speed and time-to-station on the gas discharge display while you fly toward real Czech DMEs (ENR 4.1 and the ILS DMEs of AD 2.19, at their published antenna elevation). Built from the Bendix/King Silver Crown Plus Pilot's Guide (KN 62A and KN 64) and the KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7).
+The RMT / FREQ / GS/T function switch, the concentric knobs with the pull-out 0.05 MHz, the frequency hold in GS/T, dashes while searching, and slant range, ground speed and time-to-station on the gas discharge display while you fly toward real Czech DMEs (ENR 4.1 and the ILS DMEs of AD 2.19, at their published antenna elevation). Built from the [Bendix/King Silver Crown Plus Pilot's Guide](http://www.heilmannpub.com/kingpilotguides.pdf) (KN 62A and KN 64) and the [KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7)](http://www.flymafc.com/docs/manuals/king-KN62_KN62A_KN64.pdf).
 
 ## Running it
 
@@ -83,10 +83,22 @@ Frequencies and navaids come from the Czech AIP (aim.rlp.cz) for a specific AIRA
 ## Tests
 
 ```sh
-cd sim && node --test
+npm ci          # once: installs the linter (Biome)
+npm run lint
+npm test
 ```
 
 Unit tests plus a manual-replay suite per device: every numbered procedure from the manuals, pressed key by key on a unit that's already been used for something else.
+
+## Deploying
+
+The site is plain static files, served by Cloudflare (Workers static assets) at <https://radiorack.dr1v3.cz>. GitHub Actions (`.github/workflows/ci.yml`) lints and tests every push and pull request that touches the site, and deploys `master` with `wrangler deploy` (config in `wrangler.jsonc`). Changes that only touch Markdown, `.claude/` or the PDFs in the repo root don't run it. Run it by hand from the Actions tab (Run workflow).
+
+One-time setup in the GitHub repo settings:
+
+- Secret `CLOUDFLARE_API_TOKEN`: a Cloudflare API token from the "Edit Cloudflare Workers" template, with the `dr1v3.cz` zone included (it creates the `radiorack` DNS record).
+- Secret `CLOUDFLARE_ACCOUNT_ID`: the account ID from the Cloudflare dashboard.
+- Optional variable `SELF_HOST_MANUALS`: unset, the deployed manual buttons open each manual's public source (`sim/data/manuals.js`) and the PDFs aren't uploaded. Set it to `true` to serve the PDFs from `sim/manuals/` instead. Locally they're always served from `sim/manuals/` (`sim/config.js`).
 
 ## Adding a unit
 
@@ -94,4 +106,4 @@ There's a Claude Code skill for it in [`.claude/skills/add-device/`](.claude/ski
 
 ## Credits
 
-The manuals in `sim/manuals/` belong to Garmin, Trig Avionics, Becker Avionics and Honeywell (Bendix/King) and are included for reference. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`).
+The manuals in `sim/manuals/` belong to Garmin, Trig Avionics, Becker Avionics and Honeywell (Bendix/King) and are included for reference; `sim/data/manuals.js` lists where each one was downloaded from. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`).

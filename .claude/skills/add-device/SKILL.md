@@ -19,7 +19,7 @@ You are adding one more practice simulator to `sim/` (plain ES modules, no build
 - `rm` is aliased interactive: use `rm -f`. Scratch output goes to the scratchpad, never the repo.
 
 ## Phase 1 — Sources (no code yet)
-1. Locate the manual(s) the user gave (often in the repo root). Copy them into `sim/manuals/<model>-<kind>.pdf`.
+1. Locate the manual(s) the user gave (often in the repo root). Copy them into `sim/manuals/<model>-<kind>.pdf`. Record the URL each one was downloaded from in `sim/data/manuals.js` (check it with `sha256sum`; the user's Firefox download history has it if they don't know), and give every manual link `data-manual="<model>-<kind>"`.
 2. Text: `nix shell nixpkgs#poppler-utils -c pdftotext -layout file.pdf <scratch>/x.txt`. Booklet PDFs may be imposed two pages per sheet and rotated: read the text carefully, page numbers can be interleaved.
 3. **View every page as an image** (`pdftoppm -r 110 -png`, then Read each PNG). Screen figures are often raster images whose text never reaches pdftotext. Extract figures with `pdfimages -png` and zoom (`magick … -crop … -scale 300%`) to read small display text. This is your OCR; `tesseract` only as a helper.
 4. Find what the user's PDF lacks: the **installation manual** (setup menus, defaults, exact message texts, connector features), other issues of the same manual, sibling/newer models. Launch a research subagent with an explicit numbered question list; demand verbatim quotes + URL + document issue; downloads go to the scratchpad. Newer-model facts are hints only: mark them as such.
