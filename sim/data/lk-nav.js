@@ -41,3 +41,34 @@ export const NAVAIDS = [
   { id: 'CF', name: 'LKCV RWY 31', type: 'ILS', f: 111750, lat: 49.9496, lon: 15.3675, var: 5, course: 312, src: AD('LKCV') },
   { id: 'LA', name: 'LKNA RWY 30', type: 'ILS', f: 111350, lat: 49.1752, lon: 16.1076, var: 5, course: 304, src: AD('LKNA') },
 ];
+
+// NDBs and locators (L) for the ADF, from the AD 2.19 tables (ENR 4.1 lists none).
+// Verified against the Czech eAIP (AIRAC 01 OCT 2026) on 2026-10-05. f in kHz. The emission
+// (ident tone) is not published.
+export const NDBS = [
+  { id: 'KD', name: 'KBELY', type: 'NDB', f: 300, lat: 50.1526, lon: 14.6366, src: AD('LKKB') },
+  { id: 'K', name: 'KBELY', type: 'L', f: 438, lat: 50.1297, lon: 14.5682, src: AD('LKKB') },
+  { id: 'PK', name: 'PARDUBICE', type: 'NDB', f: 432, lat: 50.0111, lon: 15.8130, src: AD('LKPD') },
+  { id: 'P', name: 'PARDUBICE', type: 'L', f: 888, lat: 50.0125, lon: 15.7705, src: AD('LKPD') },
+  { id: 'L', name: 'VRATA', type: 'L', f: 365, lat: 50.1958, lon: 12.9417, src: AD('LKKV') },
+  { id: 'V', name: 'MASLOVICE', type: 'L', f: 416, lat: 50.2202, lon: 14.3748, src: AD('LKVO') },
+  { id: 'CF', name: 'CASLAV', type: 'NDB', f: 345.5, lat: 49.9040, lon: 15.4328, src: AD('LKCV') },
+  { id: 'C', name: 'CASLAV', type: 'L', f: 715, lat: 49.9248, lon: 15.4032, src: AD('LKCV') },
+  { id: 'F', name: 'CASLAV', type: 'L', f: 715, lat: 49.9582, lon: 15.3553, src: AD('LKCV') },
+  { id: 'LA', name: 'NAMEST', type: 'NDB', f: 514.5, lat: 49.1365, lon: 16.1796, src: AD('LKNA') },
+  { id: 'L', name: 'NAMEST', type: 'L', f: 362, lat: 49.1505, lon: 16.1536, src: AD('LKNA') },
+  { id: 'XU', name: 'NAMEST', type: 'NDB', f: 563, lat: 49.1973, lon: 16.0668, src: AD('LKNA') },
+  { id: 'X', name: 'NAMEST', type: 'L', f: 362, lat: 49.1810, lon: 16.0968, src: AD('LKNA') },
+  { id: 'KUN', name: 'KUNOVICE', type: 'NDB', f: 416, lat: 49.1139, lon: 17.5014, src: AD('LKKU') },
+  { id: 'KNE', name: 'KUNOVICE', type: 'NDB', f: 434, lat: 49.0465, lon: 17.4522, src: AD('LKKU') },
+];
+
+// ILS approaches with 75 MHz marker beacons (AD 2.19 markers, AD 2.12 threshold). The marker
+// positions are the published antenna coordinates; toThr is the published distance to the
+// threshold in m (null where AD 2.19 gives none: computed from the coordinates).
+export const APPROACHES = [
+  { id: 'LKKB24', name: 'LKKB ILS RWY 24', ils: 'KD', gp: 3, rdh: 52.69, thr: { lat: 50.1255, lon: 14.5560 }, src: AD('LKKB'),
+    markers: [{ type: 'OM', lat: 50.1525, lon: 14.6365, toThr: 6490 }, { type: 'MM', lat: 50.1297, lon: 14.5683, toThr: 989 }] },
+  { id: 'LKPD27', name: 'LKPD ILS RWY 27', ils: 'PK', gp: 3, rdh: 50.85, thr: { lat: 50.0129, lon: 15.7560 }, src: AD('LKPD'),
+    markers: [{ type: 'OM', lat: 50.0111, lon: 15.8129, toThr: null }, { type: 'MM', lat: 50.0125, lon: 15.7706, toThr: null }] },
+];

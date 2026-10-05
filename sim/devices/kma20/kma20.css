@@ -1,0 +1,115 @@
+/* King KMA 20 TSO bezel (880 x 223 = 6.312" x 1.600", IM Figure 2-1), laid out from a straight-on
+   photo of the unit. Black faceplate, cream legends, chrome bat toggles. Light from the top left. */
+@font-face { font-family: "KMA"; src: url(../../fonts/barlow-semicondensed-semibold.woff2) format("woff2"); font-weight: 600; font-display: block; }
+
+.bezel.kma {
+  height: 223px; border-radius: 5px; border-color: #121211;
+  background: var(--bezel-grain), linear-gradient(#22221f, #1c1c1a 60%, #181816);
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.07);
+}
+/* the raised upper panel carrying the controls; its bottom edge catches the light (photo) */
+.bezel.kma .upper {
+  position: absolute; left: 5px; top: 4px; width: 864px; height: 146px; border-radius: 4px;
+  background: var(--bezel-grain), linear-gradient(#20201d, #1b1b19);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.06), inset -1px -1px 0 rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.13), 1px 3px 4px rgba(0,0,0,.55);
+  cursor: help;
+}
+
+/* printed legends: cream, condensed bold */
+.bezel.kma .print {
+  position: absolute; color: #e3dfc9; font: 600 23px/1 "KMA", "Arial Narrow", sans-serif; letter-spacing: .6px;
+  white-space: nowrap; cursor: help; transform: scaleX(.9); transform-origin: 0 0;
+}
+.bezel.kma .print.lbl { top: 41px; transform: translateX(-50%) scaleX(.9); transform-origin: 50% 0; }
+.bezel.kma .print.sp {   /* centered on the frame line, which breaks around it (photo); the cap height centered on the line */
+  left: 491.8px; margin-top: -4.5px; font-size: 20px; letter-spacing: 1.4px;   /* offsets put the glyphs' center on the frame center (494) and the line */ transform: translate(-50%, -50%) scaleX(.9); transform-origin: 50% 50%; }
+.bezel.kma .print.model { font-size: 21px; letter-spacing: 1.2px; }
+.bezel.kma .frame { position: absolute; left: 0; top: 0; pointer-events: none; }
+.bezel.kma .frame path { fill: none; stroke: #e3dfc9; stroke-width: 1.6; opacity: .85; }
+.bezel.kma .frame path.mid { stroke-width: 1.4; opacity: .75; }
+.bezel.kma .index { position: absolute; width: 0; height: 0; border: 5px solid transparent; border-bottom: 7px solid #e3dfc9; border-top: 0; cursor: help; }
+
+/* microphone selector: a bar knob on a knurled skirt; the bar and its mark turn, the light stays */
+.bezel.kma .knob.mic { left: 74px; top: 52px; width: 62px; height: 62px; border: 0; background: none; box-shadow: none; }
+.bezel.kma .knob.mic .skirt {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-conic-gradient(#2a2a27 0 4deg, #121211 4deg 8deg);
+  box-shadow: 4px 6px 9px rgba(0,0,0,.7), inset 0 0 0 2px rgba(0,0,0,.4);
+}
+.bezel.kma .knob.mic .grip { position: absolute; inset: 0; border-radius: 0; background: none; -webkit-mask: none; mask: none; transition: transform .12s ease-out; }
+.bezel.kma .knob.mic .bar {
+  position: absolute; left: 18px; top: -8px; width: 26px; height: 90px; border-radius: 5px;
+  background: linear-gradient(90deg, #2a2a27, #1a1a18 55%, #121211);
+  box-shadow: 5px 7px 10px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.bezel.kma .knob.mic .sym {   /* white ring with a line from its top to the center (photo) */
+  position: absolute; left: 14px; top: 14px; width: 34px; height: 34px; box-sizing: border-box; border-radius: 50%;
+  border: 3px solid #ecebe3;
+}
+.bezel.kma .knob.mic .sym::after { content: ""; position: absolute; left: 12.5px; top: -6px; width: 3px; height: 20px; background: #ecebe3; border-radius: 1px; }
+
+/* bat toggles: dark bushing nut, lever and chrome ball; up / center / down */
+.bezel.kma .tgl { position: absolute; top: 52px; width: 30px; height: 60px; margin-left: -15px; cursor: pointer; }
+.bezel.kma .tgl .nut {
+  position: absolute; left: 4px; top: 19px; width: 22px; height: 22px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #3a3a37, #141413 70%);
+  box-shadow: 1px 2px 3px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.6);
+}
+.bezel.kma .tgl .lever {
+  position: absolute; left: 10px; width: 10px; border-radius: 4px;
+  background: linear-gradient(90deg, #2e2e2b, #121211 70%);
+  transition: top .08s, height .08s;
+}
+.bezel.kma .tgl .ball {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #fff 0 18%, #d9d9d4 32%, #8b8b86 70%, #4c4c49);
+  box-shadow: 2px 3px 3px rgba(0,0,0,.55);
+  transition: top .08s;
+}
+.bezel.kma .tgl[data-pos="0"] .lever { top: 23px; height: 14px; opacity: 0; }
+.bezel.kma .tgl[data-pos="0"] .ball { left: 8px; top: 23px; width: 14px; height: 14px; }        /* lever pointing at the viewer: the ball end-on */
+.bezel.kma .tgl[data-pos="1"] .lever { top: 12px; height: 22px; }
+.bezel.kma .tgl[data-pos="1"] .ball { left: 9px; top: 6px; width: 12px; height: 12px; }
+.bezel.kma .tgl[data-pos="-1"] .lever { top: 27px; height: 25px; }
+.bezel.kma .tgl[data-pos="-1"] .ball { left: 9px; top: 45px; width: 12px; height: 12px; box-shadow: 2px 4px 4px rgba(0,0,0,.6); }
+.bezel.kma .tgl:hover .ball { filter: brightness(1.08); }
+
+/* marker lamps: one strip of three tinted lenses with engraved letters */
+.bezel.kma .lenses {
+  position: absolute; left: 58px; top: 171px; width: 228px; height: 34px; display: flex; cursor: help;
+  box-shadow: 0 0 0 2px #0f0f0e, -1px -1px 0 2px rgba(0,0,0,.6), 1px 1px 0 2px rgba(255,255,255,.07);
+}
+.bezel.kma .lens { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; --lit: 0; }
+.bezel.kma .lens b { position: relative; z-index: 1; font: 400 27px/1 Arial, Helvetica, sans-serif; color: rgba(40,38,32,.8); }
+.bezel.kma .lens.a { background: linear-gradient(#c9c2ad, #b7b09b); }
+.bezel.kma .lens.o { background: linear-gradient(#4b87bd, #3a74a8); }
+.bezel.kma .lens.m { background: linear-gradient(#d88b2e, #c57a22); box-shadow: inset 4px 0 0 #d9c46a; }
+/* lit: a bright layer of the lens color whose opacity is the lamp brightness */
+.bezel.kma .lens::before { content: ""; position: absolute; inset: 0; opacity: var(--lit); transition: opacity .03s; }
+.bezel.kma .lens.a::before { background: radial-gradient(ellipse at 50% 50%, #fffef4, #f3eedb 70%); box-shadow: inset 0 0 8px #fff; }
+.bezel.kma .lens.o::before { background: radial-gradient(ellipse at 50% 50%, #b9e4ff, #5fb2ff 75%); }
+.bezel.kma .lens.m::before { background: radial-gradient(ellipse at 50% 50%, #ffe39c, #ffa632 75%); }
+.bezel.kma .lens::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,.14), transparent 45%); }
+
+.bezel.kma .screw {
+  position: absolute; width: 34px; height: 34px; border-radius: 50%; cursor: help;
+  background: radial-gradient(circle at 50% 50%, #050505 0 5px, transparent 6px),
+    radial-gradient(circle at 38% 32%, #4a4a45, #22221f 60%, #121211);
+  box-shadow: 0 0 0 3px #0e0e0d, 1px 2px 3px rgba(0,0,0,.6), inset 1px 1px 0 rgba(255,255,255,.1);
+}
+.bezel.kma .photocell {
+  position: absolute; width: 26px; height: 26px; border-radius: 50%; cursor: help;
+  background: radial-gradient(circle at 38% 34%, rgba(255,240,200,.35) 0 14%, transparent 35%), radial-gradient(circle, #4a3f22, #2a2416 70%);
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,.9), 0 0 0 1px #0b0b0a, 1px 1px 0 rgba(255,255,255,.06);
+}
+.bezel.kma .badge {
+  position: absolute; width: 49px; height: 33px; border-radius: 2px; cursor: help;
+  background: linear-gradient(135deg, #c9d2db, #9aa5b1 60%, #b9c3cd);
+  box-shadow: 0 0 0 2px #111, inset 0 0 0 1px rgba(255,255,255,.3);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.bezel.kma .badge span { font: italic 900 12px/1 Arial, Helvetica, sans-serif; color: #2f5fa8; letter-spacing: .3px; padding-bottom: 6px; }
+.bezel.kma .badge::before {   /* the crown above the name */
+  content: ""; position: absolute; left: 13px; top: 7px; width: 23px; height: 8px;
+  background: #2f5fa8; clip-path: polygon(0 100%, 8% 0, 30% 60%, 50% 0, 70% 60%, 92% 0, 100% 100%);
+}

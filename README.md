@@ -36,6 +36,12 @@ The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure alt
 
 Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user channels and the last-channel memory, squelch with signal strength, intercom and pilot menus — and the full installer Installation Setup behind the password. Built from the [Operating Instructions (Issue 5, 2013)](https://www.becker-avionics.com/wp-content/uploads/2017/08/AR6201_OI.pdf) and the [Installation and Operation Manual DV 14300.03](https://www.becker-avionics.com/wp-content/uploads/2017/08/AR6201_IO_SW3050149.pdf).
 
+### King KMA 20 TSO — audio panel with marker beacon receiver
+
+![King KMA 20 TSO](sim/previews/kma20.png)
+
+The microphone selector, a SPEAKER / OFF / PHONE toggle for every receiver, the AUTO switch that follows the transmitter you talk on, mic muting, and the marker lamps and tones (HI / LO / TEST) while you fly a real Czech ILS approach with outer and middle markers. Every input plays a real signal: COM calls and the Morse idents of the tuned VOR, ILS, NDB and DME. Built from the King brochure "Operating your KMA 20 Audio Control System" (006-8200-05) and the KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2); neither is published by Honeywell (Bendix/King), so they are only in `sim/manuals/`.
+
 ## Running it
 
 You need Python 3 and a browser.
@@ -52,9 +58,10 @@ Open <http://localhost:8225> and pick a unit.
 - **Push a knob:** click it.
 - **Press a key:** click it. Hold it for a long press where the unit has one.
 - **Keep a key pressed:** right-click it (GTX 328), click again to release.
+- **Flip a toggle switch:** click its upper or lower half, or scroll over it (KMA 20).
 - **Hover anything** for a tooltip that says what it does.
 
-Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, pull aircraft power, set the GPS position, fly a track, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
+Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, switch off the avionics master, set the GPS position, fly a track or an ILS approach, tune the receivers behind the audio panel, put the headset on, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
 
 Settings, frequencies and stored channels are kept in your browser.
 
@@ -80,4 +87,4 @@ There's a Claude Code skill for it in [`.claude/skills/add-device/`](.claude/ski
 
 ## Credits
 
-The manuals in `sim/manuals/` belong to Garmin, Trig Avionics and Becker Avionics and are included for reference. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`).
+The manuals in `sim/manuals/` belong to Garmin, Trig Avionics, Becker Avionics and Honeywell (Bendix/King) and are included for reference. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`).

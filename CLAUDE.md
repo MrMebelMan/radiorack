@@ -1,11 +1,12 @@
 # RadioRack
 
-A local web app with simulators of avionics units (Garmin, Trig, Becker), so the owner can practice operating them on the ground.
+A local web app with simulators of avionics units (Garmin, Trig, Becker, King), so the owner can practice operating them on the ground.
 - Landing page: `sim/index.html`, one card per simulator.
 - **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
 - **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
 - **Trig TT31** (Mode S transponder): source of truth `sim/manuals/tt31-operating-manual.pdf` (00454-00-AF, same file as `XPDR TT31 Operating Handbook.pdf`) and `tt31-installation-manual.pdf` (00455-00-AR). Its screens are copied from user photos of the real unit (boot, main, FLIGHT TIME, TIMER, ALTITUDE MONITOR, squawk entry).
 - **Garmin GTX 328** (Mode S transponder): source of truth `sim/manuals/gtx328-pilots-guide.pdf` (190-00420-03 Rev A, SW 5.00), `gtx328-installation-manual.pdf` (190-00420-04 Rev C: the configuration pages, every figure at the LCD's native 200 x 33 dots) and `gtx328-maintenance-manual.pdf` (190-00420-05 Rev A). The bezel is laid out from a GTX 327 shop photo (same front panel).
+- **King KMA 20 TSO** (audio panel with marker beacon receiver, version 066-1024-03 with AUTO): source of truth `sim/manuals/kma20-operating-guide.pdf` (brochure 006-8200-05, same file as `KMA_20_audio_panel.pdf`) and `kma20-installation-manual.pdf` (KMA 20/KR 21 IM 006-0044-02 Rev 2: operation §3, pinout per version Fig 2-8). The bezel is laid out from a user photo of a real unit (unlit).
 - **Becker AR6201** (57 mm VHF COM): source of truth `sim/manuals/ar6201-operating-instructions.pdf` (Issue 5 2013, same file as `AR6201_OI.pdf`) and `ar6201-installation-manual.pdf` (DV 14300.03 Issue 5, has the Installation Setup). Gaps filled from the newer AR620X family manual are listed in ASSUMPTIONS.md. The bezel is laid out from user photos of a real unit (unlit and lit).
 
 ## Run / test
@@ -48,14 +49,15 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
   - `lcd.js` (view → LCD HTML; segments: inv/ul/big/tiny, `stack`, `cdi`, `bar`; full-width message screen; big digits in fixed slots so values never shift; `photo` in a view sets the backlight from the cockpit light)
   - `lcd-becker.js` (AR6201 `bk` view), `lcd-gtx.js` + `fonts-gtx.js` (GTX 328 `gtx` view: 200 x 33 dot matrix on a canvas, bitmap fonts from the manual figures)
   - `controls.js` (the COM pot, further `pots`, optional encoders, keys, hold buttons, `latch`: right-click keeps a hold key pressed, keyboard)
-  - `audio.js` (static, incoming-call clips, NAV Morse)
+  - `audio.js` (static, incoming-call clips, NAV Morse; exports `MORSE` / `scheduleMorse` for units with their own mixer)
   - `panel.js` (status line, yoke/simulation panels, Flight block when present, cockpit light slider and key lighting; `ambWord`)
-- `data/lk.js` (COM frequencies, positions, DB info) and `data/lk-nav.js` (VOR/DME/ILS from ENR 4.1 / AD 2.19).
-- `manuals/`: both Pilot's Guides and the shared TSO Installation Manual (190-01182-02 Rev L, public copy with highlights; Garmin doesn't publish it), linked from the landing page and the simulator pages.
-- `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs`, `test/manual-tt31.test.mjs`, `test/manual-ar6201.test.mjs`, `test/manual-gtx328.test.mjs`, `test/gtx328.test.mjs` (literal manual procedure replays).
+- `data/lk.js` (COM frequencies, positions, DB info) and `data/lk-nav.js` (VOR/DME/ILS from ENR 4.1 / AD 2.19; `NDBS` and the marker `APPROACHES` from AD 2.19 / AD 2.12).
+- `manuals/`: the source-of-truth PDFs of every unit (see the list at the top; the GTR/GNC TSO Installation Manual 190-01182-02 Rev L is a public copy with highlights, Garmin doesn't publish it), linked from the landing page and the simulator pages.
+- `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs`, `test/manual-tt31.test.mjs`, `test/manual-ar6201.test.mjs`, `test/manual-gtx328.test.mjs`, `test/gtx328.test.mjs`, `test/manual-kma20.test.mjs`, `test/kma20.test.mjs` (literal manual procedure replays).
 - `devices/ar6201/`: standalone `AR6201` class (`device.js`), Installation Setup page table (`setup.js`), preloaded AIP channels (`channels.js`). LCD view type `bk` rendered by `ui/lcd-becker.js` (positive LCD theme `.lcd.pos`, font Barlow Semi Condensed in `fonts/`, OFL). Keys are bound as holds (`down:KEY` / `up:KEY`); the device times short / long (2 s) presses.
 - `devices/gtx328/`: standalone `GTX328` class (`device.js`), configuration page table with every position copied from the IM figures (`config.js`), `sound.js` (490 Hz tone, voice clips `sounds/gtx328/{male,female}-{leaving-altitude,timer-expired}.mp3`, supplied by the owner). The LCD is a real 200 x 33 dot matrix on a canvas: `ui/lcd-gtx.js` (view type `gtx`: a list of draw ops in dot coordinates; `gtxBitmap()` is pure and used by the tests) with bitmap fonts in `ui/fonts-gtx.js` (glyphs extracted from the manual figures; designed ones listed in `DESIGNED`). Keys are holds; right-click latches a key (`latch` in `bindControls`) for FUNC + ON.
-- Cockpit light: units with a photocell (GTR, GNC, TT31, GTX) have a "Cockpit light" slider; the AR6201 has none.
+- `devices/kma20/`: standalone `KMA20` class (`device.js`: toggles, mic selector, `routes()` speaker / phone / EXT / muting, marker reception and keying on an AD 2.19 approach, lamps) and `sound.js` (Web Audio: each receiver input feeds a speaker bus and a phone bus; COM clips, Morse idents via the exported `scheduleMorse` of `ui/audio.js`, marker tones keyed on the unit's clock). No display; the bezel toggles are bound in `main.js` (click upper / lower half, wheel; MKR TEST held).
+- Cockpit light: units with a photocell (GTR, GNC, TT31, GTX, KMA 20) have a "Cockpit light" slider; the AR6201 has none.
 - `devices/tt31/`: standalone `TT31` class (not a `ComRadio`, same `input` / `tick` / `view` shape). The LCD view type is `xpdr` (amber theme `.lcd.amber`). It has its own small panel binding in `main.js`.
 - Adding a device: create `devices/<name>/` (class, page, `main.js`), add a card and preview to the landing page, and add tests, including a manual replay suite.
   Use the project skill `.claude/skills/add-device/` (`/add-device`): the full workflow, the look techniques (`look.md`) and the CDP check scripts (`checks.md`, `scripts/`).

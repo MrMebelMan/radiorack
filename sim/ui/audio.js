@@ -3,16 +3,16 @@
 const MASTER_GAIN = 0.3; // overall loudness of all sound effects
 
 // NAV ident: Morse code at 1020 Hz, repeated while the station is received and ID is on
-const MORSE = {
+export const MORSE = {
   A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..', J: '.---',
   K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.', Q: '--.-', R: '.-.', S: '...', T: '-',
   U: '..-', V: '...-', W: '.--', X: '-..-', Y: '-.--', Z: '--..',
   0: '-----', 1: '.----', 2: '..---', 3: '...--', 4: '....-', 5: '.....', 6: '-....', 7: '--...', 8: '---..', 9: '----.',
 };
-const MORSE_UNIT = 0.12;      // seconds per dot (about 10 words per minute)
+export const MORSE_UNIT = 0.12;      // seconds per dot (about 10 words per minute)
 const MORSE_REPEAT = 8;       // seconds between idents
 // schedule one ident on gain g from time t; returns its end time
-function scheduleMorse(g, ident, t, level) {
+export function scheduleMorse(g, ident, t, level) {
   for (const ch of ident) {
     for (const sym of MORSE[ch] || '') {
       const len = (sym === '-' ? 3 : 1) * MORSE_UNIT;

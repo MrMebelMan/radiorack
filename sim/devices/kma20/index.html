@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMA 20 Simulator</title>
+<link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="kma20.css">
+</head>
+<body>
+
+<main>
+  <section class="unit-col">
+    <header>
+      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
+      <h1>King KMA 20 TSO audio control system simulator</h1>
+      <span class="sub">Practice trainer based on the King brochure "Operating your KMA 20 Audio Control System" (006-8200-05) and the KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2). Standard version 066-1024-03.</span>
+      <span class="sub">Mouse: click the upper or lower half of a toggle switch to move it up or down (or scroll on it). Drag the microphone selector up/down or scroll on it. Hold the lower half of the MKR switch for TEST.</span>
+    </header>
+    <div class="bezel-wrap" id="bezelWrap">
+      <div class="bezel kma" id="bezel">
+        <div class="upper" title="Front panel of the KMA 20: microphone selector, receiver audio selector switches and the marker beacon sensitivity and lamp test switch"></div>
+
+        <!-- microphone selector -->
+        <div class="print" style="left:93px;top:14px" title="Microphone selector position COM 2: the microphone and its push-to-talk go to the COMM 2 transmitter">COM 2</div>
+        <div class="print" style="left:25px;top:36px" title="Microphone selector position COM 1: the microphone and its push-to-talk go to the COMM 1 transmitter">COM 1–</div>
+        <div class="print" style="left:144px;top:36px" title="Microphone selector position EXT: the microphone and the speaker amplifier go to the external (ramp hail / cabin address) speaker">–EXT</div>
+        <i class="index" style="left:107px;top:34px" title="Index mark"></i>
+        <div class="knob mic" id="micKnob" title="Microphone selector switch: connects the microphone to the COMM 1 or COMM 2 transmitter, or to the external speaker (EXT: ramp hailer, cabin address or intercom). Drag up/down or scroll.">
+          <i class="skirt"></i><div class="grip"><i class="bar"></i><i class="sym"></i></div>
+        </div>
+
+        <!-- receiver audio selector switches -->
+        <svg class="frame" width="880" height="223" viewBox="0 0 880 223" aria-hidden="true">
+          <path d="M282 31H223Q213 31 213 41V100Q213 110 223 110H282" />
+          <path d="M282 31H451.5M537.5 31H765Q775 31 775 41V100Q775 110 765 110H527M462 110H282" />
+          <path d="M276 31Q282 31 282 37Q282 31 288 31M276 110Q282 110 282 104Q282 110 288 110" />
+          <path class="mid" d="M250 81H743" />
+        </svg>
+        <div class="print sp" style="top:31px" title="Toggle switches up: the receiver is heard on the cockpit speaker">SPEAKER</div>
+        <div class="print sp" style="top:110px" title="Toggle switches down: the receiver is heard in the headphones">PHONE</div>
+
+        <div class="print lbl" style="left:250px" title="AUTO switch: automatically selects the receiver of the COMM transmitter chosen with the microphone selector">AUTO</div>
+        <div class="print lbl" style="left:319px" title="COMM 1 receiver audio">COM 1</div>
+        <div class="print lbl" style="left:394px" title="COMM 2 receiver audio">COM 2</div>
+        <div class="print lbl" style="left:463px" title="NAV 1 receiver audio (station identifier)">NAV 1</div>
+        <div class="print lbl" style="left:534px" title="NAV 2 receiver audio (station identifier)">NAV 2</div>
+        <div class="print lbl" style="left:604px" title="ADF receiver audio">ADF</div>
+        <div class="print lbl" style="left:673px" title="DME audio (station identifier)">DME</div>
+        <div class="print lbl" style="left:743px" title="Marker beacon receiver audio">MKR</div>
+
+        <div class="tgl" data-sw="AUTO" style="left:250px" title="AUTO switch. Up: SPEAKER, middle: OFF, down: PHONE. With COM 1 and COM 2 off, you hear the receiver of the COMM transmitter selected with the microphone selector."></div>
+        <div class="tgl" data-sw="COM1" style="left:319px" title="COM 1 receiver. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="COM2" style="left:394px" title="COM 2 receiver. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="NAV1" style="left:463px" title="NAV 1 receiver. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="NAV2" style="left:534px" title="NAV 2 receiver. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="ADF" style="left:604px" title="ADF receiver. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="DME" style="left:673px" title="DME audio. Up: SPEAKER, middle: OFF, down: PHONE"></div>
+        <div class="tgl" data-sw="MKR" style="left:743px" title="Marker beacon audio. Up: SPEAKER, middle: OFF, down: PHONE. The marker lamps work in every position."></div>
+
+        <!-- marker sensitivity / lamp test -->
+        <div class="print" style="left:795px;top:22px" title="Marker beacon sensitivity and lamp test switch">MKR</div>
+        <div class="print" style="left:802px;top:41px" title="HI: high marker sensitivity, the marker is received over a larger area">HI</div>
+        <div class="print" style="left:819px;top:71px" title="LO: low marker sensitivity, a shorter and more accurate indication of passage">LO</div>
+        <div class="print" style="left:791px;top:101px" title="TEST: lights the marker lamps">TEST</div>
+        <div class="tgl mkr" id="mkrSw" style="left:805px" title="Marker beacon sensitivity and lamp test switch. Up: HI sensitivity, middle: LO sensitivity, down (hold): lamp TEST."></div>
+
+        <!-- lower strip -->
+        <div class="lenses" title="Marker beacon lights: A (white) airway or inner marker, O (blue) outer marker, M (amber) middle marker. They dim automatically with the cockpit light.">
+          <i class="lens a" id="lampA"><b>A</b></i><i class="lens o" id="lampO"><b>O</b></i><i class="lens m" id="lampM"><b>M</b></i>
+        </div>
+        <i class="screw" style="left:344px;top:172px" title="Hold-down screw: locks the unit in its mounting tray"></i>
+        <div class="print model" style="left:487px;top:181px" title="King KMA 20 TSO audio control system">KMA 20TSO</div>
+        <i class="photocell" style="left:694px;top:174px" title="Ambient light sensor: dims the marker lamps in a dark cockpit, brighter in daylight"></i>
+        <div class="badge" style="left:765px;top:172px" title="King Radio Corporation"><span>KING</span></div>
+      </div>
+    </div>
+
+    <div class="card status" id="statusBar" data-state="off">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="status-text">
+        <div id="hint" class="hint"></div>
+        <div id="hearingRow"><span id="hearing"></span></div>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel-col">
+        <section class="card">
+          <h2>Pilot</h2>
+          <button id="ptt" class="hold btn-primary" title="Push-to-talk on the yoke: hold to transmit on the transmitter chosen with the microphone selector (EXT: on the external speaker). The receivers on the speaker are muted while it is held.">PTT <small>hold to transmit</small></button>
+          <div class="field">
+            <label class="lbl-t" for="headSw" title="Headset on: you hear the PHONE audio, and the cockpit speaker muffled through the ear cups. Off: the cockpit speaker only.">Headset on</label>
+            <div><input type="checkbox" id="headSw" class="switch" title="Headset on: you hear the PHONE audio, and the cockpit speaker muffled through the ear cups. Off: the cockpit speaker only."></div>
+          </div>
+        </section>
+        <nav class="manuals">
+          <a class="manual-btn" href="../../manuals/kma20-operating-guide.pdf" target="_blank" rel="noopener" title="Operating your KMA 20 Audio Control System (King 006-8200-05) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="manual-btn" href="../../manuals/kma20-installation-manual.pdf" target="_blank" rel="noopener" title="KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
+      </div>
+
+      <section class="card">
+        <h2>Receivers</h2>
+        <div class="field">
+          <label class="lbl-t" for="com1Sel" title="Frequency the COMM 1 transceiver is tuned to">COM 1</label>
+          <div class="ctl-row"><select id="com1Sel" title="Frequency the COMM 1 transceiver is tuned to"></select><button data-call="COM1" title="A station transmits on the COM 1 frequency">Call</button></div>
+          <label class="lbl-t" for="com2Sel" title="Frequency the COMM 2 transceiver is tuned to">COM 2</label>
+          <div class="ctl-row"><select id="com2Sel" title="Frequency the COMM 2 transceiver is tuned to"></select><button data-call="COM2" title="A station transmits on the COM 2 frequency">Call</button></div>
+          <label class="lbl-t" for="nav1Sel" title="VOR or ILS the NAV 1 receiver is tuned to (its Morse identifier is heard)">NAV 1</label>
+          <select id="nav1Sel" title="VOR or ILS the NAV 1 receiver is tuned to (its Morse identifier is heard)"></select>
+          <label class="lbl-t" for="nav2Sel" title="VOR or ILS the NAV 2 receiver is tuned to (its Morse identifier is heard)">NAV 2</label>
+          <select id="nav2Sel" title="VOR or ILS the NAV 2 receiver is tuned to (its Morse identifier is heard)"></select>
+          <label class="lbl-t" for="adfSel" title="NDB or locator the ADF is tuned to (its Morse identifier is heard)">ADF</label>
+          <select id="adfSel" title="NDB or locator the ADF is tuned to (its Morse identifier is heard)"></select>
+          <label class="lbl-t" for="dmeSel" title="Station the DME is tuned to (its Morse identifier is heard about every 30 seconds)">DME</label>
+          <select id="dmeSel" title="Station the DME is tuned to (its Morse identifier is heard about every 30 seconds)"></select>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Approach</h2>
+        <div class="field">
+          <label class="lbl-t" for="apprSel" title="ILS approach with outer and middle marker beacons (Czech AIP AD 2.19)">Approach</label>
+          <select id="apprSel" title="ILS approach with outer and middle marker beacons (Czech AIP AD 2.19)"></select>
+          <label class="lbl-t" for="distSl" title="Distance to the runway threshold on the final approach course, on the 3° glide path">Distance to THR</label>
+          <div class="ctl-row"><input type="range" id="distSl" min="0" max="12" step="0.01" title="Distance to the runway threshold on the final approach course, on the 3° glide path"><span id="distVal" class="val"></span></div>
+          <label class="lbl-t" for="gsSl" title="Ground speed while flying the approach">Ground speed</label>
+          <div class="ctl-row"><input type="range" id="gsSl" min="60" max="160" step="5" title="Ground speed while flying the approach"><span id="gsVal" class="val"></span></div>
+          <span class="lbl-t" title="Fly inbound along the final approach course at the ground speed">Fly</span>
+          <div class="btn-row"><button id="flyBtn" title="Fly inbound along the final approach course at the ground speed (click again to pause)">Fly</button></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Aircraft</h2>
+        <div class="field">
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the ambient light sensor: from a dark night to direct sunlight">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the ambient light sensor: from a dark night to direct sunlight"><span id="ambVal" class="val"></span></div>
+        </div>
+        <div class="card-foot">
+          <button id="factory" class="btn-danger-quiet" title="Reset the switches, tuned stations and approach to the simulator defaults">Reset to defaults</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <aside class="help-col">
+    <div class="card procs">
+      <h2>Procedures</h2>
+      <details open><summary>Microphone transmission control</summary>
+        <ul><li>Rotary switch at the left: the microphone goes to the <b>COMM 1</b> or <b>COMM 2</b> transmitter, or to the external speaker (<b>EXT</b>: ramp hailer, cabin address or pilot-copilot intercom).</li>
+        <li>When you press the mike button, the output of all receivers to the speaker is muted, so there is no cockpit feedback.</li>
+        <li>On <b>EXT</b>, the receivers selected are heard on the EXT speaker until the microphone is keyed; then the microphone goes to the EXT speaker.</li></ul></details>
+      <details open><summary>Audio reception control</summary>
+        <ul><li>Each toggle: up <b>SPEAKER</b>, middle <b>OFF</b>, down <b>PHONE</b>.</li>
+        <li>Pre-tune the receivers and listen to any of them: COMM 1, COMM 2, NAV 1, NAV 2, ADF, DME or Marker Beacon (MKR).</li>
+        <li>The pilot can listen to one radio on the speaker while the copilot listens to another on the headphones.</li></ul></details>
+      <details open><summary>AUTO switch</summary>
+        <ol><li>Put both COMM receiver toggle switches (<b>COM 1</b>, <b>COM 2</b>) on <b>OFF</b>.</li>
+        <li>Set <b>AUTO</b> to <b>SPEAKER</b> or <b>PHONE</b>.</li>
+        <li>You now hear the receiver of the COMM transmitter selected as you turn the microphone selector between COMM 1 and COMM 2.</li></ol></details>
+      <details><summary>Marker beacon</summary>
+        <ul><li>Outer marker: blue <b>O</b> lamp and 400 Hz dashes, two per second. Middle marker: amber <b>M</b> lamp and 1300 Hz dots and dashes. Airway / inner marker: white <b>A</b> lamp and 3000 Hz.</li>
+        <li>The <b>MKR</b> toggle routes the marker audio to the speaker or phones; the lamps work regardless.</li>
+        <li>Fly <b>HI</b> sensitivity until the marker is received (about one mile before the outer marker), then switch to <b>LO</b> for a more accurate indication of passage. The marker audio may then be turned off and the passage timed from the light only.</li>
+        <li><b>TEST</b> (hold the switch down): lamp test.</li></ul></details>
+    </div>
+  </aside>
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

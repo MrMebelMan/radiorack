@@ -5,7 +5,7 @@ This file covers everything the simulators do that the Pilot's Guides **don't sp
 - GTR 225: Pilot's Guide 190-01182-00 Rev D (SW 2.10), `sim/manuals/gtr225-pilots-guide.pdf`
 - GNC 255: Pilot's Guide 190-01182-01 Rev E, `sim/manuals/gnc255-pilots-guide.pdf`
 - Both: TSO Installation Manual 190-01182-02 Rev L, `sim/manuals/gtr225-gnc255-installation-manual.pdf`
-- Trig TT31 and Becker AR6201: see their sections.
+- Trig TT31, Garmin GTX 328, Becker AR6201 and King KMA 20: see their sections.
 
 **Rule:** screen text that isn't in a manual screenshot or photo has been **removed**. Where a screen has to show *something* but its look is undocumented, it is kept to the bare minimum and listed here.
 
@@ -252,14 +252,39 @@ Everything below is **not** stated in the two X0X manuals.
 - [ ] **Volume knob.** Sim: OFF (pointer at the OFF print, -57° from the top) plus 100 steps of 1 % up to about +78° (user observation). Real:
 - [ ] **Not simulated:** aux audio input, TANDEM / RCU6201 second controller, PC database upload, SWAP MIKE IC / MIKE_SW, sidetone level.
 
+## 4e. King KMA 20 TSO audio panel (066-1024-03)
+Sources:
+- the brochure "Operating your KMA 20 Audio Control System" 006-8200-05, 7/76 (`sim/manuals/kma20-operating-guide.pdf`), marked B;
+- the KMA 20/KR 21 Installation Manual 006-0044-02 Rev 2, June 1976 (`sim/manuals/kma20-installation-manual.pdf`), marked IM;
+- photos of a real unit (front, unlit); no photo with the lamps lit;
+- marker beacons, NDBs and ILS data from the Czech eAIP AD 2.19 / AD 2.12 (AIRAC 01 OCT 2026).
+
+Everything below is **not** stated in B or the IM.
+
+- [ ] **AUTO with the mic on EXT.** Sim: AUTO selects no receiver. Real:
+- [ ] **AUTO and a COM toggle on the same receiver.** Sim: they add up (e.g. AUTO SPEAKER + COM 1 PHONE: COM 1 on both). The IM only says "for normal operation" the COM toggles are off. Real:
+- [ ] **Mic keyed: phones.** Sim: keying the mic mutes the speaker (amplifier input) only; PHONE audio stays on, since it "completely bypasses the amplifier" (IM 3.2). B says "the output of all aircraft receivers is electronically muted". Real:
+- [ ] **Mic keyed: the transmitting COM.** Sim: no reception; its audio line carries the transceiver's sidetone (the same static as the GTR / GNC PTT), routed by its toggle and AUTO like any receiver, so with the speaker muted it is heard only on PHONE. The KMA 20 itself has no sidetone (IM). Real:
+- [ ] **EXT.** Sim: the speaker toggles feed the ramp hail speaker, so nothing is heard on the cockpit speaker; PTT keys no transmitter. Real:
+- [ ] **No power.** Sim: avionics master off silences everything, including the PHONE path (the IM calls PHONE "a bypass switching function", which may work without power). Real:
+- [ ] **TEST.** Sim: spring-loaded, back to LO on release; lights all three lamps. Real:
+- [ ] **MKR switch positions.** Sim: HI up, LO center, TEST down (photos). Real:
+- [ ] **Marker reception.** Sim: on LO the cone is ±300 m around the outer marker and ±150 m around the middle marker (ICAO Annex 10 coverage); HI is 6 × wider, so the outer marker tone begins about 1 NM before the station (IM 3.1). The cone does not vary with height. Real:
+- [ ] **Marker keying.** Sim: outer 375 ms dashes every 500 ms; middle a 100 ms dot and a 300 ms dash in 632 ms (ICAO: 95 combinations a minute); the lamp flashes with the tone. Real:
+- [ ] **Lamp brightness.** Sim: 35 % at night to 100 % in sunlight with the Cockpit light slider (B: "Brighter during the day; dimmer at night"); the lit look (a bright layer in the lens color) is not from a photo. Real:
+- [ ] **Mic selector detents.** Sim: COM 1 −22°, COM 2 straight up, EXT +22°, with stops at both ends. Real:
+- [ ] **Receiver idents.** Sim: VOR / ILS and NDB idents at 1020 Hz every 8 s; DME at 1350 Hz every 30 s (the AIP doesn't publish NDB tones). Every tuned station is received at full strength. Real:
+- [ ] **Not simulated:** the non-switched input (radar altimeter), KA 40 remote lamps, the speaker / ramp hailer load resistors, panel lighting from the instrument light dimmer.
+
 ## 4d. Cockpit light (photocell), all units that have one
-The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell. The AR6201 manuals mention none, so it has no slider.
+The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell; the KMA 20 dims its marker lamps with one (see 4e). The AR6201 manuals mention none, so it has no slider.
 - [ ] **GTR / GNC.** Sim: brightness 0.55 + 0.75 × light (about unchanged at 60 %), times the pilot DSPL BRT offset; key lighting fades in below the KEY CO default 80 %. Real:
 - [ ] **TT31.** Sim: LCD brightness 0.55 + 0.75 × light. Real:
 
 ## 5. Simulator-only (no device check needed)
 These exist only to make practice possible:
 - Incoming-call sound clips, static levels, the "Audio" status line.
+- KMA 20: the Headset switch (phones in the ears plus the speaker muffled through the ear cups), the approach slider and Fly button, the station lists.
 - GPS start positions, the Flight panel (ground speed/track; track converted to true with a fixed 5°E variation).
 - USB-drive selector, message raiser, aircraft-power switch, factory reset.
 - Keyboard shortcuts.
