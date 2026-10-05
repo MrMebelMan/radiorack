@@ -18,9 +18,9 @@ const GLYPH = {
   _: 'M0 18H10',
 };
 const glyph = ch => {
-  if (ch === '.' || ch === ',') return '<svg class="dg dot" viewBox="0 0 3 20" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect x="0.4" y="16.4" width="2.2" height="2.2"/></svg>';
+  if (ch === '.' || ch === ',') return `<svg class="dg dot" data-ch="${ch}" viewBox="0 0 3 20" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect x="0.4" y="16.4" width="2.2" height="2.2"/></svg>`;
   if (!GLYPH[ch]) return esc(ch);
-  return `<svg class="dg" viewBox="-1 -1 12 20" preserveAspectRatio="none" aria-hidden="true"><path d="${GLYPH[ch]}" vector-effect="non-scaling-stroke"/></svg>`;
+  return `<svg class="dg" data-ch="${ch}" viewBox="-1 -1 12 20" preserveAspectRatio="none" aria-hidden="true"><path d="${GLYPH[ch]}" vector-effect="non-scaling-stroke"/></svg>`;
 };
 // text with digits drawn as LCD glyphs (letters stay in the font)
 const lcd = t => [...String(t)].map(glyph).join('');

@@ -54,6 +54,7 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
 - `devices/ar6201/`: standalone `AR6201` class (`device.js`), Installation Setup page table (`setup.js`), preloaded AIP channels (`channels.js`). LCD view type `bk` rendered by `ui/lcd-becker.js` (positive LCD theme `.lcd.pos`, font Barlow Semi Condensed in `fonts/`, OFL). Keys are bound as holds (`down:KEY` / `up:KEY`); the device times short / long (2 s) presses.
 - `devices/tt31/`: standalone `TT31` class (not a `ComRadio`, same `input` / `tick` / `view` shape). The LCD view type is `xpdr` (amber theme `.lcd.amber`). It has its own small panel binding in `main.js`.
 - Adding a device: create `devices/<name>/` (class, page, `main.js`), add a card and preview to the landing page, and add tests, including a manual replay suite.
+  Use the project skill `.claude/skills/add-device/` (`/add-device`): the full workflow, the look techniques (`look.md`) and the CDP check scripts (`checks.md`, `scripts/`).
 
 ## Manual errata / gaps (GNC 255)
 - §2.2.1 gives the NAV MHz range as 118–136; §1.1 says 108–117.95. The simulator uses §1.1.
