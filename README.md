@@ -10,31 +10,31 @@ Every unit here behaves the way its manual says it does: the same keys, the same
 
 ![GTR 225A](sim/previews/gtr225.png)
 
-8.33 kHz COM with monitor, intercom, timers, the frequency database (nearest airports, ATIS, FIS), user frequencies, stuck-mic and emergency 121.5. Built from the Pilot's Guide 190-01182-00 Rev D.
+8.33 kHz COM with monitor, intercom, timers, the frequency database (nearest airports, ATIS, FIS), user frequencies, stuck-mic and emergency 121.5. Built from the [Pilot's Guide 190-01182-00 Rev D](https://static.garmin.com/pumac/190-01182-00_d.pdf).
 
 ### Garmin GNC 255A — NAV/COM
 
 ![GNC 255A](sim/previews/gnc255.png)
 
-Everything the GTR does, plus the NAV side: VOR/LOC tuning, OBS and CDI, TO/FROM, distance, and Morse ident. A simple flight simulation moves the aircraft along a track. Built from the Pilot's Guide 190-01182-01 Rev E.
+Everything the GTR does, plus the NAV side: VOR/LOC tuning, OBS and CDI, TO/FROM, distance, and Morse ident. A simple flight simulation moves the aircraft along a track. Built from the [Pilot's Guide 190-01182-01 Rev E](https://static.garmin.com/pumac/190-01182-01_e.pdf).
 
 ### Trig TT31 — Mode S transponder
 
 ![Trig TT31](sim/previews/tt31.png)
 
-Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight timer, stopwatch, altitude monitor and the ADS-B position warning. The screens are copied from photos of a real unit. Built from the Operating Manual 00454-00-AF and Installation Manual 00455-00-AR.
+Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight timer, stopwatch, altitude monitor and the ADS-B position warning. Built from the [Operating Manual 00454-00-AF](https://trig-avionics.com/library/00454-00%20AF%20TT31%20Operating%20Handbook.pdf) and [Installation Manual 00455-00-AR](https://trig-avionics.com/library/00455-00%20AR%20TT31%20Installation%20Manual%20-%20Full.pdf).
 
 ### Garmin GTX 328 — Mode S transponder
 
 ![Garmin GTX 328](sim/previews/gtx328.png)
 
-The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. The display is the unit's real 200 × 33 dot matrix, with the fonts copied from the manual figures. Built from the Pilot's Guide 190-00420-03, the Installation Manual 190-00420-04 and the Maintenance Manual 190-00420-05.
+The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. Built from the [Pilot's Guide 190-00420-03](https://static.garmin.com/pumac/GTX328Transponder_PilotsGuide.pdf), the Installation Manual 190-00420-04 (not published by Garmin) and the [Maintenance Manual 190-00420-05](https://static.garmin.com/pumac/GTX328Transponder_MaintenanceManual.pdf).
 
 ### Becker AR6201 — 57 mm VHF COM
 
 ![Becker AR6201](sim/previews/ar6201.png)
 
-Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user channels and the last-channel memory, squelch with signal strength, intercom and pilot menus — and the full installer Installation Setup behind the password. Built from the Operating Instructions (Issue 5, 2013) and the Installation and Operation Manual DV 14300.03.
+Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user channels and the last-channel memory, squelch with signal strength, intercom and pilot menus — and the full installer Installation Setup behind the password. Built from the [Operating Instructions (Issue 5, 2013)](https://www.becker-avionics.com/wp-content/uploads/2017/08/AR6201_OI.pdf) and the [Installation and Operation Manual DV 14300.03](https://www.becker-avionics.com/wp-content/uploads/2017/08/AR6201_IO_SW3050149.pdf).
 
 ## Running it
 
