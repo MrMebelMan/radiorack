@@ -45,10 +45,11 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
   - optional bezel CSS
   - `gnc255/device.js` adds the NAV state, C/N / OBS / T/F keys, NAV VOL/ID knob, CDI, DST row, flight simulation (`livePos`, ground speed/track) and Morse ident (`navAudio()`).
 - `ui/`:
-  - `lcd.js` (view → LCD HTML; segments: inv/ul/big/tiny, `stack`, `cdi`, `bar`; full-width message screen)
-  - `controls.js` (the COM pot, further `pots`, encoders, keys, hold buttons, keyboard)
+  - `lcd.js` (view → LCD HTML; segments: inv/ul/big/tiny, `stack`, `cdi`, `bar`; full-width message screen; big digits in fixed slots so values never shift; `photo` in a view sets the backlight from the cockpit light)
+  - `lcd-becker.js` (AR6201 `bk` view), `lcd-gtx.js` + `fonts-gtx.js` (GTX 328 `gtx` view: 200 x 33 dot matrix on a canvas, bitmap fonts from the manual figures)
+  - `controls.js` (the COM pot, further `pots`, optional encoders, keys, hold buttons, `latch`: right-click keeps a hold key pressed, keyboard)
   - `audio.js` (static, incoming-call clips, NAV Morse)
-  - `panel.js` (status line, yoke/simulation panels, Flight block when present)
+  - `panel.js` (status line, yoke/simulation panels, Flight block when present, cockpit light slider and key lighting; `ambWord`)
 - `data/lk.js` (COM frequencies, positions, DB info) and `data/lk-nav.js` (VOR/DME/ILS from ENR 4.1 / AD 2.19).
 - `manuals/`: both Pilot's Guides and the shared TSO Installation Manual (190-01182-02 Rev L, public copy with highlights; Garmin doesn't publish it), linked from the landing page and the simulator pages.
 - `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs`, `test/manual-tt31.test.mjs`, `test/manual-ar6201.test.mjs`, `test/manual-gtx328.test.mjs`, `test/gtx328.test.mjs` (literal manual procedure replays).

@@ -25,6 +25,7 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 - Small holes: dark, with only a subtle gloss on the top-left half of the rim.
 
 ## Keys
+- Keys set at an angle (a mode cluster): draw them as SVG paths with the gradient in page space; keep the rotation of a legend on its own group, the press offset on a wrapper, so neither replaces the other.
 - Rubber caps: dome gradient, inset highlight on top, inset shade at the bottom, outer drop shadow to the bottom-right. Pressed = `translateY(1px)` and a smaller shadow.
 - Hover is one shared rule in `shared/style.css` (`filter: brightness(1.12)` on keys and knobs). For a knob nested in another (dual encoder), light only the outer ring with an overlay so the inner one doesn't light up too.
 - Key lighting (backlit legends) may follow the unit's brightness via a CSS variable.
@@ -37,10 +38,12 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 ## Display
 - Frame: thick, rounded surround with sloped sides (top slopes dark, bottom slope lit, glare on the outer corners).
 - Fonts: bundle OFL woff2 files in `sim/fonts/` with their license. Pixel LCDs: Jersey 15. Segment-like positive LCDs: a condensed sans for letters and **hand-drawn SVG digit glyphs** when the real digits have a distinctive shape (chamfered corners, a foot on the 1, flat-topped 1, decimal dot on the baseline, thicker strokes on the main line). Compare glyphs zoomed against a close-up photo.
+- Dot-matrix LCDs: when the manuals have figures at the display's native resolution (check `pdfimages -list`: e.g. 200 x 33 images), draw the real dot matrix on a canvas (`ui/lcd-gtx.js`) and extract the fonts dot by dot from the figures, mapping each figure's text to its glyph blobs. Check every repeated letter for consistency, learn the spacing (tabular digits, per-font cells) from the figures, then re-render each figure and diff it dot for dot until it matches. Design missing glyphs in the same style and list them.
 - Digits never move: every digit sits in a fixed-width slot (the widest digit) so 4/5/1 don't shift neighbors.
 - Text changes: cross-fade only the characters that changed (TT31 `xpdrRender`/`syncCell` in `ui/lcd.js`); a value redrawn with the same text must not flicker.
 - Backlight: a fixed-color layer whose opacity follows brightness; unlit glass color from the unlit photo. Inversion ("display inverted") swaps the two theme colors explicitly — never `filter: invert()` (gives wrong hues).
 - Power: keep the last frame while fading out; fade durations as the user specifies (they will tell you; for the AR6201 off was almost instant, on ~120 ms).
+- Big proportional digits (e.g. Jersey 15) also need fixed slots, or values jump when they change or swap (GTR flip).
 - Fixed slots for indicators that blink (reply indicator, annunciators) so neighbors never move.
 
 ## Page layout

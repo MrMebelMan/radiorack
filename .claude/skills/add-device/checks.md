@@ -29,6 +29,9 @@ Look at it. Fix differences before reporting.
 ## Landing preview — `scripts/preview.mjs`
 `S=$S node .claude/skills/add-device/scripts/preview.mjs <device> [power-on js]` writes `sim/previews/<device>.png` (powered-on bezel). The power-on JS turns the unit on the way a user would (e.g. scroll the volume knob); default sends wheel events to the first `.knob` and waits 4 s.
 
+## Display vs the native manual figures
+For a dot-matrix display with native-resolution figures: load each figure's values into the device, render with the pure bitmap function (`gtxBitmap`) and diff against the thresholded figure dot for dot; only live values may differ.
+
 ## Color sampling
 `magick photo.png -crop 10x10+X+Y -resize 1x1 -format '%[pixel:p{0,0}]' info:`
 
@@ -36,4 +39,5 @@ Look at it. Fix differences before reporting.
 - Inside `ev(\`…\`)` template strings, interpolate values with `${v}` deliberately; a stray `${'${v}'}` sends the literal text.
 - Remove the Chromium profile dirs the scripts leave in `$S` if they pile up (`rm -rf`, it's the scratchpad).
 - Saved state lives in localStorage under the device's `PERSIST_KEY`; stale state hides default changes — clear it in checks, bump the key when defaults change.
+- Measuring text widths over CDP: `await document.fonts.load('62px LCD')` first, and remember `getBoundingClientRect` includes the `fitBezel` scale.
 - A CDP screenshot can't catch a 300 ms flash: check transient states via computed styles right after the action instead.
