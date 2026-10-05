@@ -1,6 +1,9 @@
-# GTR 225 simulator
+# Garmin radio simulators
 
-A local web app that simulates the Garmin GTR 225A VHF COM radio. It exists so the owner can practise operating the radio on the ground. The source of truth is `GTR225.pdf` (Pilot's Guide 190-01182-00 Rev D, SW v2.10).
+A local web app with simulators of Garmin radios, so the owner can practise operating them on the ground.
+- Landing page: `sim/index.html`, one card per simulator.
+- **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
+- **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
 
 ## Run / test
 - Serve: `python3 sim/serve.py` → http://localhost:8225. It sends no-cache headers, so a normal reload picks up edits. ES modules don't load over `file://`.
@@ -10,38 +13,61 @@ A local web app that simulates the Garmin GTR 225A VHF COM radio. It exists so t
 - In this shell `rm` is aliased to prompt for confirmation. Use `rm -f`.
 
 ## Layout (`sim/`)
-Plain ES modules with no build step. The layers depend downward only: `devices` → `com` / `ui` → `core`.
+Plain ES modules with no build step. The layers depend downward only: `devices` → `com` / `nav` / `ui` → `core`.
+- `index.html` plus `shared/landing.css`: the landing page. `previews/*.png` are powered-on bezel screenshots, captured with headless Chrome.
+- `shared/style.css`: the page shell, panels, LCD and base bezel. The LCD uses the bundled pixel font `fonts/jersey15.woff2` (OFL).
 - `core/`: device-independent helpers.
   - `util.js` (range/wrap/clamp, the `S()` display segment)
-  - `freq.js` (COM channel math, 8.33/25 kHz)
-  - `text.js` (knob character entry)
-  - `time.js` (Stopwatch, fmtTime)
-  - `geo.js` (distNm)
-  - `persist.js` (guarded localStorage)
-- `com/`: the COM transceiver, shared by every Garmin COM unit (GTR 225, the COM side of a GNC 255).
-  - `com-radio.js` holds the `ComRadio` base class:
-    - power, bus and switch, TX/RX and monitor priority, 2 s holds, the emergency channel and the 121.5 lock, stuck mic, messages, timers;
-    - `input(evt, arg)` takes the inputs, `tick()` handles timed things, and `view()` returns the display model.
-    - Device-specific things come from the `device` config: menu, settings defs, messages, key maps, defaults, info pages, splash.
-  - `database.js` (`FreqDatabase`: identifiers, reverse look-up, nearest lists).
-  - `constants.js`.
-  - `pages/*.js`: one module per screen, each `{ handlers, render, tick? }`. They're called with `this` = the radio and registered in `ComRadio.pages` under `page.id`.
-- `devices/gtr225/`:
-  - `device.js` defines the `GTR225` class: menu tree, settings pages, messages, defaults, `PERSIST_KEY`, the COM/FUNC/MEM/ICS/MON keys and the ICS key cycle.
-  - `info.js` holds the unit info.
-  - `main.js` is the page entry: it builds the device and wires the UI modules to `index.html`.
+  - `freq.js` (COM channel math)
+  - `nav.js` (bearings, radial/bearing TO, VOR CDI, dead-reckoning step)
+  - `text.js`, `time.js`, `geo.js`, `persist.js`
+- `com/`: the COM transceiver shared by all units.
+  - `com-radio.js` holds `ComRadio`:
+    - power, bus and switch; TX/RX and monitor priority; holds, emergency and lock; stuck mic; messages; timers;
+    - `input()`, `tick()` and `view()`;
+    - band-aware setters (`setActive` / `setStandby` / `swap(band)`), plus `mainBand()` / `goMain()`.
+  - `band.js` (`COM_BAND`).
+  - `garmin-defs.js`: the messages, ICS/SYS settings and COM defaults shared by GTR and GNC.
+  - `database.js`.
+  - `pages/*.js`: one module per screen, each `{ handlers, render, tick? }`. They're called with `this` = the radio and keyed by `page.id`. The lists, user-edit, database look-up and main page read `p.band`, so COM and NAV share them.
+- `nav/`: the NAV (VLOC) side.
+  - `band.js` (`NAV_BAND`: 108.00–117.95 in 50 kHz, 2 decimals, 3 on the NAV DATABASE page, NAV types)
+  - `nav-database.js` (VOR/DME/ILS look-up, reverse look-up, nearest VOR)
+  - `obs-page.js` (OBS/CDI)
+- `devices/<model>/`:
+  - `index.html` (bezel, panels, procedures)
+  - `device.js` (subclass of `ComRadio`: menu, keys, messages, defaults, `PERSIST_KEY`)
+  - `info.js`
+  - `main.js` (wires `ui/*`)
+  - optional bezel CSS
+  - `gnc255/device.js` adds the NAV state, C/N / OBS / T/F keys, NAV VOL/ID knob, CDI, DST row, flight simulation (`livePos`, ground speed/track) and Morse ident (`navAudio()`).
 - `ui/`:
-  - `lcd.js` (view model → LCD HTML)
-  - `controls.js` (knob drag/wheel, keys, hold buttons, keyboard, bezel scaling; config-driven)
-  - `audio.js` (static plus the incoming-call clips in `sounds/`)
-  - `panel.js` (status line, yoke and simulation panels)
-- `data/lk.js`: the Czech frequency database, GPS positions, and DB cycle info.
-- `manuals/`: a local copy of the GTR 225 Pilot's Guide, opened from the button in the page header.
-- `index.html` / `style.css`: the bezel is absolutely positioned on an 880×248 canvas, scaled to fit. The LCD is a CSS grid using the bundled pixel font (`fonts/jersey15.woff2`, OFL).
-- Adding a device (e.g. GNC 255): add `devices/<name>/` with a subclass of `ComRadio` (plus NAV pages via `device.pages`), its own bezel HTML, and a `main.js` that reuses `ui/*`.
+  - `lcd.js` (view → LCD HTML; segments: inv/ul/big/tiny, `stack`, `cdi`, `bar`; full-width message screen)
+  - `controls.js` (the COM pot, further `pots`, encoders, keys, hold buttons, keyboard)
+  - `audio.js` (static, incoming-call clips, NAV Morse)
+  - `panel.js` (status line, yoke/simulation panels, Flight block when present)
+- `data/lk.js` (COM frequencies, positions, DB info) and `data/lk-nav.js` (VOR/DME/ILS from ENR 4.1 / AD 2.19).
+- `manuals/`: both Pilot's Guides and the shared TSO Installation Manual (190-01182-02 Rev L, public copy with highlights; Garmin doesn't publish it), linked from the landing page and the simulator pages.
+- `test/gtr225.test.mjs`, `test/gnc255.test.mjs` (unit/feature tests), `test/manual-gtr225.test.mjs`, `test/manual-gnc255.test.mjs` (literal manual procedure replays).
+- Adding a device: create `devices/<name>/` (subclass, page, `main.js`), add a card and preview to the landing page, and add tests.
+
+## Manual errata / gaps (GNC 255)
+- §2.2.1 gives the NAV MHz range as 118–136; §1.1 says 108–117.95. The simulator uses §1.1.
+- The NAV user-list screenshots are titled "NAV RECENT FREQS". This is copied as shown.
+- Nearest VOR: the text says ENT/CLR, but the screenshot shows `⇄=ACT`, so flip is allowed.
+- Simulator assumptions, not from the manual:
+  - OBS key again (or C/N) leaves the OBS page.
+  - T/F cycles off → TO → FROM → off.
+  - OBS steps: outer knob 10°, inner knob 1°.
+  - VOR/LOC usable within 150 NM.
+  - LOC full scale ±2.5°.
+  - Flight track is converted with 5°E variation.
+  - MON works only in COM mode.
 
 ## Rules
 - **Follow the manual exactly.** Implement the manual's step sequences literally, with no "convenient" shortcuts. Where the manual is silent or contradicts itself, say so and ask; don't guess quietly.
+- **The procedure steps are the spec.** `test/manual-*.test.mjs` replay every numbered procedure of both Pilot's Guides literally, one input per step, on a radio used elsewhere first. Any behaviour change must keep them green. Before calling something an assumption, check whether a procedure's step sequence already decides it.
+- **No invented screen text.** Anything on the display that isn't in a manual screenshot or a photo of the unit is removed, not guessed. Assumptions go in `ASSUMPTIONS.md` for checking on a real unit.
 - **Don't add anything that wasn't asked for.** That covers UI helpers, extra controls, decorations, duplicated status and sounds. Offer the idea in one line instead.
 - **Frequencies must be real.** Check them against the Czech AIP at aim.rlp.cz (eAIP AD 2.18, VFR Manual, ENR 2.1, GEN 3.5), never from memory. They are stored in kHz using 8.33 channel names (120.335 → `120335`). The current data was verified for AIRAC 01 OCT 2026.
 - Saved state lives in localStorage under `PERSIST_KEY` in `devices/gtr225/device.js`. Bump it when the defaults change in a way that old saved state would hide.

@@ -10,7 +10,25 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
     $('usbSel').value = radio.s.usb;
   };
   syncInputs();
-  posSel.onchange = () => { radio.s.posId = posSel.value; radio.save(); };
+  posSel.onchange = () => {
+    if (radio.setStartPos) radio.setStartPos(posSel.value);   // also resets a flown position
+    else { radio.s.posId = posSel.value; radio.save(); }
+  };
+
+  // flight simulation (NAV/COM pages only): ground speed, track, run / pause, back to start
+  const gs = $('flightGs');
+  if (gs) {
+    const trk = $('flightTrk'), run = $('flightRun');
+    const sync = () => {
+      gs.value = radio.s.flight.gs; $('flightGsVal').textContent = `${radio.s.flight.gs} kt`;
+      trk.value = radio.s.flight.trk; $('flightTrkVal').textContent = `${String(radio.s.flight.trk).padStart(3, '0')}°`;
+    };
+    sync();
+    gs.oninput = () => { radio.s.flight.gs = +gs.value; radio.save(); sync(); };
+    trk.oninput = () => { radio.s.flight.trk = +trk.value; radio.save(); sync(); };
+    run.onclick = () => { radio.setFlying(!radio.flying); run.textContent = radio.flying ? 'Pause' : 'Fly'; run.classList.toggle('down', radio.flying); };
+    $('flightReset').onclick = () => { radio.setStartPos(posSel.value); render(); };
+  }
   $('gpsOn').onchange = e => { radio.s.gps = e.target.checked; radio.save(); };
   $('usbSel').onchange = e => { radio.s.usb = e.target.value; radio.save(); };
   // aircraft (avionics bus) power switch
@@ -54,7 +72,8 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
       quiet: 'quiet (squelched)',
     }[a.src];
     const extra = radio.power ? ` · vol ${s.vol}% · speaker ${s.speaker ? 'on' : 'off'} · ICS ${s.ics.on ? 'on' : 'off'}${s.ics.mute && (a.src === 'act' || a.src === 'stb') ? ' (muted on RX)' : ''}${radio.stuck ? ' · STUCK MIC' : ''}` : '';
-    $('hearing').textContent = txt + extra;
+    const nav = radio.navAudio?.();
+    $('hearing').textContent = txt + extra + (nav ? ` · NAV ident ${nav.ident} (vol ${nav.vol}%)` : '');
     $('usbSlot').classList.toggle('inserted', s.usb !== 'none');
     $('busSw').checked = radio.bus;
     // status dot: off / on / no aircraft power / receiving / transmitting

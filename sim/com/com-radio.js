@@ -8,7 +8,8 @@ import { toChars } from '../core/text.js';
 import { Stopwatch, fmtTime } from '../core/time.js';
 import { makeStore } from '../core/persist.js';
 import { FreqDatabase } from './database.js';
-import { MAX_USER, MAX_RECENT, HOLD_MS, STUCK_WARN_MS, STUCK_MS, DB_MEMORY_MS, IDENT_LEN } from './constants.js';
+import { COM_BAND } from './band.js';
+import { MAX_RECENT, HOLD_MS, STUCK_WARN_MS, STUCK_MS, DB_MEMORY_MS, IDENT_LEN } from './constants.js';
 import comMain from './pages/com-main.js';
 import menu from './pages/menu.js';
 import lists, { LIST_KINDS } from './pages/lists.js';
@@ -30,8 +31,8 @@ export class ComRadio {
    *                 keys: {KEY: radio => …} (blocked while a message shows),
    *                 alwaysKeys: {KEY: radio => …} (work even with a message),
    *                 pages: extra/override page modules,
-   *                 itemBlocked(key) -> message|null, infoPage(kind) -> [title, ...lines],
-   *                 splash() -> [logo, line2, line3] }
+   *                 itemBlocked(key) -> truthy when unavailable, infoPage(kind) -> [title, ...lines] }
+   * }
    */
   constructor({ now = () => performance.now(), storage = null } = {}, device) {
     this.now = now;
@@ -59,7 +60,7 @@ export class ComRadio {
     this.bus = true;        // aircraft (avionics bus) power present
     this.bootUntil = 0;
     this.page = { id: 'com' };
-    this.menuPos = { cat: 0, item: 0 };
+    this.menuPos = { cat: 0, item: -1 };
     this.cu = new Stopwatch();
     this.cd = new Stopwatch();
     this.tx = false; this.txStart = 0; this.stuck = false; this.pttWarned = false;
@@ -68,10 +69,9 @@ export class ComRadio {
     this.rx = { act: null, stb: null };
     this.hold = {};
     this.msgs = [];
-    this.toastMsg = null;
     this.volShowUntil = 0;
     this.emergHintUntil = 0;
-    this.dbMemory = null;
+    this.dbMemory = {};   // last database look-up per band (kept 30 min)
     this.recallIdx = -1;
     this.shutdownAt = 0;
   }
@@ -81,40 +81,42 @@ export class ComRadio {
   factoryReset() {
     this.s = this.device.defaults();
     this.cu.reset(); this.cd.reset();
-    this.locked = false; this.msgs = []; this.dbMemory = null;
+    this.locked = false; this.msgs = []; this.dbMemory = {};
     this.page = { id: 'com' };
     this.save();
   }
 
   // ---------- helpers ----------
-  toast(text, ms = 2000) { this.toastMsg = { text, until: this.now() + ms }; }
   get transmitting() { return this.tx && !this.stuck; }
   get pos() { return this.positions.find(p => p.id === this.s.posId) || this.positions[0]; }
-  pushRecent(f) {
-    const r = this.s.recent.filter(x => x !== f);
-    r.unshift(f);
-    this.s.recent = r.slice(0, MAX_RECENT);
+  pushRecent(f, band = COM_BAND) {
+    const st = band.state(this);
+    st.recent = [f, ...st.recent.filter(x => x !== f)].slice(0, MAX_RECENT);
   }
-  setActive(f) {
-    if (this.locked) { this.toast('COM LOCKED TO 121.5'); return false; }
-    if (this.transmitting) { this.toast('TRANSMITTING'); return false; }
-    this.s.act = f;
-    this.pushRecent(f);
+  setActive(f, band = COM_BAND) {
+    if (band === COM_BAND) {
+      if (this.locked || this.transmitting) return false;
+    }
+    band.state(this).act = f;
+    this.pushRecent(f, band);
     this.save();
     return true;
   }
-  setStandby(f) { this.s.stb = f; this.save(); }
-  swap() {
-    if (this.locked) { this.toast('COM LOCKED TO 121.5'); return; }
-    if (this.transmitting) return; // flip disabled during TX
-    const a = this.s.act;
-    this.s.act = this.s.stb;
-    this.s.stb = a;
-    this.pushRecent(this.s.act);
+  setStandby(f, band = COM_BAND) { band.state(this).stb = f; this.save(); }
+  swap(band = COM_BAND) {
+    if (band === COM_BAND) {
+      if (this.locked || this.transmitting) return; // locked / flip disabled during TX
+    }
+    const st = band.state(this);
+    [st.act, st.stb] = [st.stb, st.act];
+    this.pushRecent(st.act, band);
     this.save();
   }
+  // band shown on the main page (a NAV/COM switches it with C/N)
+  mainBand() { return COM_BAND; }
+  goMain() { this.page = { id: 'com', band: this.mainBand() }; }
   goCom() { this.page = { id: 'com' }; }
-  goBack(p = this.page) { this.page = p.back || { id: 'com' }; }
+  goBack(p = this.page) { if (p.back) this.page = p.back; else this.goMain(); }
   raise(id) {
     if (this.msgs.includes(id)) return;
     this.msgs.push(id);
@@ -123,16 +125,17 @@ export class ComRadio {
   infoPage(kind) { return this.device.infoPage.call(this, kind); }
 
   // ---------- database ----------
-  reverse(f) { return this.s.gps ? this.db.reverse(f, this.pos) : null; }
+  reverse(f, band = COM_BAND) { return this.s.gps ? band.db(this).reverse(f, this.pos) : null; }
   usableFreq(f) { return this.s.spacing === 833 || !is833Only(f); }
-  listItems(kind) {
-    if (kind === 'recent') return this.s.recent.map(f => ({ freq: f, l2: [S(this.reverse(f) || '')] }));
+  listItems(kind, band = COM_BAND) {
+    const st = band.state(this);
+    if (kind === 'recent') return st.recent.map(f => ({ freq: f, l2: [S(this.reverse(f, band) || '')] }));
     if (kind === 'user') {
-      const items = this.s.user.map(u => ({ freq: u.freq, user: u }));
-      if (items.length < MAX_USER) items.push({ empty: true });
+      const items = st.user.map(u => ({ freq: u.freq, user: u }));
       return items;
     }
     if (!this.s.gps) return [];
+    if (kind === 'nvor') return this.navDb.nearestVors(this.pos).map(v => ({ freq: v.f, l2: [S(`${v.id} ${v.type}`)] }));
     if (kind === 'napt') return this.db.nearestAirports(this.pos).map(a => ({ apt: a, l2: [S(a.name)] }));
     const cat = { nacc: 'acc', nfss: 'fss', nwx: 'wx' }[kind];
     return this.db.nearestStations(cat, this.pos, f => this.usableFreq(f)).map(o => ({ freq: o.f, l2: [S(o.name)] }));
@@ -254,19 +257,20 @@ export class ComRadio {
   flipShort() {
     const p = this.page;
     if (!this.msgs.length && p.id === 'list') {
-      const it = this.listItems(p.kind)[p.idx];
-      if (it && !it.empty && !it.apt) this.setActive(it.freq); // stays on the list (CLR leaves)
+      const it = this.listItems(p.kind, p.band || COM_BAND)[p.idx];
+      if (it && !it.empty && !it.apt) this.setActive(it.freq, p.band || COM_BAND); // stays on the list (CLR leaves)
       return;
     }
     if (!this.msgs.length && p.id === 'db' && p.phase === 'type') {
+      const band = p.band || COM_BAND;
       const e = p.entries[p.idx];
-      this.dbMemory = { ident: p.ident.join(''), idx: p.idx, t: this.now() };
-      // from the COM page the look-up ends on the COM page (manual 2.4 step 7);
+      this.dbMemory[band.key] = { ident: p.ident.join(''), idx: p.idx, t: this.now() };
+      // from the main page the look-up ends on the main page (manual 2.4 step 7);
       // from the function lists you stay on the page
-      if (this.setActive(e.f) && p.from === 'com') this.goCom();
+      if (this.setActive(e.f, band) && p.from === 'com') this.goMain();
       return;
     }
-    this.swap();
+    this.swap(this.mainBand());
   }
 
   emergency() {
@@ -275,7 +279,7 @@ export class ComRadio {
     this.s.act = EMERGENCY;
     this.pushRecent(EMERGENCY);
     this.emergHintUntil = this.now() + 2500;
-    this.goCom();
+    this.showCom();
     this.save();
   }
 
@@ -288,7 +292,6 @@ export class ComRadio {
       this.raise('COM_LOCKED');
     } else {
       this.locked = false;
-      this.toast('COM UNLOCKED');
     }
     this.save();
   }
@@ -305,16 +308,16 @@ export class ComRadio {
     if (sp === this.s.spacing) return;
     this.s.spacing = sp;
     if (sp === 25) {
-      const before = this.s.user.length;
       this.s.user = this.s.user.filter(u => !is833Only(u.freq));
-      const removed = before - this.s.user.length;
       this.s.recent = this.s.recent.filter(f => !is833Only(f)); // NOTE p.i: user and recent 8.33 freqs are lost
       this.s.act = snapTo25(this.s.act);
       this.s.stb = snapTo25(this.s.stb);
-      if (removed) this.toast(`${removed} 8.33 USER FREQ DELETED`, 3000);
     }
     this.save();
   }
+
+  // emergency / lock always end on the COM page
+  showCom() { this.goCom(); }
 
   // ---------- page openers ----------
   openSetting(kind, back, viaKey = false) {
@@ -323,9 +326,15 @@ export class ComRadio {
   }
   openItem(key) {
     const back = { id: 'menu', func: true };
-    const blocked = this.itemBlocked(key);
-    if (blocked) { this.toast(blocked); return; }
-    if (LIST_KINDS.includes(key)) {
+    if (this.itemBlocked(key)) return;
+    const navBand = this.device.navBand;
+    if (navBand && key.startsWith('nav')) {
+      const kind = key.slice(3);   // navrecent / navuser / navdb
+      if (kind === 'db') this.openLookup('func', back, navBand);
+      else this.page = { id: 'list', kind, band: navBand, idx: 0, from: 'func', func: true, back };
+    } else if (key === 'nvor') {
+      this.page = { id: 'list', kind: 'nvor', band: navBand, idx: 0, from: 'func', func: true, back };
+    } else if (LIST_KINDS.includes(key)) {
       this.page = { id: 'list', kind: key, idx: 0, from: 'func', func: true, back };
     } else if (key === 'db') {
       this.openLookup('func', back);
@@ -343,10 +352,11 @@ export class ComRadio {
     this.page = { id: 'db', from: 'func', func: true, fromList: true, back, phase: 'type',
       ident: toChars(a.id, IDENT_LEN), cur: 0, entries: this.db.typeEntries(a), idx: 0 };
   }
-  openLookup(from, back) {
-    const mem = this.dbMemory && this.now() - this.dbMemory.t < DB_MEMORY_MS ? this.dbMemory : null;
+  openLookup(from, back, band = COM_BAND) {
+    const m = this.dbMemory[band.key];
+    const mem = m && this.now() - m.t < DB_MEMORY_MS ? m : null;
     this.page = {
-      id: 'db', from, back, func: from === 'func', phase: 'ident',
+      id: 'db', band, from, back, func: from === 'func', phase: 'ident',
       ident: toChars(mem ? mem.ident : '', IDENT_LEN), cur: 0,
       entries: [], idx: mem ? mem.idx : 0,
     };
@@ -416,30 +426,38 @@ export class ComRadio {
   view() {
     const now = this.now();
     if (!this.power) return { off: true };
-    if (this.booting) return { splash: this.device.splash.call(this) };
     const s = this.s;
+    if (this.booting) {
+      // Installation Manual 190-01182-02: "Garmin" appears at power-up (6.4) and the database
+      // information is displayed during the start-up sequence (6.6.4.4). Exact layout not shown.
+      const first = this.now() < this.bootUntil - BOOT_MS / 2;
+      return { splash: first ? ['GARMIN'] : ['', `CYCLE: ${s.db.cycle}`, `EFCTV: ${s.db.effective}`] };
+    }
     const au = this.audio();
     const v = {
       brt: s.brt, contrast: s.contrast,
       ann: this.transmitting ? 'TX' : (au.src === 'act' || au.src === 'stb') ? 'RX' : s.sq ? 'SQ' : '',
-      act: fmtFreq(s.act),
-      locked: this.locked,
+      act: fmtFreq(s.act),   // replaced below by the shown band
       right: null, bottomLeft: [], bottomRight: [], bottomFull: null,
     };
 
     if (this.msgs.length) {
-      v.right = { type: 'msg', title: 'MESSAGE', text: this.messages[this.msgs[0]] };
-      v.bottomLeft = [S('ENT=ACKNOWLEDGE')];
-      return v;
+      // manual 5.1 screenshot: message text full width, "ENT=ACCEPT" bottom-left
+      // (messages are stored as "CATEGORY - text"; the unit shows the text)
+      const full = this.messages[this.msgs[0]];
+      const text = full.includes(' - ') ? full.slice(full.indexOf(' - ') + 3) : full;
+      return { brt: s.brt, contrast: s.contrast, message: text.replace(/\.$/, ''), bottomLeft: [S('ENT=ACCEPT')] };
     }
 
     const p = this.page;
+    const shown = p.band || this.mainBand();
+    v.act = shown.fmt(shown.state(this).act);
+    if (shown !== COM_BAND) v.ann = this.navAnn?.() ?? '';
     this.pages[p.id].render.call(this, p, v);
     // settings that preview live on the display (e.g. brightness / contrast)
     if (p.id === 'set') this.settingsDefs[p.kind].preview?.(p.vals, v);
 
     // overlays on the bottom line
-    if (this.toastMsg && now < this.toastMsg.until && !v.bottomFull) v.bottomFull = [S(this.toastMsg.text)];
     if (p.id === 'com' || (p.id === 'db' && p.from === 'com')) {
       const holdingFlip = this.hold.flip && !this.hold.flip.fired && now - this.hold.flip.t > 300;
       if (holdingFlip || now < this.emergHintUntil) v.bottomFull = [S('HOLD FOR EMERGENCY COM FREQUENCY', { box: true })];

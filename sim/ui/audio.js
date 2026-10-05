@@ -2,6 +2,29 @@
 // recorded incoming-call clips. Follows radio.audio(); silent without power.
 const MASTER_GAIN = 0.3; // overall loudness of all sound effects
 
+// NAV ident: Morse code at 1020 Hz, repeated while the station is received and ID is on
+const MORSE = {
+  A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..', J: '.---',
+  K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.', Q: '--.-', R: '.-.', S: '...', T: '-',
+  U: '..-', V: '...-', W: '.--', X: '-..-', Y: '-.--', Z: '--..',
+  0: '-----', 1: '.----', 2: '..---', 3: '...--', 4: '....-', 5: '.....', 6: '-....', 7: '--...', 8: '---..', 9: '----.',
+};
+const MORSE_UNIT = 0.12;      // seconds per dot (about 10 words per minute)
+const MORSE_REPEAT = 8;       // seconds between idents
+// schedule one ident on gain g from time t; returns its end time
+function scheduleMorse(g, ident, t, level) {
+  for (const ch of ident) {
+    for (const sym of MORSE[ch] || '') {
+      const len = (sym === '-' ? 3 : 1) * MORSE_UNIT;
+      g.setValueAtTime(level, t);
+      g.setValueAtTime(0, t + len);
+      t += len + MORSE_UNIT;
+    }
+    t += 2 * MORSE_UNIT;
+  }
+  return t;
+}
+
 /**
  * @param radio  ComRadio
  * @param clips  [{ url, ms }]   recorded calls (ms = fallback length until decoded)
@@ -26,6 +49,12 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
       this.gain = ctx.createGain(); this.gain.gain.value = 0;
       noise.connect(filt).connect(this.gain).connect(out);
       noise.start();
+    // NAV Morse ident tone
+    const tone = ctx.createOscillator(); tone.type = 'sine'; tone.frequency.value = 1020;
+    this.morseGain = ctx.createGain(); this.morseGain.gain.value = 0;
+    tone.connect(this.morseGain).connect(out);
+    tone.start();
+    this.morseNext = 0;
       // recorded incoming transmissions
       this.clipGain = ctx.createGain(); this.clipGain.gain.value = 0;
       this.clipGain.connect(out);
@@ -55,7 +84,8 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
     silence() {
       this.stopClip();
       const t = this.ctx.currentTime;
-      for (const g of [this.gain.gain, this.clipGain.gain]) { g.cancelScheduledValues(t); g.setValueAtTime(0, t); }
+      for (const g of [this.gain.gain, this.clipGain.gain, this.morseGain.gain]) { g.cancelScheduledValues(t); g.setValueAtTime(0, t); }
+      this.morseNext = 0;
     },
     update() {
       if (!this.enabled || !this.ctx) return;
@@ -80,7 +110,17 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
       }
       this.clipGain.gain.setTargetAtTime(vol, now, 0.02);
 
-      // static levels / colour per source (tune here)
+      // NAV ident (NAV/COM units only)
+    const nav = radio.navAudio?.();
+    if (nav) {
+      if (now >= this.morseNext) this.morseNext = scheduleMorse(this.morseGain.gain, nav.ident, now + 0.05, 0.25 * nav.vol / 100) + MORSE_REPEAT;
+    } else if (this.morseNext) {
+      this.morseGain.gain.cancelScheduledValues(now);
+      this.morseGain.gain.setValueAtTime(0, now);
+      this.morseNext = 0;
+    }
+
+    // static levels / colour per source (tune here)
       let n = 0, fc = 1800, q = 0.6;
       if (a.src === 'static') n = 0.12 * vol;                  // squelch override
       if (hearingRx) n = 0.12 * vol;                           // background under incoming calls

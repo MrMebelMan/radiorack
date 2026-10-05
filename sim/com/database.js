@@ -15,6 +15,7 @@ export class FreqDatabase {
   }
   allIdents() { return [...this.airports, this.firEntry()]; }
   findIdent(id) { return this.allIdents().find(a => a.id === id); }
+  findAll(id) { return this.allIdents().filter(a => a.id === id); }
   stationName(f) { return this.stations.find(st => st.f === f)?.name || ''; }
   // frequency types for the look-up; "+" when the facility has more of that type
   typeEntries(a) {

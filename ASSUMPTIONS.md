@@ -1,0 +1,151 @@
+# Assumptions to verify on a real unit
+
+This file covers everything the simulators do that the Pilot's Guides **don't specify, only imply, or contradict**. Check each item on a real radio, tick it, and note what the real unit does if it differs.
+
+- GTR 225: Pilot's Guide 190-01182-00 Rev D (SW 2.10), `sim/manuals/gtr225-pilots-guide.pdf`
+- GNC 255: Pilot's Guide 190-01182-01 Rev E, `sim/manuals/gnc255-pilots-guide.pdf`
+- Both: TSO Installation Manual 190-01182-02 Rev L, `sim/manuals/gtr225-gnc255-installation-manual.pdf`
+
+**Rule:** screen text that isn't in a manual screenshot or photo has been **removed**. Where a screen has to show *something* but its look is undocumented, it is kept to the bare minimum and listed here.
+
+Legend: **Sim:** what the simulator does now · **Why:** where it comes from · **Real:** fill in.
+
+---
+
+## 1. Both radios (shared COM side)
+
+### Power and start-up
+- [ ] **Start-up screen.** Sim: "GARMIN" for 1.25 s, then "CYCLE: …" / "EFCTV: …" for 1.25 s. Why: the Installation Manual says "Garmin" appears (§6.4) and the database information is displayed during the start-up sequence (§6.6.4.4); the layout, wording and timing aren't shown. The software version is not shown at start-up (not documented). Real:
+- [ ] **What survives a power cycle.**
+  - Restored: active/standby frequencies, recent and user lists, all ICS/SYS settings, count-down start value, DB cycle.
+  - Reset: both timers, MON (off), squelch override (off), 121.5 lock (cleared), pending messages.
+  - The 121.5 lock reset is documented (troubleshooting table: "cycle the avionics power"); the rest is assumed.
+
+  Why: the manual only implies that user/recent lists are stored; the lock reset comes from the troubleshooting table. Real:
+- [ ] **Aircraft power loss.** Sim: POWER ALERT, then shutdown after 10 s unless power returns. If the PWR knob is still on when power returns, the unit boots by itself. Why: the message text only says "if power is not restored immediately". Real:
+- [ ] **Volume knob.** Sim: steps of 5 %, 0 % at −135° and 100 % at +135° of knob travel, OFF just below 0. The COM VOL bar graph shows for about 2 s after the last turn. Why: not specified. Real:
+- [ ] **PUSH SQ held about 2 s tunes 121.5** (like holding flip/flop). Why: only in the message table ("press and hold the volume knob … force the COM radio to 121.5"). Real:
+
+### COM tuning and display
+- [ ] **8.33 mode steps.** Sim: the inner knob steps through the 25 kHz names too (x.000, x.005, x.010, x.015, x.025 …). It wraps inside the MHz with no carry; the outer knob wraps 118 ↔ 136. Real:
+- [ ] **Switching 8.33 → 25 kHz.** Sim: active/standby snap down to the 25 kHz channel. 8.33-only frequencies are removed from user **and recent** lists, with no notice on screen. Why: the manual note mentions only user freqs; the front note says recent are lost too. Real:
+- [ ] **Annunciator priority.** Sim: TX over RX over SQ (one shows at a time, top-left). Real:
+- [ ] **Bottom line without GPS.** Sim: "COM ACTIVE" / "COM STANDBY". With GPS: the nearest facility using the frequency within 200 NM, "*" when that facility has several types on it. Real:
+- [ ] **Flip / set active during TX or while locked.** Sim: silently ignored (no on-screen notice). Real:
+- [ ] **Emergency hint.** Sim: "HOLD FOR EMERGENCY COM FREQUENCY" shows after holding flip/flop for 0.3 s, and stays 2.5 s after 121.5 is set. Why: the manual screenshot shows the text but not its timing. Real:
+- [ ] **Recent list.** Sim: a frequency is added when it becomes active (flip, emergency, or set active from a list), duplicates removed, newest first, max 20. Real:
+
+### Remote (yoke) inputs
+- [ ] **COM RMT XFR.** Sim: tap = flip; hold 2 s = 121.5 **and** lock (hold again 2 s to unlock). Why: the manual says the lock applies "on units so configured". Real (installation-dependent):
+- [ ] **COM CHAN UP / DN.** Sim: step the standby frequency by one channel. Why: these switches are named only in the message table. Real:
+- [ ] **Remote ICS switch.** Sim: toggles the intercom, nothing shown on screen. Real:
+- [ ] **Stuck mic timing.** Sim: "REMOTE KEY STUCK" message at 30 s, transmitting stops at 35 s ("STUCK MIC" until released). Why: §2.6 says 35 s, §5.1 says 30 s. Real:
+- [ ] **COM RMT XFR held 30 s** raises "REMOTE KEY STUCK – COM remote transfer key". Real:
+
+### Messages
+- [ ] **Message screen.** Sim: text only (category prefix like "REMOTE KEY STUCK -" dropped), centred, wrapped to 2 lines if long, "ENT=ACCEPT" bottom-left. Why: the screenshot shows one short message. Real (long ones, e.g. COM LOCKED):
+- [ ] **Keys while a message shows.** Sim: only ENT (acknowledge) works among the bezel keys; flip/flop, PTT, volume, MON keep working. Real:
+
+### Lists and database (FUNC)
+- [ ] **FUNC menu screen.** Sim, from two photos of a GNC 255:
+  - one line per category, four visible;
+  - choosing the category (outer knob) inverts only its short name ("ICS CONFIGURATION");
+  - the first inner-knob click then shows the first item in place of the title, inverted ("NAV USER FREQS").
+
+  Assumed:
+  - the GTR 225 looks the same;
+  - the list scrolls only when the active line would leave the window (with ICS active it still starts at COM, as in the photo);
+  - ENT does nothing until an item is shown.
+
+  From the procedures (not an assumption): FUNC always opens at COM FREQUENCY LIST with no item, since every procedure starts "Press FUNC. Turn the inner knob to …" (COM items) or "Turn the outer knob to … CONFIGURATION".
+
+  Real:
+- [ ] **ENT / flip in a list stays on the list.** CLR returns to the functions display. Why: inferred from the procedures, which list CLR as the way out. Real:
+- [ ] **DB look-up from the COM page returns to the COM page** after ENT/flip. Why: §2.4 step 7 implies it. Real:
+- [ ] **DB look-up details.**
+  - Auto-completes from the characters up to the cursor.
+  - Pressing PUSH CRSR again cancels back to the COM page.
+  - Outer knob counter-clockwise on the type screen returns to the identifier.
+  - Unknown ident: ENT does nothing.
+  - The last look-up (ident + type) is offered again for 30 min.
+
+  Real:
+- [ ] **Adding a user frequency from FUNC → USER FREQS.** Sim: not possible (only view / edit / delete); save from the COM page. Why: the manual says saving is possible "from the COM User Function" but not how. Real:
+- [ ] **User list full.** Sim: ENT does nothing (no notice). Real:
+- [ ] **Empty list** (no recent, no user, no GPS for nearest). Sim: title only, blank rows. Real:
+- [ ] **NEAREST lists.**
+  - NEAREST APT lists airports; ENT shows that airport's frequencies (with GPS).
+  - WX includes airport ATIS/AWOS.
+
+  Real:
+
+### Settings
+- [ ] **Step sizes.** Sim: intercom VOL and AUX VOL in steps of 1 (observed by the owner); intercom SQ still in steps of 5 (unverified); sidetone offset, brightness and contrast in steps of 1. Real (SQ):
+- [ ] **Brightness / contrast preview live** while turning; CLR restores, ENT keeps. Why: the manual only says ENT saves / CLR cancels. Real:
+- [ ] **DSPL BRT readout.** Sim: BRIGHTNESS = offset (never below 0). Why: fitted to the only screenshot (OFFSET 25 → BRIGHTNESS 25); the real value likely depends on the photocell. Real:
+- [ ] **FUNC on DATABASE INFO / SOFTWARE VER / SERIAL NUMBER** goes back to the COM page. Why: the manual says "exit page" / "return to the main menu" (could mean the FUNC menu). Real:
+- [ ] **Database update after the version page.** Sim: ENT loads instantly and returns to the menu (verify on DATABASE INFO); no progress screen. No drive: ENT does nothing. Corrupt drive / missing unlock file: the message is raised straight from the prompt. Why: the manual only says "wait until the updating process is complete". Real (what's shown while updating):
+
+### Timers
+- [ ] **ENT on the COM page with a running timer shown** opens "STOP TMR? ENT=STOP CLR=CANCEL" (so ENT does not open SAVE USER FREQ then). Why: from "press ENT twice to stop". Real:
+- [ ] **CLR then ENT resets the displayed timer** with nothing shown in between. Why: the manual says "CLR and then ENT" but shows only the STOP prompt. Real (what CLR shows):
+- [ ] **Which timer is shown.** Sim: a running count-down; else a running count-up; else a stopped count-down that isn't at its start; else a stopped count-up that isn't zero. Why: the manual only covers running timers. Real:
+- [ ] **Count-down editing** starts with the cursor on minutes; hours 0–23. Real:
+- [ ] **Timer pages** show only the title, the time and the key hints (as in the screenshots). Real:
+
+---
+
+## 2. GTR 225 only
+- [ ] **ICS key order.** Sim: Adjust Intercom → AUX Audio → Intercom On/Off → COM page. Adjust Intercom is skipped when the intercom is off. Why: §1.2 lists them in a different order; §3.3.1 starts with "Press ICS" → Adjust Intercom. Real:
+- [ ] **MEM key.** Sim: first press = recent list; each further press toggles recent ↔ user. Real:
+- [ ] **Adjust Intercom with the intercom OFF.** Sim: ENT on the menu item does nothing. Why: the manual only says it is "not available". Real (both radios):
+
+---
+
+## 3. GNC 255 only
+
+### Manual errata (sim follows the more plausible reading)
+- [ ] **NAV frequency range.** Sim: 108.00–117.95 MHz. Why: §2.2.1 says "118 to 136" (copy of the COM text); §1.1 says 108–117.95. Real:
+- [ ] **NAV user-list title.** Sim: "NAV RECENT FREQS", as in the manual's §3.3.2 screenshots (probably a reused image). Real:
+- [ ] **Nearest VOR flip/flop.** Sim: ⇄ sets active. Why: the text lists only ENT/CLR, but the screenshot shows "⇄=ACT". Real:
+
+### NAV radio
+- [ ] **NAV tuning.** Sim: inner knob 50 kHz steps wrapping inside the MHz; outer knob wraps 108 ↔ 117. Two decimals on the main page, three on the NAV DATABASE page (as in the screenshots). Real:
+- [ ] **Annunciators on NAV displays.** Sim: only "ID" (when ident is on); SQ/TX/RX are not shown on NAV displays. Real:
+- [ ] **ID toggle** works only while the NAV display is active (C/N in NAV). Real:
+- [ ] **NAV volume.** Sim: steps of 5 %, no power detent; knob travel shown −135°…+135°. Real:
+- [ ] **Morse ident audio.** Sim: 1020 Hz, about 10 words per minute, repeated every 8 s while the station is received and ID is on. Real:
+- [ ] **MON key in NAV mode.** Sim: does nothing (monitoring is a COM function, but it stays on when switching to NAV, as the manual says). Real:
+- [ ] **Power-up state (GNC).** Sim: starts in COM mode with T/F (DST row) off and NAV ID off; NAV frequencies, lists, OBS and NAV volume are kept. Real:
+- [ ] **C/N** always goes to the main page of the selected radio; FUNC (exit) returns to the main page of the current radio. Real:
+- [ ] **Holding flip/flop 2 s in NAV mode** sets 121.5 on COM and switches to COM mode. Real:
+- [ ] **NAV RMT XFR.** Sim: tap swaps the NAV frequencies; no 2 s function; held 30 s → "REMOTE KEY STUCK – NAV remote transfer key". Real:
+- [ ] **NAV database.** Sim: one entry per station (type = VOR, DME or ILS); ILS named like "LKPR RWY 24"; DME-only stations included but give no CDI/ident. Real:
+- [ ] **Timers** shown bottom-right on the NAV page as on the COM page. Why: the manual says "COM/NAV displays". Real:
+
+### OBS / CDI
+- [ ] **Leaving the OBS page.** Sim: press OBS again (or C/N). Why: not specified. Real:
+- [ ] **OBS knob steps.** Sim: outer knob 10°, inner knob 1°; shown 000–359. Why: the manual only says "the outer and inner knobs can be used". Real:
+- [ ] **Decoded ident on the OBS page.** Sim: the station ident whenever the station is received; blank otherwise. Real:
+- [ ] **CDI with no signal / DME-only.** Sim: dots only, no triangle, no needle. Real:
+- [ ] **Localizer on the CDI.** Sim: "ident  LOC" instead of the OBS value and a circle at the centre (both from a Garmin photo of the unit). Full scale ±2.5°, course from the database; LKKB ILS 24 has no published course, so no needle. Why: the deflection scale is not documented. Real:
+- [ ] **Signal range.** Sim: VOR/LOC usable within 150 NM regardless of altitude. Real (altitude-dependent):
+
+### T/F and DST
+- [ ] **T/F cycle.** Sim: off → TO → FROM → off. While on, the DST row replaces the bottom line on the COM/NAV main page. Why: the manual doesn't say how DST is hidden. Real:
+- [ ] **DST labels.** Sim: "TO/BRG" for bearing TO (from the screenshot); for radial FROM the value is shown with no label (none documented). Real (FROM label):
+- [ ] **DST without data** (no GPS, nothing within 200 NM): dashes. Real:
+- [ ] **Ground speed / time format.** Sim: GS in whole knots (0 while the simulated aircraft is paused); time to station "h:mm", "-:--" when GS is 0. Real:
+- [ ] **COM VOL line** shows "NV ACT" + active NAV frequency at the right (from the §1.2 screenshot); the sim shows it on every volume change. Real:
+
+---
+
+- [ ] **Bezel layout** scaled from Garmin's front-view render (labels beside the knobs, 880×228). Real:
+
+## 4. Simulator-only (no device check needed)
+These exist only to make practice possible:
+- Incoming-call sound clips, static levels, the "Audio" status line.
+- GPS start positions, the Flight panel (ground speed/track; track converted to true with a fixed 5°E variation).
+- USB-drive selector, message raiser, aircraft-power switch, factory reset.
+- Keyboard shortcuts.
+- Frequency and navaid data: Czech AIP, AIRAC 01 OCT 2026 (re-check each cycle).

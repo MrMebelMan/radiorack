@@ -55,7 +55,8 @@ test('stuck mic', () => {
   assert.ok(r.transmitting);
   r.advance(5000);
   assert.ok(!r.transmitting);
-  assert.match(text(r.view()), /MESSAGE/);
+  assert.match(text(r.view()), /PUSH-TO-TALK KEY IS STUCK/);
+  assert.match(text(r.view()), /ENT=ACCEPT/);
   r.input('ENT');
   assert.match(text(r.view()), /STUCK MIC/);
   r.input('pttUp');
@@ -97,7 +98,7 @@ test('user list limit and delete', () => {
   r.s.user = Array.from({ length: MAX_USER }, (_, i) => ({ freq: 118000 + i * 25, name: 'X', type: '' }));
   r.input('ENT');
   assert.equal(r.page.id, 'com');
-  r.input('FUNC'); r.input('inner', 1); r.input('ENT'); // USER FREQS
+  r.input('FUNC'); r.input('inner', 2); r.input('ENT'); // USER FREQS
   assert.equal(r.page.kind, 'user');
   r.input('CLR');
   assert.match(text(r.view()), /DELETE FREQUENCY/);
@@ -135,7 +136,7 @@ test('count down timer overruns and counts up highlighted; COM page stop/reset p
   const r = make();
   r.s.cdStart = 5;
   r.input('FUNC'); r.input('outer', -1); // TMR CONFIGURATION
-  r.input('inner', 1); r.input('ENT');  // COUNT DOWN
+  r.input('inner', 2); r.input('ENT');  // COUNT DOWN
   assert.equal(r.page.id, 'tmrdown');
   r.input('ENT'); // start
   r.advance(2000);
@@ -149,15 +150,15 @@ test('count down timer overruns and counts up highlighted; COM page stop/reset p
   assert.match(text(r.view()), /STOP TMR/);
   r.input('ENT');
   assert.ok(!r.cd.running);
-  r.input('CLR');
-  assert.match(text(r.view()), /RESET TMR/);
+  r.input('CLR');                 // CLR then ENT resets (no prompt text in the manual)
+  assert.doesNotMatch(text(r.view()), /RESET TMR/);
   r.input('ENT');
   assert.equal(r.displayedTimer(), null);
 });
 
 test('count down set start value', () => {
   const r = make();
-  r.input('FUNC'); r.input('outer', -1); r.input('inner', 1); r.input('ENT');
+  r.input('FUNC'); r.input('outer', -1); r.input('inner', 2); r.input('ENT');
   r.input('push');
   r.input('inner', 4); // minutes 1 -> 5
   r.input('ENT');
@@ -269,7 +270,7 @@ test('remote transfer key held 30 s raises REMOTE KEY STUCK', () => {
 
 test('lists: ENT / flip stay on the list, CLR returns to the functions display', () => {
   const r = make();
-  r.input('FUNC'); r.input('ENT'); // RECENT FREQS
+  r.input('FUNC'); r.input('inner', 1); r.input('ENT'); // RECENT FREQS
   r.input('ENT');
   assert.equal(r.page.id, 'list');
   r.input('CLR');
@@ -279,7 +280,7 @@ test('lists: ENT / flip stay on the list, CLR returns to the functions display',
 test('nearest APT lists airports; ENT shows its frequencies; ENT = standby, flip = active', () => {
   const r = make();
   r.s.posId = 'LKPR';
-  r.input('FUNC'); for (let i = 0; i < 3; i++) r.input('inner', 1); r.input('ENT'); // NEAREST APT
+  r.input('FUNC'); for (let i = 0; i < 4; i++) r.input('inner', 1); r.input('ENT'); // NEAREST APT
   assert.equal(r.page.kind, 'napt');
   assert.match(text(r.view()), /LKPR/);
   assert.match(text(r.view()), /ENT=DONE/);
@@ -306,7 +307,7 @@ test('database look-up from the COM page returns to the COM page after ENT', () 
 test('display brightness / contrast preview live; CLR restores, ENT keeps', () => {
   const r = make();
   r.input('FUNC'); r.input('outer', 1); r.input('outer', 1); // SYS CONFIGURATION
-  r.input('inner', 3); r.input('ENT');                       // DSPL CONTRAST
+  r.input('inner', 4); r.input('ENT');                       // DSPL CONTRAST
   assert.equal(r.page.kind, 'contrast');
   r.input('inner', 1); r.input('inner', 1);
   assert.equal(r.view().contrast, 2);
@@ -315,4 +316,26 @@ test('display brightness / contrast preview live; CLR restores, ENT keeps', () =
   assert.equal(r.view().contrast, 0);
   r.input('ENT'); r.input('inner', 1); r.input('ENT');
   assert.equal(r.s.contrast, 1);
+});
+
+test('FUNC menu screen: category lines, active short name + selected item inverted (photo of the unit)', () => {
+  const r = make();
+  r.input('FUNC'); r.input('inner', 2);          // COM > USER FREQS
+  const v = r.view();
+  assert.equal(v.right.type, 'menu');
+  assert.equal(v.right.lines.length, 4);
+  assert.deepEqual(v.right.lines[0].map(x => [x.t, !!x.inv]), [['COM', true], [' ', false], ['USER FREQS', true]]);
+  assert.deepEqual(v.right.lines[1].map(x => x.t).join(''), 'ICS CONFIGURATION');
+  assert.deepEqual(v.right.lines[3].map(x => x.t).join(''), 'TMR CONFIGURATION');
+});
+
+test('FUNC menu: choosing a category lights only its short name (photo of the unit)', () => {
+  const r = make();
+  r.input('FUNC'); r.input('outer', 1);           // ICS
+  const l = r.view().right.lines.map(x => x.map(y => [y.t, !!y.inv]));
+  assert.deepEqual(l[1], [['ICS', true], [' ', false], ['CONFIGURATION', false]]);
+  r.input('ENT');
+  assert.equal(r.page.id, 'menu', 'ENT with no item chosen does nothing');
+  r.input('inner', 1);
+  assert.deepEqual(r.view().right.lines[1].map(y => y.t).join(''), 'ICS ADJUST INTRCOM');
 });

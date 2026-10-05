@@ -1,6 +1,5 @@
 // Count-up and count-down timer pages (manual 3.5).
 import { S, wrap, clamp } from '../../core/util.js';
-import { fmtTime } from '../../core/time.js';
 
 export const countUp = {
   handlers: {
@@ -8,7 +7,7 @@ export const countUp = {
     CLR() { this.cu.reset(); },
   },
   render(p, v) {
-    v.right = { type: 'page', title: 'COUNT UP TIMER', rows: [[{ ...this.cuSeg(), big: true }], [S(this.cu.running ? 'RUNNING' : 'STOPPED', { small: true })]] };
+    v.right = { type: 'page', title: 'COUNT UP TIMER', rows: [[{ ...this.cuSeg(), big: true }]] };
     v.bottomLeft = [S('ENT=START/STOP  CLR=RESET')];
   },
 };
@@ -54,7 +53,6 @@ export const countDown = {
       big = [{ ...this.cdSeg(), big: true }];
       v.bottomLeft = [S('ENT=START/STOP CLR=RESET PUSH CRSR=SETTINGS')];
     }
-    const status = p.edit ? 'SET START TIME' : this.cd.running ? (this.cdRemainingMs() < 0 ? 'EXPIRED - COUNTING UP' : 'RUNNING') : 'STOPPED';
-    v.right = { type: 'page', title: 'COUNT DOWN TIMER', rows: [big, [S(`${status}  START ${fmtTime(this.s.cdStart)}`, { small: true })]] };
+    v.right = { type: 'page', title: 'COUNT DOWN TIMER', rows: [big] };
   },
 };

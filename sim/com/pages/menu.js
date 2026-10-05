@@ -1,28 +1,39 @@
-// FUNC menu over the device's tree: outer = category, inner = item, ENT opens.
+// FUNC menu (photos of the unit + manual 3.1): one line per category. First the outer knob
+// picks the category (its short name inverted, title shown); turning the inner knob then
+// replaces the title with the item, inverted ("Turn the inner knob to RECENT FREQS").
+// Four lines fit; the list scrolls only when the active line would leave the window.
 import { S, wrap } from '../../core/util.js';
+
+const MENU_LINES = 4;
+const NONE = -1;   // category chosen, no item yet
 
 export default {
   handlers: {
-    outer(p, d) { this.menuPos.cat = wrap(this.menuPos.cat + d, this.menu.length); this.menuPos.item = 0; },
-    inner(p, d) { const c = this.menu[this.menuPos.cat]; this.menuPos.item = wrap(this.menuPos.item + d, c.items.length); },
-    ENT() { this.openItem(this.menu[this.menuPos.cat].items[this.menuPos.item][1]); },
-    CLR() { this.goCom(); },
+    outer(p, d) { this.menuPos.cat = wrap(this.menuPos.cat + d, this.menu.length); this.menuPos.item = NONE; },
+    inner(p, d) {
+      const n = this.menu[this.menuPos.cat].items.length;
+      const i = this.menuPos.item;
+      // from "no item" the first click lands on the first (or, turning back, the last) item
+      this.menuPos.item = i === NONE ? wrap(d > 0 ? d - 1 : n + d, n) : wrap(i + d, n);
+    },
+    ENT() {
+      if (this.menuPos.item === NONE) return;   // nothing selected yet
+      this.openItem(this.menu[this.menuPos.cat].items[this.menuPos.item][1]);
+    },
+    CLR() { this.goMain(); },
   },
 
   render(p, v) {
-    const c = this.menu[this.menuPos.cat];
-    const i = this.menuPos.item;
-    const item = (k) => {
-      const [label, key] = c.items[k];
-      return label + (this.itemBlocked(key) ? ' (OFF)' : '');
-    };
-    v.right = {
-      type: 'page', title: c.title,
-      rows: [
-        [S(item(i), { inv: true }), S(`  ${i + 1}/${c.items.length}`, { small: true })],
-        [S(c.items.length > 1 ? item(wrap(i + 1, c.items.length)) : '', { dim: true })],
-      ],
-    };
-    v.bottomLeft = [S('ENT=SELECT  FUNC=EXIT')];
+    const n = this.menu.length, cat = this.menuPos.cat, i = this.menuPos.item;
+    const first = Math.max(0, Math.min(cat - (MENU_LINES - 1), n - MENU_LINES));
+    const lines = this.menu.slice(first, first + MENU_LINES).map((m, k) => {
+      const [short, ...rest] = m.title.split(' ');
+      if (first + k !== cat) return [S(short), S(' '), S(rest.join(' '))];
+      return i === NONE
+        ? [S(short, { inv: true }), S(' '), S(rest.join(' '))]
+        : [S(short, { inv: true }), S(' '), S(m.items[i][0], { inv: true })];
+    });
+    v.right = { type: 'menu', lines };
+    v.bottomLeft = [];
   },
 };

@@ -1,0 +1,11 @@
+/* GNC 255 bezel geometry (880 x 228), scaled from Garmin's front-view render of the unit
+   (labels beside the knobs, keys C/N OBS T/F . FUNC CLR ENT); the rest is shared/style.css. */
+.bezel.gnc { height: 228px; }
+.bezel.gnc .knob.vol { left: 43px; top: 27px; width: 52px; height: 52px; }
+.bezel.gnc .knob.nav { left: 43px; top: 153px; width: 52px; height: 52px; }
+.bezel.gnc .sensor { left: 113px; top: 24px; width: 24px; height: 24px; }
+.bezel.gnc .lcd-frame { left: 180px; top: 8px; }
+.bezel.gnc .garmin { top: 10px; }
+.bezel.gnc .usb { left: 776px; top: 31px; width: 101px; height: 31px; }
+.bezel.gnc .dual { left: 774px; top: 133px; width: 88px; height: 88px; }
+.bezel.gnc .dual .inner { left: 18px; top: 18px; width: 50px; height: 50px; }

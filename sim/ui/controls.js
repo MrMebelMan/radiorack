@@ -11,7 +11,9 @@ const WHEEL_STEP = 50;
  * @param cfg {
  *   encoders: { outer: el, inner: el },     endless rotary encoders (event name = key)
  *   innerPush: 'push',                       event when the inner knob is clicked
- *   vol: { el, angle: radio => deg },        volume pot with end stops (angle from state)
+ *   vol: { el, angle: radio => deg },        COM volume pot with end stops (angle from state);
+ *                                            click = PUSH SQ, hold without dragging = 121.5
+ *   pots: [{ el, evt, pushDown, pushUp, angle }]  further pots (e.g. GNC NAV VOL / PUSH ID)
  *   keys: NodeList of [data-key] buttons,
  *   holds: [[el, downEvt, upEvt]],
  *   keyboard: { keys: {code: evt}, holds: {code: [down, up]}, turns: {code: [knob, dir]}, presses: {code: [evt…]} }
@@ -26,8 +28,9 @@ export function bindControls(radio, after, cfg) {
     angles[knob] = (angles[knob] || 0) + dir * TUNE_STEP_DEG;
     el.querySelector('.grip').style.transform = `rotate(${angles[knob]}deg)`;
   };
+  const potEvts = new Set(['vol', ...(cfg.pots || []).map(p => p.evt)]);
   const turn = (knob, dir) => {
-    if (knob === 'vol') { send('vol', dir); return; }
+    if (potEvts.has(knob)) { send(knob, dir); return; }
     rotate(knob, dir);
     send(knob, dir);
   };
@@ -90,6 +93,14 @@ export function bindControls(radio, after, cfg) {
     onClick: () => send('sqUp'),
   });
   const volGrip = vol.el.querySelector('.grip');
+  for (const pot of cfg.pots || []) {
+    pot.el.addEventListener('wheel', wheelHandler(pot.evt), { passive: false });
+    dragKnob(pot.el, pot.evt, {
+      onPress: () => pot.pushDown && send(pot.pushDown),
+      onClick: () => pot.pushUp && send(pot.pushUp),
+    });
+    pot.grip = pot.el.querySelector('.grip');
+  }
 
   // encoders; the inner knob sits inside the outer one
   const { outer, inner } = cfg.encoders;
@@ -134,7 +145,10 @@ export function bindControls(radio, after, cfg) {
   return {
     send, turn,
     // the volume pot's angle follows the radio state (end stops)
-    renderKnobs() { volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`; },
+    renderKnobs() {
+      volGrip.style.transform = `rotate(${vol.angle(radio)}deg)`;
+      for (const pot of cfg.pots || []) pot.grip.style.transform = `rotate(${pot.angle(radio)}deg)`;
+    },
   };
 }
 

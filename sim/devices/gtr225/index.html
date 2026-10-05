@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GTR 225 Simulator</title>
+<link rel="stylesheet" href="../../shared/style.css">
+</head>
+<body>
+
+<main>
+  <section class="unit-col">
+    <header>
+      <a class="back" href="../../">&larr; All simulators</a>
+      <h1>GTR 225A COM simulator</h1>
+      <span class="sub">Practice trainer based on the GTR 225/225A/225B Pilot's Guide (190-01182-00 Rev D, SW v2.10).</span>
+      <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. On the TUNE knob, the outer ring and the centre are separate. Click the centre for PUSH CRSR, click the volume knob for PUSH SQ.</span>
+    </header>
+    <div class="bezel-wrap" id="bezelWrap">
+      <div class="bezel" id="bezel">
+        <div class="lbl" style="left:42px;top:20px;width:40px" title="COM: this knob controls the COM radio audio volume">COM</div>
+        <div class="knob vol" id="volKnob" title="Power / COM Volume / Squelch knob. Turn clockwise past the detent to power on, counter-clockwise past 0 to power off; turning adjusts COM volume (drag up/down or scroll). Press to toggle automatic squelch override (SQ shown). Press and hold about 2 s to tune 121.5."><div class="grip"></div></div>
+        <div class="lbl" style="left:5px;top:77px;text-align:left" title="PWR / VOL: turn the knob to power on/off and set COM volume">PWR<br>VOL</div>
+        <div class="lbl" style="left:32px;top:100px;width:60px" title="PUSH SQ: press the knob to toggle automatic squelch override">PUSH SQ</div>
+        <div class="sensor" title="Photo sensor: the unit automatically adjusts display brightness for the cabin lighting (manual offset under FUNC > SYS > DSPL BRT)"></div>
+        <button class="key" data-key="MON" style="left:107px;top:87px" title="MON (Monitor): listen to the standby frequency while still listening to the active one. MN replaces STB; press again to turn off. A signal on the active frequency takes priority.">MON</button>
+
+        <div class="lcd-frame" title="Display: active frequency (ACT) on the left, standby (STB, or MN when monitoring) on the right. Top-left annunciator shows SQ, TX or RX. Bottom line: station ident/type, prompts, and the running timer."><div class="lcd-recess"><div class="lcd off" id="lcd"></div></div></div>
+
+        <div class="garmin" title="Garmin GTR 225A VHF COM transceiver (118.000-136.990 MHz, 8.33 / 25 kHz)">GARMIN</div>
+        <div class="usb" id="usbSlot" title="USB port: used to update the frequency database (FUNC > SYS > LOAD DATABASE). Insert a drive from the Simulation panel."></div>
+        <button class="key flip" id="flip" style="left:710px;top:88px" title="FLIP/FLOP: press and release to swap active and standby frequencies (disabled while transmitting). In a list, sends the selected frequency to active. Press and hold about 2 s for the emergency channel 121.5."><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><path d="M0 6 7 0v4.8h12V0l7 6-7 6V7.2H7V12z" fill="currentColor"/></svg></button>
+        <div class="lbl" style="left:798px;top:121px;width:40px" title="TUNE: dual concentric knob for frequency tuning and data entry">TUNE</div>
+        <div class="dual" id="tune">
+          <div class="outer" id="tuneOuter" title="Outer knob: MHz (118-136) on the COM page; moves the cursor / selects the field or category on other pages. Drag up/down or scroll."><div class="grip"></div>
+            <div class="inner" id="tuneInner" title="Inner knob: kHz (25 or 8.33 kHz steps) on the COM page; changes characters, values and list entries on other pages. Drag up/down or scroll. Press (PUSH CRSR) for database look-up from the COM page, to edit a user frequency, or to set the countdown timer."><div class="grip"></div></div>
+          </div>
+        </div>
+        <div class="lbl" style="left:737px;top:211px;text-align:left" title="PUSH CRSR: press the inner knob to activate the cursor / database look-up">PUSH<br><span style="padding-left:12px">CRSR</span></div>
+
+        <button class="key" data-key="COM" style="left:151px;top:190px" title="COM: return to the COM radio page (COM annunciator on the top line).">COM</button>
+        <button class="key" data-key="MEM" style="left:248px;top:190px" title="MEM: recall the Recent frequency list (last 20); press again for the User frequency list (up to 15).">MEM</button>
+        <button class="key" data-key="ICS" style="left:346px;top:190px" title="ICS: show intercom settings. Repeated presses cycle Adjust Intercom, AUX Audio and Intercom On/Off.">ICS</button>
+        <div class="screw" style="left:431px;top:207px" title="Locking screw: secures the unit in its mounting rack"></div>
+        <button class="key" data-key="FUNC" style="left:472px;top:190px" title="FUNC: open the Function menu (COM frequency lists, ICS, SYS and Timer configuration). Press again to exit.">FUNC</button>
+        <button class="key" data-key="CLR" style="left:570px;top:190px" title="CLR: erase information, cancel entries, and reset timers. On the COM page with a timer shown: CLR then ENT resets it.">CLR</button>
+        <button class="key" data-key="ENT" style="left:667px;top:190px" title="ENT: save values, confirm prompts and acknowledge messages. On the COM page: save the standby frequency as a user frequency (or stop the displayed timer).">ENT</button>
+      </div>
+    </div>
+
+    <div class="card status" id="statusBar" data-state="off">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="status-text">
+        <div id="hint" class="hint"></div>
+        <div id="hearingRow"><b>Audio:</b> <span id="hearing"></span></div>
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div class="panel-col">
+        <section class="card">
+          <h2>Yoke &amp; remote</h2>
+          <button id="ptt" class="hold btn-primary">PTT <small>hold to transmit</small></button>
+          <button id="xfr" class="hold btn-wide" title="Remote flip/flop on the yoke. Tap = flip; hold 2 s = 121.5 + lock (hold again to unlock)">COM RMT XFR <small>tap = flip · hold 2 s = 121.5 lock</small></button>
+          <div class="btn-row">
+            <button data-sim="recall" title="Loads the next user preset into standby">Remote recall</button>
+            <div class="seg" role="group" aria-label="COM channel">
+              <button data-sim="chanDn" title="COM CHAN DN">CHAN &#9660;</button>
+              <button data-sim="chanUp" title="COM CHAN UP">CHAN &#9650;</button>
+            </div>
+            <button data-sim="remoteIcs" title="Remote intercom on/off switch">Remote ICS</button>
+          </div>
+        </section>
+        <nav class="manuals">
+          <a class="manual-btn" href="../../manuals/gtr225-pilots-guide.pdf" target="_blank" rel="noopener" title="GTR 225/225A/225B Pilot's Guide (190-01182-00 Rev D) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>GTR 225 Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="manual-btn" href="../../manuals/gtr225-gnc255-installation-manual.pdf" target="_blank" rel="noopener" title="GTR 225/GNC 255 TSO Installation Manual (190-01182-02 Rev L; public copy with a previous reader's highlights) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
+      </div>
+
+      <section class="card">
+        <h2>Traffic &amp; audio</h2>
+        <div class="field">
+          <span class="lbl-t">Incoming call</span>
+          <div class="btn-row">
+            <button data-sim="rxAct">Active</button>
+            <button data-sim="rxStb">Standby</button>
+          </div>
+          <label class="lbl-t" for="audioOn">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Aircraft &amp; installation</h2>
+        <div class="field">
+          <label class="lbl-t" for="busSw">Aircraft power</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked></div>
+          <label class="lbl-t" for="gpsOn">GPS source</label>
+          <div class="ctl-row"><input type="checkbox" id="gpsOn" class="switch"><select id="posSel" aria-label="GPS position"></select></div>
+          <label class="lbl-t" for="usbSel">USB drive</label>
+          <select id="usbSel">
+            <option value="none">not inserted</option>
+            <option value="valid">valid database (cycle 2611)</option>
+            <option value="corrupt">corrupt / wrong system ID</option>
+            <option value="nounlock">missing unlock file</option>
+          </select>
+          <label class="lbl-t" for="msgSel">Message</label>
+          <div class="ctl-row"><select id="msgSel"></select><button data-sim="msg">Raise</button></div>
+        </div>
+        <div class="card-foot">
+          <button data-sim="factory" class="btn-danger-quiet">Reset to factory settings</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <aside class="help-col">
+
+    <div class="card procs">
+      <h2>Procedures</h2>
+      <details open><summary>Power, volume, squelch</summary>
+        <ul>
+          <li>Power on: turn PWR/VOL clockwise past the detent (scroll up). Power off: turn counter-clockwise past 0.</li>
+          <li>Press the knob to toggle the automatic squelch override. <b>SQ</b> appears top-left.</li>
+          <li>The volume bar graph shows while you turn the knob.</li>
+        </ul></details>
+      <details><summary>2.1 Select a frequency / flip</summary>
+        <ol><li>Press <b>COM</b> if needed.</li><li>Outer knob = MHz (118–136), inner knob = kHz (25 or 8.33 steps).</li>
+        <li>Press <b>&#x21C4;</b> to swap active and standby. Flip is disabled while transmitting.</li>
+        <li>With GPS: the nearest station ident/type shows under each frequency. <b>*</b> = more than one type.</li></ol></details>
+      <details><summary>2.2 Monitor standby (MON)</summary>
+        <ul><li>Press <b>MON</b>: <b>MN</b> replaces STB and you hear standby too.</li>
+        <li>When the active frequency receives a signal, the radio switches to it automatically, cutting off the standby audio. Once the active goes quiet, the standby is heard again. Active audio quality is not affected.</li>
+        <li>Press <b>MON</b> again to turn monitoring off. With MON off, standby transmissions are not heard.</li>
+        <li>Practise it: press <b>Incoming call on STANDBY</b>, then <b>Incoming call on ACTIVE</b> while the standby call is playing.</li></ul></details>
+      <details><summary>2.3 Save standby as user freq</summary>
+        <ol><li>On the COM page press <b>ENT</b>.</li><li>Inner knob = character, outer knob = cursor.</li><li>After selecting characters, press <b>ENT</b>. Then turn the <b>outer knob</b> to the TYPE field and the inner knob to select the type.</li><li><b>ENT</b> saves (max 15), <b>CLR</b> cancels.</li></ol>
+        <p class="small">If a timer is running and shown, ENT on the COM page opens the STOP TMR prompt instead.</p></details>
+      <details><summary>2.4 Database look-up</summary>
+        <ol><li>On the COM page press the inner knob (PUSH CRSR).</li><li>Inner knob = character, outer knob = cursor (auto-completes). Try <b>LKLT</b>, <b>LKKB</b>, <b>LKMB</b>, <b>LKPR</b>, <b>LKAA</b> (Praha FIR / Information).</li>
+        <li><b>ENT</b>, then the inner knob scrolls types (<b>+</b> = more freqs of the same type).</li><li><b>ENT</b> = to standby, <b>&#x21C4;</b> = to active. Remembered for 30 min.</li></ol></details>
+      <details><summary>2.5 Emergency / 2.6 stuck mic / 2.8 remote</summary>
+        <ul><li>Hold <b>&#x21C4;</b> (or the COM RMT XFR) about 2 s: 121.500 becomes active and the old active moves to standby.</li>
+        <li>Hold <b>COM RMT XFR</b> 2 s: COM is locked to 121.5. Hold again to unlock (or cycle power).</li>
+        <li>PTT held &gt; 30 s raises the REMOTE KEY STUCK message. At 35 s the radio returns to RX and shows STUCK MIC until you release.</li>
+        <li>Remote recall: each press loads the next user preset into standby (wraps).</li></ul></details>
+      <details><summary>3.2 MEM: recent &amp; user lists</summary>
+        <ol><li><b>MEM</b> = recent (last 20). <b>MEM</b> again = user list.</li><li>Inner knob scrolls. <b>&#x21C4;</b> = set active, <b>ENT</b> = set standby.</li></ol></details>
+      <details><summary>3.2.2 Edit / delete user freq</summary>
+        <ol><li><b>FUNC</b> &rarr; USER FREQS &rarr; <b>ENT</b>, inner knob to an entry.</li>
+        <li>Delete: <b>CLR</b>, then <b>ENT</b> to confirm.</li>
+        <li>Edit: press the inner knob. Inner knob sets MHz, outer knob to the kHz field, inner knob sets kHz, outer knob to the WPT field (inner = character, outer = cursor). Press <b>ENT</b>, turn the outer knob to the TYPE field, inner knob selects the type. <b>ENT</b> accepts, <b>CLR</b> cancels. Use the empty slot to add a new entry.</li></ol></details>
+      <details><summary>3.2.3–3.2.7 FUNC: database &amp; nearest</summary>
+        <ol><li><b>FUNC</b>. Outer knob = category, inner knob = item, <b>ENT</b> opens.</li><li>NEAREST APT: inner knob scrolls the 25 nearest airports, <b>ENT</b> shows that airport's frequencies; then inner knob selects, <b>&#x21C4;</b> = active, <b>ENT</b> = standby, <b>CLR</b> = back.</li><li>NEAREST ACC/FSS/WX: inner knob scrolls, <b>&#x21C4;</b> = active, <b>ENT</b> = standby, <b>CLR</b> returns to the functions display.</li><li>Needs a GPS position (see the Simulation panel).</li></ol></details>
+      <details><summary>3.3 ICS settings</summary>
+        <ul><li><b>ICS</b> key cycles Adjust Intercom &rarr; AUX Audio &rarr; Intercom On/Off &rarr; COM page.</li>
+        <li>Adjust Intercom (needs intercom ON): SQ (one click below 0 = AUTO), VOL, MUTE ON RX. Outer knob = field, inner knob = value.</li>
+        <li><b>ENT</b> saves, <b>CLR</b> undoes. The speaker setting is under FUNC &rarr; ICS CONFIGURATION.</li></ul></details>
+      <details><summary>3.4 System configuration</summary>
+        <ul><li>COM SPACING 8.33/25. Switching to 25 kHz deletes 8.33-only user frequencies.</li>
+        <li>COM SIDETONE: OFFSET/FIXED, offset −10…10.</li><li>DSPL BRT −10…100, DSPL CONTRAST −50…50.</li>
+        <li>DATABASE INFO, SOFTWARE VER, SERIAL NUMBER: press FUNC to exit.</li>
+        <li>LOAD DATABASE: insert USB (Simulation panel), <b>ENT</b>, check the versions, <b>ENT</b>, wait.</li></ul></details>
+      <details><summary>3.5 Timers</summary>
+        <ul><li>FUNC &rarr; TMR CONFIGURATION (outer knob) &rarr; COUNT UP / COUNT DOWN.</li>
+        <li>Count up: <b>ENT</b> start/stop, <b>CLR</b> reset to 0.</li>
+        <li>Count down: press the inner knob to set the start time (outer knob = H/M/S field, inner knob = value), <b>ENT</b> to accept. Then <b>ENT</b> start/stop, <b>CLR</b> reset to the start value.</li>
+        <li>On the COM page the running timer shows bottom-right (countdown first). At 0 the countdown keeps counting up, highlighted.</li>
+        <li>On the COM page: <b>CLR</b> then <b>ENT</b> = reset, <b>ENT</b> twice = stop.</li></ul></details>
+      <details><summary>5.1 Messages</summary>
+        <ul><li>Messages take over the display. <b>ENT</b> acknowledges and returns to the previous page.</li>
+        <li>Raise any of them from the Simulation panel to practise.</li></ul></details>
+    </div>
+  </aside>
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
