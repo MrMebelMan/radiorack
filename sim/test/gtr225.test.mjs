@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Radio, stepKhz, stepMhz, fmtFreq, MAX_USER, EMERGENCY } from './radio.js';
+import { GTR225 as Radio } from '../devices/gtr225/device.js';
+import { stepKhz, stepMhz, fmtFreq, EMERGENCY } from '../core/freq.js';
+import { MAX_USER } from '../com/constants.js';
 
 function make() {
   let t = 0;
@@ -299,4 +301,18 @@ test('database look-up from the COM page returns to the COM page after ENT', () 
   r.input('ENT'); r.input('ENT');
   assert.equal(r.page.id, 'com');
   assert.equal(r.s.stb, 120335);
+});
+
+test('display brightness / contrast preview live; CLR restores, ENT keeps', () => {
+  const r = make();
+  r.input('FUNC'); r.input('outer', 1); r.input('outer', 1); // SYS CONFIGURATION
+  r.input('inner', 3); r.input('ENT');                       // DSPL CONTRAST
+  assert.equal(r.page.kind, 'contrast');
+  r.input('inner', 1); r.input('inner', 1);
+  assert.equal(r.view().contrast, 2);
+  assert.equal(r.s.contrast, 0);
+  r.input('CLR');
+  assert.equal(r.view().contrast, 0);
+  r.input('ENT'); r.input('inner', 1); r.input('ENT');
+  assert.equal(r.s.contrast, 1);
 });

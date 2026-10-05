@@ -113,11 +113,3 @@ export const POSITIONS = [
 
 export const DB_INFO = { cycle: '2610', effective: '01-OCT-26', region: 'EUR' };
 export const USB_DB_INFO = { cycle: '2611', effective: '29-OCT-26', region: 'EUR' };
-
-export const UNIT_INFO = {
-  model: 'GTR 225A',
-  displaySw: '2.10',
-  comSw: '2.20',
-  systemId: '0048B3F1A0C2D5E',
-  serial: '1HK012345',
-};
