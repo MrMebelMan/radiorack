@@ -1,6 +1,6 @@
 # RadioRack
 
-Avionics simulators you can practise on before you get in the aircraft.
+Avionics simulators for training on the ground before you fly.
 
 Every unit here behaves the way its manual says it does: the same keys, the same knob pushes, the same menus, the same screens. You turn knobs with the mouse, hear the radio, and work through the real procedures until your fingers know them.
 
@@ -28,7 +28,7 @@ Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight t
 
 ![Becker AR6201](sim/previews/ar6201.png)
 
-Standard, Direct Tune and Channel modes, scan with priority, 99 labelled user channels and the last-channel memory, squelch with signal strength, intercom and pilot menus — and the full installer Installation Setup behind the password. Built from the Operating Instructions (Issue 5, 2013) and the Installation and Operation Manual DV 14300.03.
+Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user channels and the last-channel memory, squelch with signal strength, intercom and pilot menus — and the full installer Installation Setup behind the password. Built from the Operating Instructions (Issue 5, 2013) and the Installation and Operation Manual DV 14300.03.
 
 ## Running it
 

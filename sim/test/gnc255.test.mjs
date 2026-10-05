@@ -132,11 +132,11 @@ test('nearest VOR: ENT = standby, flip = active, CLR exits (manual 3.3.4)', () =
 });
 
 test('VOR CDI geometry: TO/FROM and needle side (2 deg per dot, 10 full scale)', () => {
-  // on radial 270 inbound (course 090): centred, TO
+  // on radial 270 inbound (course 090): centered, TO
   assert.deepEqual(vorCdi(90, 270), { toFrom: 'TO', needleDeg: 0 });
   // on radial 280 with OBS 090: north of course, course to the left -> needle left
   assert.ok(vorCdi(90, 280).needleDeg < 0);
-  // outbound on radial 090 with OBS 090: FROM, centred
+  // outbound on radial 090 with OBS 090: FROM, centered
   assert.deepEqual(vorCdi(90, 90), { toFrom: 'FROM', needleDeg: 0 });
   assert.equal(vorCdi(90, 120).needleDeg, -10);   // clamped full scale
 });
@@ -146,7 +146,7 @@ test('OBS page: knobs set the OBS, CDI follows the aircraft position (manual 2.3
   r.input('OBS');
   assert.equal(r.page.id, 'obs');
   const radial = Math.round(radialFrom(r.navDb.findIdent('OKL'), r.pos));
-  // set the OBS to the radial the aircraft is on -> FROM, centred
+  // set the OBS to the radial the aircraft is on -> FROM, centered
   for (let i = 0; i < Math.floor(radial / 10); i++) r.input('outer', 1);
   for (let i = 0; i < radial % 10; i++) r.input('inner', 1);
   assert.equal(r.s.nav.obs, radial);

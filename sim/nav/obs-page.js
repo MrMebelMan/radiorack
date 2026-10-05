@@ -17,7 +17,7 @@ export default {
     const nav = this.s.nav;
     v.right = { type: 'com', ann: 'NAV', label: 'STB', big: [S(NAV_BAND.fmt(nav.stb))] };
     const c = this.cdi();
-    // localizer (photo of the unit): "RIS  LOC" instead of the OBS setting, circle at the centre
+    // localizer (photo of the unit): "RIS  LOC" instead of the OBS setting, circle at the center
     const mid = c.loc ? [S('LOC'), S(' ')] : [S(pad3(nav.obs)), S('OBS', { tiny: true }), S(' ')];
     v.bottomFull = [
       S(c.ident || ''), S(' '),

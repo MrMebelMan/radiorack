@@ -44,7 +44,7 @@ Legend: **Sim:** what the simulator does now · **Why:** where it comes from · 
 - [ ] **COM RMT XFR held 30 s** raises "REMOTE KEY STUCK – COM remote transfer key". Real:
 
 ### Messages
-- [ ] **Message screen.** Sim: text only (category prefix like "REMOTE KEY STUCK -" dropped), centred, wrapped to 2 lines if long, "ENT=ACCEPT" bottom-left. Why: the screenshot shows one short message. Real (long ones, e.g. COM LOCKED):
+- [ ] **Message screen.** Sim: text only (category prefix like "REMOTE KEY STUCK -" dropped), centered, wrapped to 2 lines if long, "ENT=ACCEPT" bottom-left. Why: the screenshot shows one short message. Real (long ones, e.g. COM LOCKED):
 - [ ] **Keys while a message shows.** Sim: only ENT (acknowledge) works among the bezel keys; flip/flop, PTT, volume, MON keep working. Real:
 
 ### Lists and database (FUNC)
@@ -129,7 +129,7 @@ Legend: **Sim:** what the simulator does now · **Why:** where it comes from · 
 - [ ] **OBS knob steps.** Sim: outer knob 10°, inner knob 1°; shown 000–359. Why: the manual only says "the outer and inner knobs can be used". Real:
 - [ ] **Decoded ident on the OBS page.** Sim: the station ident whenever the station is received; blank otherwise. Real:
 - [ ] **CDI with no signal / DME-only.** Sim: dots only, no triangle, no needle. Real:
-- [ ] **Localizer on the CDI.** Sim: "ident  LOC" instead of the OBS value and a circle at the centre (both from a Garmin photo of the unit). Full scale ±2.5°, course from the database; LKKB ILS 24 has no published course, so no needle. Why: the deflection scale is not documented. Real:
+- [ ] **Localizer on the CDI.** Sim: "ident  LOC" instead of the OBS value and a circle at the center (both from a Garmin photo of the unit). Full scale ±2.5°, course from the database; LKKB ILS 24 has no published course, so no needle. Why: the deflection scale is not documented. Real:
 - [ ] **Signal range.** Sim: VOR/LOC usable within 150 NM regardless of altitude. Real (altitude-dependent):
 
 ### T/F and DST
@@ -157,7 +157,7 @@ Everything below is **not** shown or stated there.
 - [ ] **ADS-B monitor page.** Sim: "ADS-B" / "MONITOR" + latitude / longitude (N50°07.88 / E014°31.54), dashes when the GPS position is invalid. Real:
 - [ ] **BACK on FUNC pages.** Sim: does nothing there. Both manuals document BACK only as "goes back to the previous digit in the code selector" (and for configuration items). Real (does it step back a page or return to the main screen?):
 - [ ] **IDENT indication.** Sim: "IDENT" next to the mode text for 18 s. Real (where, and does it flash?):
-- [ ] **Reply indicator.** Shape from photos of the unit (bell on a thin base, two dimmer arrows above pointing inwards, top-centre). Sim: lit for 180 ms about once a second while replying. Real (blink rate, or steady while replying?):
+- [ ] **Reply indicator.** Shape from photos of the unit (bell on a thin base, two dimmer arrows above pointing inwards, top-center). Sim: lit for 180 ms about once a second while replying. Real (blink rate, or steady while replying?):
 - [ ] **Display cross-fade.** Sim: when the display changes, the old frame fades out while the new one fades in, both over 150 ms (user observation; the duration is a guess). Real (duration):
 - [ ] **ON mode altitude.** Sim: the flight level is still shown (only reporting is suppressed). Real:
 - [ ] **Altitude monitor pointer.** Sim: ▲ / ▼ / ◆ next to the flight level (climb back / descend back / within limits). Real (shape):

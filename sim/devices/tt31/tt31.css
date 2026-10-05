@@ -12,7 +12,7 @@
 .bezel.tt31 .key.pill.wide { width: 92px; }
 .bezel.tt31 .key.pill:active, .bezel.tt31 .key.pill.down { background: radial-gradient(ellipse 75% 85% at 50% 40%, #d2d5cd, #b0b3ab 70%, #8e918a); box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 2px 4px rgba(0,0,0,.3), inset 0 -2px 3px rgba(0,0,0,.15); transform: translateY(1px); }
 .bezel.tt31 .lbl.mk { font: 700 13px Arial, sans-serif; color: #dfe79a; white-space: nowrap; }
-/* round the mode knob (centre 94,153): each label anchored by the edge facing the knob, all 8 px from the ring */
+/* round the mode knob (center 94,153): each label anchored by the edge facing the knob, all 8 px from the ring */
 .bezel.tt31 .lbl.mk.l { transform: translate(-100%, -50%); }
 .bezel.tt31 .lbl.mk.r { transform: translate(0, -50%); }
 .bezel.tt31 .lbl.mk.t { transform: translate(-50%, -100%); }
@@ -25,7 +25,7 @@
   border-width: 8px 12px 10px; border-color: #0b0b0b #121212 #2b2b2a #121212;
 }
 .bezel.tt31 .lcd-recess { padding: 6px 10px; }
-.bezel.tt31 .tstrip {           /* light grey panel under the display, logo printed on it (photo) */
+.bezel.tt31 .tstrip {           /* light gray panel under the display, logo printed on it (photo) */
   position: absolute; left: 196px; top: 128px; width: 460px; height: 16px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 0 0 14px 14px / 0 0 10px 10px;

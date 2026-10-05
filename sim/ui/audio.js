@@ -154,7 +154,7 @@ export function createAudio(radio, { clips, clipFor, toggle }) {
       this.morseNext = 0;
     }
 
-    // static levels / colour per source (tune here)
+    // static levels / color per source (tune here)
       let n = 0, fc = 1800, q = 0.6;
       if (a.src === 'static') n = 0.12 * vol;                  // squelch override
       if (hearingRx) n = (a.quality === 'poor' ? (this.dropping ? 0.5 : 0.3) : a.quality === 'good' ? 0.18 : 0.12) * vol;   // background under incoming calls

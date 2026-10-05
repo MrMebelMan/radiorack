@@ -81,7 +81,7 @@ export const AIRPORTS = [
 
 // Non-airport stations. `id` is the short label shown on the COM page
 // (reverse look-up); `name` is shown in the Nearest lists.
-// Positions are rough sector centres, used only for "nearest" sorting.
+// Positions are rough sector centers, used only for "nearest" sorting.
 export const STATIONS = [
   // PRAHA INFORMATION (FIS, below FL95) - ENR 2.1
   { cat: 'fss', id: 'PRAHA', type: 'FSS', name: 'PRAHA INFO W', f: 126100, lat: 49.90, lon: 13.30 },

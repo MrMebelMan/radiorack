@@ -1,4 +1,4 @@
-// ComRadio: the VHF COM transceiver behaviour shared by Garmin COM units
+// ComRadio: the VHF COM transceiver behavior shared by Garmin COM units
 // (GTR 225, and the COM side of a GNC 255). No DOM: the UI feeds input() and
 // renders view(). A device subclass supplies its menu, settings, keys, messages,
 // defaults and info pages through the `device` config passed to the constructor.

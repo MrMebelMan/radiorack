@@ -276,7 +276,7 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .big { font-family: "LCD", monospace; font-size: var(--f-big); line-height: .82; letter-spacing: -1px; display: inline-block; }
 .mid { font-size: var(--f-mid); }
 
-/* COM page: [ACT][active][COM][STB/MN][standby] / ident centred under each frequency */
+/* COM page: [ACT][active][COM][STB/MN][standby] / ident centered under each frequency */
 .lcd.cg { grid-template-columns: 20px max-content 1fr 20px max-content; }
 .lcd.cg .ann { grid-column: 1; grid-row: 1; align-self: end; padding-bottom: 6px; display: flex; flex-direction: column; gap: 10px; }
 .lcd.cg .act { grid-column: 2; grid-row: 1; align-self: end; }
@@ -320,7 +320,7 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .lcd.xp .ch, .lcd.xp .xptr { display: inline-grid; }
 .lcd.xp .dg { grid-template-columns: calc(1.09ch + 1px); justify-items: center; }   /* fixed slot = widest digit (1ch is the narrow 0) + letter-spacing: digits never move */
 .lcd.xp .xr > .cl { display: flex; align-items: center; }
-.lcd.xp .xreply { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; }   /* centre of the display (photo); out of the flow so IDENT never moves */
+.lcd.xp .xreply { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; }   /* center of the display (photo); out of the flow so IDENT never moves */
 .lcd.xp .xsmall { text-align: right; }
 .lcd.xp .xbot { display: flex; align-items: center; flex: none; height: 46px; min-height: 0; }   /* fixed, so the top row never moves between pages */
 .lcd.xp .xfl { font-size: 34px; width: 30%; white-space: nowrap; }
@@ -375,7 +375,7 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
   transition: opacity .12s ease-out;   /* power on: quick */
   -webkit-font-smoothing: auto; font-smooth: auto;
 }
-.lcd.pos::before {   /* backlight over the grey-green glass: pilot brightness / dimming bus */
+.lcd.pos::before {   /* backlight over the gray-green glass: pilot brightness / dimming bus */
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: var(--lit, 1);
   background: radial-gradient(ellipse 75% 85% at 50% 48%, #eef3fb, #dbe3f2 60%, #c9d3e8);
 }

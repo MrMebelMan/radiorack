@@ -29,7 +29,7 @@ Look at it. Fix differences before reporting.
 ## Landing preview — `scripts/preview.mjs`
 `S=$S node .claude/skills/add-device/scripts/preview.mjs <device> [power-on js]` writes `sim/previews/<device>.png` (powered-on bezel). The power-on JS turns the unit on the way a user would (e.g. scroll the volume knob); default sends wheel events to the first `.knob` and waits 4 s.
 
-## Colour sampling
+## Color sampling
 `magick photo.png -crop 10x10+X+Y -resize 1x1 -format '%[pixel:p{0,0}]' info:`
 
 ## Gotchas

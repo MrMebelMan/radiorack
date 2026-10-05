@@ -5,7 +5,7 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 ## Measure, don't eyeball
 - Lay the bezel out in a fixed pixel box (e.g. 880×248 for a wide radio, 440×440 for a 57 mm square unit) and scale with `fitBezel`.
 - Get positions from the photo: crop/zoom with ImageMagick, convert to % of the face, place elements in the same %. Verify with `scripts/measure.mjs` (prints element boxes as % of the bezel) and fix until they agree.
-- Colours: sample `magick photo.png -crop 10x10+X+Y -resize 1x1 -format '%[pixel:p{0,0}]' info:` on several spots. Studio photos are lighter than a cockpit: go a bit darker than the samples. The user notices both "too bright" and "way too dark".
+- Colors: sample `magick photo.png -crop 10x10+X+Y -resize 1x1 -format '%[pixel:p{0,0}]' info:` on several spots. Studio photos are lighter than a cockpit: go a bit darker than the samples. The user notices both "too bright" and "way too dark".
 
 ## Light comes from the top-left — everywhere
 - Highlights/glare top-left, shadows to the bottom-right (`box-shadow` with positive x and y). Taller parts (knobs) cast longer shadows than flat ones (keys, screws).
@@ -36,12 +36,12 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 
 ## Display
 - Frame: thick, rounded surround with sloped sides (top slopes dark, bottom slope lit, glare on the outer corners).
-- Fonts: bundle OFL woff2 files in `sim/fonts/` with their licence. Pixel LCDs: Jersey 15. Segment-like positive LCDs: a condensed sans for letters and **hand-drawn SVG digit glyphs** when the real digits have a distinctive shape (chamfered corners, a foot on the 1, flat-topped 1, decimal dot on the baseline, thicker strokes on the main line). Compare glyphs zoomed against a close-up photo.
-- Digits never move: every digit sits in a fixed-width slot (the widest digit) so 4/5/1 don't shift neighbours.
+- Fonts: bundle OFL woff2 files in `sim/fonts/` with their license. Pixel LCDs: Jersey 15. Segment-like positive LCDs: a condensed sans for letters and **hand-drawn SVG digit glyphs** when the real digits have a distinctive shape (chamfered corners, a foot on the 1, flat-topped 1, decimal dot on the baseline, thicker strokes on the main line). Compare glyphs zoomed against a close-up photo.
+- Digits never move: every digit sits in a fixed-width slot (the widest digit) so 4/5/1 don't shift neighbors.
 - Text changes: cross-fade only the characters that changed (TT31 `xpdrRender`/`syncCell` in `ui/lcd.js`); a value redrawn with the same text must not flicker.
-- Backlight: a fixed-colour layer whose opacity follows brightness; unlit glass colour from the unlit photo. Inversion ("display inverted") swaps the two theme colours explicitly — never `filter: invert()` (gives wrong hues).
+- Backlight: a fixed-color layer whose opacity follows brightness; unlit glass color from the unlit photo. Inversion ("display inverted") swaps the two theme colors explicitly — never `filter: invert()` (gives wrong hues).
 - Power: keep the last frame while fading out; fade durations as the user specifies (they will tell you; for the AR6201 off was almost instant, on ~120 ms).
-- Fixed slots for indicators that blink (reply indicator, annunciators) so neighbours never move.
+- Fixed slots for indicators that blink (reply indicator, annunciators) so neighbors never move.
 
 ## Page layout
 - `fitBezel(bezel, wrap, { width, height, maxScale, maxViewport })`.

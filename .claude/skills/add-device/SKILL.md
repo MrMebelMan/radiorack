@@ -5,10 +5,10 @@ description: Add a new avionics device (radio, NAV/COM, transponder, DME, …) t
 
 # Add a device to the avionics simulator collection
 
-You are adding one more practice simulator to `sim/` (plain ES modules, no build step; see `CLAUDE.md` for the layout). The owner uses these to practise on the ground, so the bar is **"behaves and looks like the real unit"**. Every past device needed many correction rounds; this skill exists so you get it right the first time. Read `CLAUDE.md` first, then follow the phases in order. Supporting files: `look.md` (bezel/LCD techniques), `checks.md` (verification recipes), `scripts/` (CDP helpers).
+You are adding one more practice simulator to `sim/` (plain ES modules, no build step; see `CLAUDE.md` for the layout). The owner uses these to practice on the ground, so the bar is **"behaves and looks like the real unit"**. Every past device needed many correction rounds; this skill exists so you get it right the first time. Read `CLAUDE.md` first, then follow the phases in order. Supporting files: `look.md` (bezel/LCD techniques), `checks.md` (verification recipes), `scripts/` (CDP helpers).
 
 ## Hard rules (the user enforces these strictly)
-- **The manual is the spec.** Implement procedures literally, step by step, no "convenient" shortcuts. Cite the § for every behaviour.
+- **The manual is the spec.** Implement procedures literally, step by step, no "convenient" shortcuts. Cite the § for every behavior.
 - **No invented screen text.** Anything on the display that is not in a manual figure or a photo of the unit is not shown. Where a screen must show something undocumented, keep it minimal and list it in `ASSUMPTIONS.md`.
 - **Add nothing that wasn't asked for**: no helper buttons, markers, keyboard shortcuts, duplicated status, decorative sounds, explanatory toasts. Offer an idea in one line instead.
 - **Real data only.** Frequencies/navaids from the Czech AIP (aim.rlp.cz) via `sim/data/lk.js` / `lk-nav.js`; never from memory.
@@ -23,10 +23,10 @@ You are adding one more practice simulator to `sim/` (plain ES modules, no build
 3. **View every page as an image** (`pdftoppm -r 110 -png`, then Read each PNG). Screen figures are often raster images whose text never reaches pdftotext. Extract figures with `pdfimages -png` and zoom (`magick … -crop … -scale 300%`) to read small display text. This is your OCR; `tesseract` only as a helper.
 4. Find what the user's PDF lacks: the **installation manual** (setup menus, defaults, exact message texts, connector features), other issues of the same manual, sibling/newer models. Launch a research subagent with an explicit numbered question list; demand verbatim quotes + URL + document issue; downloads go to the scratchpad. Newer-model facts are hints only: mark them as such.
 5. Ask the user for **photos of the real unit**: unlit front, lit display, close-ups (display, knobs, screws/corners). Keep the paths; they are the visual reference.
-6. Re-check: for every behaviour you are about to call an assumption, look whether a procedure's step sequence or an installation-manual figure already decides it.
+6. Re-check: for every behavior you are about to call an assumption, look whether a procedure's step sequence or an installation-manual figure already decides it.
 
 ## Phase 2 — Plan (plan mode)
-- Write the plan: Context, Look (from photos), Behaviour per manual section with § refs and ⚑ for anything not stated, Code (which shared modules), Tests, Docs, Verification.
+- Write the plan: Context, Look (from photos), Behavior per manual section with § refs and ⚑ for anything not stated, Code (which shared modules), Tests, Docs, Verification.
 - Ask only genuine choices with AskUserQuestion (e.g. how a two-key combo is pressed with a mouse, preloaded data, how much of an optional feature to simulate). Recommend an option.
 
 ## Phase 3 — Build (reuse first)

@@ -1,6 +1,6 @@
 # RadioRack
 
-A local web app with simulators of avionics units (Garmin, Trig, Becker), so the owner can practise operating them on the ground.
+A local web app with simulators of avionics units (Garmin, Trig, Becker), so the owner can practice operating them on the ground.
 - Landing page: `sim/index.html`, one card per simulator.
 - **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
 - **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
@@ -71,9 +71,10 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
 
 ## Rules
 - **Follow the manual exactly.** Implement the manual's step sequences literally, with no "convenient" shortcuts. Where the manual is silent or contradicts itself, say so and ask; don't guess quietly.
-- **The procedure steps are the spec.** `test/manual-*.test.mjs` replay every numbered procedure of both Pilot's Guides literally, one input per step, on a radio used elsewhere first. Any behaviour change must keep them green. Before calling something an assumption, check whether a procedure's step sequence already decides it.
+- **The procedure steps are the spec.** `test/manual-*.test.mjs` replay every numbered procedure of both Pilot's Guides literally, one input per step, on a radio used elsewhere first. Any behavior change must keep them green. Before calling something an assumption, check whether a procedure's step sequence already decides it.
 - **No invented screen text.** Anything on the display that isn't in a manual screenshot or a photo of the unit is removed, not guessed. Assumptions go in `ASSUMPTIONS.md` for checking on a real unit.
 - **Don't add anything that wasn't asked for.** That covers UI helpers, extra controls, decorations, duplicated status and sounds. Offer the idea in one line instead.
 - **Frequencies must be real.** Check them against the Czech AIP at aim.rlp.cz (eAIP AD 2.18, VFR Manual, ENR 2.1, GEN 3.5), never from memory. They are stored in kHz using 8.33 channel names (120.335 → `120335`). The current data was verified for AIRAC 01 OCT 2026.
 - Saved state lives in localStorage under `PERSIST_KEY` in `devices/gtr225/device.js`. Bump it when the defaults change in a way that old saved state would hide.
+- **American English** in all text (UI, docs, comments): color, center, behavior, gray, practice, labeled. Quotes from manuals stay verbatim.
 - MON and squelch override are operating states. They reset at every power-up. Frequencies, lists and ICS/SYS settings persist.

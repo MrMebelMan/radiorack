@@ -13,7 +13,7 @@
   background: linear-gradient(160deg, rgba(54,58,55,.9), rgba(47,51,48,.9) 50%, rgba(40,44,41,.92)), var(--bezel-grain), #333734;   /* darker than the photo samples: those include the studio light */   /* smooth matte: grain only faint */
   box-shadow: 0 2px 6px rgba(0,0,0,.8), inset 1px 1px 0 rgba(255,255,255,.10), inset -1px -1px 0 rgba(0,0,0,.5);
 }
-.bezel.ar .ring {   /* raised round front (photo, centre 220,218): dark step outside, a light glare all round the edge, strongest top-left */
+.bezel.ar .ring {   /* raised round front (photo, center 220,218): dark step outside, a light glare all round the edge, strongest top-left */
   position: absolute; left: -2px; top: -3px; width: 432px; height: 432px; border-radius: 50%; pointer-events: none;   /* almost touches the sides of the front */
   box-shadow:
     0 0 0 1px rgba(0,0,0,.6), 1px 3px 5px rgba(0,0,0,.55),
@@ -24,14 +24,14 @@
 .bezel.ar .pan, .bezel.ar .cup { position: absolute; border-radius: 50%; pointer-events: none; }   /* only the slot is rotated: glare and shadow stay put */
 .bezel.ar .pan {
   width: 27px; height: 27px; margin: -13.5px 0 0 -13.5px;
-  background: radial-gradient(circle at 38% 30%, #a9a9a3 0, #878781 20%, #6b6b65 45%, #52524c 72%, #383833 100%);   /* grey metal, in the shade of the carve-out */
+  background: radial-gradient(circle at 38% 30%, #a9a9a3 0, #878781 20%, #6b6b65 45%, #52524c 72%, #383833 100%);   /* gray metal, in the shade of the carve-out */
   box-shadow: 1px 2px 2px rgba(0,0,0,.8), inset -1px -2px 3px rgba(0,0,0,.35);
 }
 .bezel.ar .cup {   /* black Phillips screw in a domed cup washer */
   width: 44px; height: 44px; margin: -22px 0 0 -22px;
   background:
     radial-gradient(circle at 34% 28%, rgba(255,255,255,.45) 0, rgba(255,255,255,.16) 16%, transparent 34%),
-    radial-gradient(circle at 42% 38%, #6a6a67 0, #545451 30%, #3f3f3d 55%, #2c2c2b 78%, #1c1c1b 100%);   /* dark grey metal dome */
+    radial-gradient(circle at 42% 38%, #6a6a67 0, #545451 30%, #3f3f3d 55%, #2c2c2b 78%, #1c1c1b 100%);   /* dark gray metal dome */
   box-shadow: 2px 3px 4px rgba(0,0,0,.75), inset 0 0 0 1px rgba(0,0,0,.5);   /* light from the top left */
 }
 .bezel.ar .pan::before, .bezel.ar .pan::after, .bezel.ar .cup::before, .bezel.ar .cup::after {
@@ -113,7 +113,7 @@
 .bezel.ar .knob.arenc > .cap { inset: 14%; }
 .bezel.ar .knob.arenc.down:not(.dragging) { filter: brightness(.8); }
 
-/* display window: recessed, thin dark bevel; the glass is grey-green unlit */
+/* display window: recessed, thin dark bevel; the glass is gray-green unlit */
 .bezel.ar .lcd-frame {   /* thick rounded surround with sloped sides (photo): top slopes in shadow, bottom slope lit, glare on the outer corners */
   left: 84px; top: 112px; width: 257px; height: 144px; border-radius: 11px;
   border-width: 9px 10px 11px; border-color: #070707 #121212 #3b3b39 #121212;
