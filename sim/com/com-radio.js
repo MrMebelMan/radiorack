@@ -58,6 +58,7 @@ export class ComRadio {
     this.power = false;     // unit actually running
     this.switchOn = false;  // PWR/VOL knob turned past the OFF detent
     this.bus = true;        // aircraft (avionics bus) power present
+    this.ambient = 60;      // light on the photocell, 0 (night) .. 100 (sunlight); simulation input
     this.bootUntil = 0;
     this.page = { id: 'com' };
     this.menuPos = { cat: 0, item: -1 };
@@ -435,7 +436,7 @@ export class ComRadio {
     }
     const au = this.audio();
     const v = {
-      brt: s.brt, contrast: s.contrast,
+      brt: s.brt, contrast: s.contrast, photo: this.ambient,
       ann: this.transmitting ? 'TX' : (au.src === 'act' || au.src === 'stb') ? 'RX' : s.sq ? 'SQ' : '',
       act: fmtFreq(s.act),   // replaced below by the shown band
       right: null, bottomLeft: [], bottomRight: [], bottomFull: null,
@@ -446,7 +447,7 @@ export class ComRadio {
       // (messages are stored as "CATEGORY - text"; the unit shows the text)
       const full = this.messages[this.msgs[0]];
       const text = full.includes(' - ') ? full.slice(full.indexOf(' - ') + 3) : full;
-      return { brt: s.brt, contrast: s.contrast, message: text.replace(/\.$/, ''), bottomLeft: [S('ENT=ACCEPT')] };
+      return { brt: s.brt, contrast: s.contrast, photo: this.ambient, message: text.replace(/\.$/, ''), bottomLeft: [S('ENT=ACCEPT')] };
     }
 
     const p = this.page;

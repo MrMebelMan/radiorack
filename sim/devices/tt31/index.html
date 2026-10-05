@@ -90,6 +90,8 @@
         <div class="field">
           <label class="lbl-t" for="busSw" title="Aircraft avionics power: the unit works only with power on">Aircraft power</label>
           <div><input type="checkbox" id="busSw" class="switch" checked title="Aircraft avionics power: the unit works only with power on"></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically.">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically."><span id="ambVal" class="val"></span></div>
           <span class="lbl-t" title="Simulated antenna problem">Antenna</span>
           <div class="btn-row"><button id="antWarn" title="Raise the antenna warning (the transponder detected a problem with the antenna)">Raise warning</button></div>
           <span class="lbl-t" title="Simulated transponder faults">Fault</span>

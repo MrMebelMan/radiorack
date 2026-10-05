@@ -1,0 +1,61 @@
+/* Garmin GTX 328 bezel (880 x 219), laid out from a straight-on photo of the GTX 3xx front panel
+   (the GTX 327 / 328 / 330 share the front panel, Maintenance Manual Table 6-2). Light from the top left. */
+.bezel.gtx {
+  height: 219px; border-radius: 7px; border-color: #161617;
+  background: var(--bezel-grain), linear-gradient(#232224, #1c1b1d 50%, #171618);
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08), inset 1px 0 0 rgba(255,255,255,.04);
+  --keylit: 0;
+}
+.bezel.gtx .print { position: absolute; color: #d9d9d9; font: 700 14px/1 Arial, Helvetica, sans-serif; letter-spacing: .6px; cursor: help; }
+.bezel.gtx .print.garmin { font-size: 15px; letter-spacing: .4px; }
+.bezel.gtx .print.model { font: 600 12px/1 Arial, Helvetica, sans-serif; letter-spacing: .3px; color: #cfcfcf; }
+
+/* rubber keys in dark wells: dome shading, drop shadow to the bottom right */
+.bezel.gtx .key {
+  border-radius: 8px; border: 1px solid #0b0b0c;
+  background: radial-gradient(ellipse 90% 80% at 45% 30%, #4b4a4d 0%, #3d3c3f 45%, #2e2d30 85%);
+  color: #ececec;
+  font: 400 15px/1 Arial, Helvetica, sans-serif; letter-spacing: .3px;
+  text-shadow: 0 0 calc(5px * var(--keylit)) rgba(255, 255, 240, calc(.55 * var(--keylit)));
+  box-shadow: 0 0 0 2px #0e0e0f, 2px 3px 4px 1px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.16), inset 0 -3px 4px rgba(0,0,0,.35), inset 2px 0 3px rgba(255,255,255,.03);
+}
+.bezel.gtx .key.num { top: 167px; width: 51px; height: 36px; font-size: 17px; }
+.bezel.gtx .key.two { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 13px; }
+.bezel.gtx .key.two span + span { border-top: 1.5px solid currentColor; padding-top: 2px; }
+.bezel.gtx .key:active, .bezel.gtx .key.down {
+  transform: translateY(1px);
+  background: radial-gradient(ellipse 90% 80% at 45% 35%, #424144 0%, #353437 50%, #2a292c 90%);
+  box-shadow: 0 0 0 2px #0e0e0f, 1px 1px 2px rgba(0,0,0,.6), inset 0 2px 3px rgba(0,0,0,.35);
+}
+
+/* mode cluster (ON / ALT / STBY / OFF around ALT): SVG shapes, gradients fixed in page space so the
+   light stays top-left on the angled keys */
+.bezel.gtx .cluster { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+.bezel.gtx .cluster .mkey { pointer-events: auto; cursor: pointer; }
+.bezel.gtx .cluster .well { fill: #0e0e0f; }
+.bezel.gtx .cluster .cap { fill: url(#gtxKeyGrad); stroke: #0b0b0c; stroke-width: 1; filter: url(#gtxKeyShadow); }
+.bezel.gtx .cluster .hi { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1; }
+.bezel.gtx .cluster text { fill: #ececec; font: 400 15px Arial, Helvetica, sans-serif; letter-spacing: .3px; pointer-events: none; }
+.bezel.gtx .cluster .mkey:hover { filter: brightness(1.12); }
+.bezel.gtx .cluster .mkey.down .lift { transform: translateY(1px); }
+.bezel.gtx .cluster .mkey.down .cap { filter: url(#gtxKeyShadowDown); }
+
+/* display window: dark frame sloping down to the glass, a thin lit lip along the bottom edge (photo) */
+.bezel.gtx .lcd-frame.gtx {
+  left: 228px; top: 22px; width: 478px; height: 125px;
+  border-width: 14px 18px 22px 18px; border-radius: 4px;
+  border-color: #0d0d0e #151516 #2a292b #151516;
+  box-shadow: 0 1px 0 rgba(255,255,255,.10), inset 0 -2px 0 rgba(255,255,255,.08);
+}
+.bezel.gtx .lcd-frame.gtx .lcd-recess { padding: 6px 9px; display: flex; align-items: center; justify-content: center; }
+.bezel.gtx #lcd { display: block; width: 420px; height: 69.3px; }
+
+.bezel.gtx .hole { position: absolute; width: 11px; height: 11px; border-radius: 50%; background: #050505;
+  box-shadow: inset 1px 1px 2px #000, -0.5px -0.5px 0 rgba(255,255,255,.07); cursor: help; }
+.bezel.gtx .photocell { position: absolute; width: 26px; height: 26px; border-radius: 50%; cursor: help;
+  background: radial-gradient(circle at 38% 34%, rgba(255,255,255,.22) 0 12%, transparent 34%), radial-gradient(circle at 50% 50%, #2e2627, #171213 70%);
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,.9), 0 0 0 1px #0b0b0c, 1px 1px 0 rgba(255,255,255,.05); }
+
+.lamp { display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: #3a2a10; border: 1px solid #555; vertical-align: middle; }
+.lamp.on { background: #ffb02e; box-shadow: 0 0 10px #ffb02e; }

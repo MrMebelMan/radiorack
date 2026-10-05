@@ -177,6 +177,7 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
   border: 1px solid #0e0e0d; border-radius: 8px;
   box-shadow: 0 3px 4px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.10);
   font: 400 14px Arial, Helvetica, sans-serif;
+  text-shadow: 0 0 calc(var(--keylit, 0) * 4px) rgba(255, 255, 240, calc(var(--keylit, 0) * .55));   /* key lighting in the dark */
 }
 /* hover, the same on every unit: a faint lift on keys and knobs (dark or light caps) */
 .bezel .key:hover { filter: brightness(1.12); }
@@ -274,6 +275,7 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .lcd.off { opacity: 0; transition-duration: .18s; }   /* backlight + text fade on power on / off */
 .lcd.splashing { display: block; }
 .big { font-family: "LCD", monospace; font-size: var(--f-big); line-height: .82; letter-spacing: -1px; display: inline-block; }
+.big .d { display: inline-block; width: .42em; text-align: center; font-style: normal; }   /* fixed digit slot: widest digit ink (0.39 em) + the font's usual gap */
 .mid { font-size: var(--f-mid); }
 
 /* COM page: [ACT][active][COM][STB/MN][standby] / ident centered under each frequency */
@@ -318,7 +320,8 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .lcd.xp .cell > .cl { grid-area: 1 / 1; mix-blend-mode: plus-lighter; }
 .lcd.xp .xr { flex: 1; }
 .lcd.xp .ch, .lcd.xp .xptr { display: inline-grid; }
-.lcd.xp .dg { grid-template-columns: calc(1.09ch + 1px); justify-items: center; }   /* fixed slot = widest digit (1ch is the narrow 0) + letter-spacing: digits never move */
+.lcd.xp .dg { grid-template-columns: calc(1.09ch + 1px); justify-items: stretch; text-align: center; }
+.lcd.xp .dg .inv { display: block; }   /* the cursor block fills the whole slot, also on the narrow 1 */   /* fixed slot = widest digit (1ch is the narrow 0) + letter-spacing: digits never move */
 .lcd.xp .xr > .cl { display: flex; align-items: center; }
 .lcd.xp .xreply { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; }   /* center of the display (photo); out of the flow so IDENT never moves */
 .lcd.xp .xsmall { text-align: right; }

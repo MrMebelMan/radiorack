@@ -16,6 +16,7 @@ const WHEEL_STEP = 50;
  *   pots: [{ el, evt, pushDown, pushUp, angle, dragPx, wheelSteps }]  further pots (e.g. GNC NAV VOL / PUSH ID)
  *   keys: NodeList of [data-key] buttons,
  *   holds: [[el, downEvt, upEvt]],
+ *   latch: true                              right-click keeps a hold key pressed until clicked again
  *   keyboard: { keys: {code: evt}, holds: {code: [down, up]}, turns: {code: [knob, dir]}, presses: {code: [evt…]} }
  * }
  */
@@ -23,7 +24,7 @@ export function bindControls(radio, after, cfg) {
   const send = (evt, arg) => { radio.input(evt, arg); after(); };
   const angles = {};
   const rotate = (knob, dir) => {
-    const el = cfg.encoders[knob];
+    const el = (cfg.encoders || {})[knob];
     if (!el) return;
     angles[knob] = (angles[knob] || 0) + dir * TUNE_STEP_DEG;
     el.querySelector('.grip').style.transform = `rotate(${angles[knob]}deg)`;
@@ -107,22 +108,35 @@ export function bindControls(radio, after, cfg) {
   }
 
   // encoders; the inner knob sits inside the outer one (a single knob has only `inner`)
-  const { outer, inner } = cfg.encoders;
-  inner.addEventListener('wheel', wheelHandler('inner'), { passive: false });
-  dragKnob(inner, 'inner', { onClick: () => cfg.innerPush && send(cfg.innerPush) });
+  const { outer, inner } = cfg.encoders || {};   // a unit with keys only has none
+  if (inner) {
+    inner.addEventListener('wheel', wheelHandler('inner'), { passive: false });
+    dragKnob(inner, 'inner', { onClick: () => cfg.innerPush && send(cfg.innerPush) });
+  }
   if (outer) {
     const outerWheel = wheelHandler('outer');
     outer.addEventListener('wheel', e => { if (!inner.contains(e.target)) outerWheel(e); }, { passive: false });
     dragKnob(outer, 'outer');
   }
 
-  cfg.keys.forEach(b => b.addEventListener('click', () => send(b.dataset.key)));
+  (cfg.keys || []).forEach(b => b.addEventListener('click', () => send(b.dataset.key)));
 
   for (const [el, down, up] of cfg.holds || []) {
-    el.addEventListener('pointerdown', e => { e.preventDefault(); el.setPointerCapture(e.pointerId); el.classList.add('down'); send(down); });
-    const rel = () => { if (el.classList.contains('down')) { el.classList.remove('down'); send(up); } };
+    el.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      if (e.button === 2) return;                                   // right button: see latch below
+      if (el.classList.contains('latched')) { el.classList.remove('latched', 'down'); send(up); return; }   // a click releases a latched key
+      el.setPointerCapture(e.pointerId); el.classList.add('down'); send(down);
+    });
+    const rel = () => { if (el.classList.contains('down') && !el.classList.contains('latched')) { el.classList.remove('down'); send(up); } };
     el.addEventListener('pointerup', rel);
     el.addEventListener('pointercancel', rel);
+    // cfg.latch: a right-click keeps the key pressed until it is clicked again (two-key combinations with a mouse)
+    if (cfg.latch) el.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      if (el.classList.contains('latched')) { el.classList.remove('latched', 'down'); send(up); }
+      else { el.classList.add('latched', 'down'); send(down); }
+    });
   }
 
   // keyboard, matched on e.code (physical key) so it works with any layout

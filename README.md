@@ -24,6 +24,12 @@ Everything the GTR does, plus the NAV side: VOR/LOC tuning, OBS and CDI, TO/FROM
 
 Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight timer, stopwatch, altitude monitor and the ADS-B position warning. The screens are copied from photos of a real unit. Built from the Operating Manual 00454-00-AF and Installation Manual 00455-00-AR.
 
+### Garmin GTX 328 — Mode S transponder
+
+![Garmin GTX 328](sim/previews/gtx328.png)
+
+The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. The display is the unit's real 200 × 33 dot matrix, with the fonts copied from the manual figures. Built from the Pilot's Guide 190-00420-03, the Installation Manual 190-00420-04 and the Maintenance Manual 190-00420-05.
+
 ### Becker AR6201 — 57 mm VHF COM
 
 ![Becker AR6201](sim/previews/ar6201.png)
@@ -45,9 +51,10 @@ Open <http://localhost:8225> and pick a unit.
 - **Turn a knob:** drag it up or down, or scroll over it.
 - **Push a knob:** click it.
 - **Press a key:** click it. Hold it for a long press where the unit has one.
+- **Keep a key pressed:** right-click it (GTX 328), click again to release.
 - **Hover anything** for a tooltip that says what it does.
 
-Under each unit there are panels for the things that happen *outside* the radio: hold PTT, make a station call you on the active or standby frequency, pull aircraft power, set the GPS position, fly a track, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
+Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, pull aircraft power, set the GPS position, fly a track, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
 
 Settings, frequencies and stored channels are kept in your browser.
 

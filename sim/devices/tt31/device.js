@@ -32,7 +32,7 @@ export function defaultSettings() {
     flightId: 'OKABC',
     primary: 'sq',                        // which value is shown big and edited: 'sq' | 'flt'
     inst: { squat: false, adsb: false },  // installation (configured by the installer)
-    sim: { alt: 800, onGround: true, gpsValid: true, radar: true, lat: 50.1314, lon: 14.5256 },
+    sim: { alt: 800, onGround: true, gpsValid: true, radar: true, lat: 50.1314, lon: 14.5256, ambient: 60 },
   };
 }
 
@@ -237,11 +237,11 @@ export class TT31 {
     if (!this.power) return { off: true };
     if (this.booting) {
       const u = this.unitInfo;
-      return { xpdr: { boot: { logo: 'TRIG', lines: [`${u.model} Mode S`, `Version ${u.sw}`, `FPGA ${u.fpga}`] } } };
+      return { photo: this.s.sim.ambient, xpdr: { boot: { logo: 'TRIG', lines: [`${u.model} Mode S`, `Version ${u.sw}`, `FPGA ${u.fpga}`] } } };
     }
-    if (this.fault) return { xpdr: { alert: { title: 'FAULT', text: FAULTS[this.fault.id] } } };
+    if (this.fault) return { photo: this.s.sim.ambient, xpdr: { alert: { title: 'FAULT', text: FAULTS[this.fault.id] } } };
     const w = this.currentWarning();
-    if (w) return { xpdr: { alert: { title: 'WARNING', text: WARNINGS[w], key: 'ENT' } } };
+    if (w) return { photo: this.s.sim.ambient, xpdr: { alert: { title: 'WARNING', text: WARNINGS[w], key: 'ENT' } } };
 
     const s = this.s;
     const x = {
@@ -259,7 +259,7 @@ export class TT31 {
         : [S(value)]);
       if (s.primary === 'sq') { x.small = [S(id)]; x.big = bigOf('sq', sq); }
       else { x.small = [S(sq)]; x.big = bigOf('flt', id); }
-      return { xpdr: x };
+      return { photo: this.s.sim.ambient, xpdr: x };
     }
     // FUNC pages (photos): squawk small top-right; label lines; big value
     x.small = [S(s.squawk)];
@@ -271,7 +271,7 @@ export class TT31 {
       x.label = [[S('ADS-B')], [S('MONITOR')]];
       x.lines = ok ? [[S(fmtLat(s.sim.lat))], [S(fmtLon(s.sim.lon))]] : [[S('---°--.--')], [S('----°--.--')]];
     }
-    return { xpdr: x };
+    return { photo: this.s.sim.ambient, xpdr: x };
   }
 }
 

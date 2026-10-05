@@ -22,9 +22,12 @@ function seg(sg) {
   if (sg.cdi) return cdiSvg(sg.cdi);
   if (sg.stack) return `<span class="stack">${sg.stack.map(x => `<i>${esc(x)}</i>`).join('')}</span>`;
   const cls = [sg.inv && 'inv', sg.ul && 'ul', sg.big && 'big', sg.small && 'small', sg.tiny && 'tiny', sg.dim && 'dim', sg.box && 'boxed'].filter(Boolean).join(' ');
-  const t = esc(sg.t).replace(/ /g, '&nbsp;');
+  let t = esc(sg.t).replace(/ /g, '&nbsp;');
+  if (sg.big) t = slots(t);
   return cls ? `<span class="${cls}">${t}</span>` : t;
 }
+// big digits sit in fixed slots (the font's 1 is much narrower than 2), so values never move
+const slots = t => t.replace(/[0-9]/g, '<i class="d">$&</i>');
 const segs = a => (a || []).map(seg).join('');
 
 function wrapText(text, width) {
@@ -69,7 +72,7 @@ export function lcdHtml(v) {
   }
   const r = v.right;
   let h = `<div class="ann"><div class="top">${v.ann}</div><div>ACT</div></div>`;
-  h += `<div class="act"><span class="big">${v.act}</span></div>`;
+  h += `<div class="act"><span class="big">${slots(esc(v.act))}</span></div>`;
   if (r.type === 'com') {
     h += `<div class="comann">${r.ann ?? (r.com ? 'COM' : '')}</div><div class="lab">${r.label}</div>`;
     h += `<div class="stb">${r.big.map(x => seg({ ...x, big: true })).join('')}</div>`;
@@ -157,8 +160,10 @@ export function createLcd(lcd) {
       lcd.style.setProperty('--lit', v.bk.lit.toFixed(2));
       lcd.classList.toggle('flash', !!v.bk.flash);
     }
-    if (v.brt === undefined) { lcd.style.filter = ''; return; }   // units without brightness / contrast settings
-    const b = v.brt, c = v.contrast ?? 0;
-    lcd.style.filter = `brightness(${(0.75 + (b + 10) / 110 * 0.5).toFixed(2)}) contrast(${(1 + c / 100).toFixed(2)})`;
+    // backlight following the photocell (cockpit light); about unchanged at 60 %
+    const photo = v.photo === undefined ? 1 : 0.55 + 0.75 * v.photo / 100;
+    if (v.brt === undefined) { lcd.style.filter = v.photo === undefined ? '' : `brightness(${photo.toFixed(2)})`; return; }
+    const b = v.brt, c = v.contrast ?? 0;   // Garmin: DSPL BRT is an offset from the automatic level (Pilot's Guide 3.4.3)
+    lcd.style.filter = `brightness(${(photo * (0.75 + (b + 10) / 110 * 0.5)).toFixed(2)}) contrast(${(1 + c / 100).toFixed(2)})`;
   };
 }

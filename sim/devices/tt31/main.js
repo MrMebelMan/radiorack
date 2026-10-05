@@ -4,6 +4,7 @@ import { createLcd } from '../../ui/lcd.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
 import { createAudio } from '../../ui/audio.js';
 import { TRIG_LOGO } from '../../ui/logos.js';
+import { ambWord } from '../../ui/panel.js';
 
 let storage = null;
 try { storage = window.localStorage; storage.getItem('x'); } catch { storage = null; }
@@ -42,6 +43,7 @@ const sync = () => {
 sync();
 const on = (id, fn) => { $(id).onchange = e => { fn(e.target); xpdr.save(); sync(); render(); }; };
 $('altSl').oninput = e => { s.sim.alt = +e.target.value; xpdr.save(); sync(); };
+$('ambSl').oninput = e => { s.sim.ambient = +e.target.value; xpdr.save(); sync(); };   // ambient light sensor: LCD backlight (Installation Manual 6.1.11)
 on('gndSw', t => { s.sim.onGround = t.checked; });
 on('radarSw', t => { s.sim.radar = t.checked; });
 on('squatSw', t => { s.inst.squat = t.checked; });

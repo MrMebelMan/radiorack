@@ -173,7 +173,41 @@ Everything below is **not** shown or stated there.
 - [ ] **Default Flight ID.** Sim: "OKABC" placeholder (set by the installer as the aircraft registration). Real:
 - [ ] **Configuration mode** (FUNC held while switching on) is not simulated; the installation options are switches in the Simulation panel.
 
-## 4b. Becker AR6201 transceiver
+## 4b. Garmin GTX 328 transponder
+Sources:
+- Pilot's Guide 190-00420-03 Rev A (`sim/manuals/gtx328-pilots-guide.pdf`), SW 5.00;
+- Installation Manual 190-00420-04 Rev C (`sim/manuals/gtx328-installation-manual.pdf`): configuration pages, every page figure at the LCD's native 200 x 33 dots;
+- Maintenance Manual 190-00420-05 Rev A (`sim/manuals/gtx328-maintenance-manual.pdf`): 200 x 33 LCD, 490 Hz audio test tone, GPS 35 kt airborne, photocell next to the 7 key;
+- for gaps only: GTX 330 Pilot's Guide 190-00207-00 Rev G (same firmware family), marked GTX330;
+- the bezel is laid out from a shop photo of a GTX 327 (same front panel, Maintenance Manual Table 6-2).
+
+The display fonts are copied dot by dot from the manual figures. Glyphs that appear in no figure were drawn in the same style (list in `sim/ui/fonts-gtx.js`, `DESIGNED`): medium 4 7 9 -, bold J Q Z / > and the lowercase of "Garmin", annunciator O N S B Y G D I E R, small lowercase of the start-up page, code digits 0 1 2 3 6 and the dash, the trend arrows, °F and the meters unit.
+
+Everything below is **not** stated in the three manuals.
+
+- [ ] **Start-up page.** Sim: 3 s; layout of the three lines approximated from the Pilot's Guide render (not a native figure). Real:
+- [ ] **Avionics master turn-on.** Sim: when wired, the unit switches on and off with aircraft power, in the last mode selected with the keys (not stated which mode). Real:
+- [ ] **Hold STBY for GND.** Sim: 2 s. Real:
+- [ ] **IDENT position and font.** Sim: "IDENT" in the mode-annunciator font above the mode, top left. IDENT is ignored in STBY. Real:
+- [ ] **Reply symbol.** Sim: shown for 180 ms each second while replying in ON / ALT with radar coverage; not shown in GND. Real:
+- [ ] **Code entry.** Sim: no timeout; while entering, the previous code stays active; CLR within 5 s shows the fourth digit as a dash. Real:
+- [ ] **VFR Key Disabled advisory.** Sim: "VFR KEY" / "DISABLED" on the right half of the display. Real (wording, position):
+- [ ] **PRESSURE ALT.** Sim: small trend arrow at |VS| ≥ VS RATE, large at ≥ 2 × VS RATE (arrow shapes drawn); no altitude source: dashes; meters with a small "m". Real:
+- [ ] **ALT MONITOR page.** Sim: blank under the title while off; deviation rounded to 100 ft; GTX330: ABOVE / BELOW flashes over the limit until back within 100 ft, monitoring stops beyond 1000 ft + deviation. The voice / tone sounds once per excursion. Real:
+- [ ] **COUNT DOWN entry.** Sim: CRSR, then six digits HHMMSS with a block cursor; CLR goes back a digit (on none it cancels); EXPIRED flashes 0.6 s on / 0.4 s off. Real:
+- [ ] **CONTRAST / DISPLAY pages.** Sim: 8 / 9 step contrast by 5 (0–99) and backlight by 50 (0–999). Real:
+- [ ] **Flight ID entry.** Sim: a key pressed repeatedly cycles digit first (5 → P → Q → R, derived from "R = 5 pressed four times"); typing from the whole-field cursor starts at the first character and keeps the rest; CRSR on a blank position goes to OK?. Real:
+- [ ] **AUTO FLT TMR.** The text lists MAN / CLEAR / ACCUM; the SW 5.00 figure shows "AUTO FLT TMR? YES". Sim follows the figure (NO / YES); YES resets and starts the flight timer at every lift-off (CLEAR behavior). Real (which one, and how ACCUM is chosen):
+- [ ] **Audio page values.** Sim: ALTITUDE MONITOR / COUNT DOWN TIMER show OFF / TONE / MSG (text: "Off, tone or message"); VOLUME bar 0–100 in steps of 5. The simulated installation has MSG / MSG and volume 50 (factory: OFF and 0). Real:
+- [ ] **Attention tone.** Sim: 490 Hz for 0.4 s before each voice message; TONE mode plays only that. Real:
+- [ ] **Configuration field editing.** Sim: CRSR highlights the first field and accepts it, moving to the next; numbers shift in from the right; BKLT LVL in MAN steps by 10 with 8 / 9. Real:
+- [ ] **Lighting curves.** Sim: level = input × SLOPE/50 + (OFFSET − 50)/100, not below MIN; RSP TIME 0–7 sets an easing time of 0.15–1.9 s; DISPLAY MODE AUTO switches to positive above LEVEL on a 0–100 photocell scale; a lighting bus under 0.5 V counts as off (photocell). Real:
+- [ ] **Diagnostics pages.** Sim: ANALOG INPUT counts are scaled guesses (LCD TEMP 512, UNIT TMP 540); RS232 and 429 RX pages show the figure's empty data. Real:
+- [ ] **Automatic airborne determination.** Sim: squat switch (SQUAT SWITCH? YES) or GPS ground speed on a GPS input (< 35 kt = ground); SENSE is shown but not used; on the ground at power-up GND comes at once, after landing after DELAY TIME. Real:
+- [ ] **Address and Flight ID defaults.** Sim installation: HEX 49D3A5, CONFIG ENTRY "OKABC". Real: the aircraft's.
+- [ ] **Not simulated:** LOOPBACK STATE (test mode), ARINC 429 / RS-232 data, Comm-A / Comm-B, density altitude from an air data computer (Sim: from the probe OAT and pressure altitude, 120 ft per °C above ISA).
+
+## 4c. Becker AR6201 transceiver
 Sources:
 - Operating Instructions AR6201-(X0X), Issue 5 / Nov 2013 (`sim/manuals/ar6201-operating-instructions.pdf`);
 - Installation and Operation Manual DV 14300.03 Issue 5 (`sim/manuals/ar6201-installation-manual.pdf`), same software (CH 3.05 / CM 1.49);
@@ -216,6 +250,11 @@ Everything below is **not** stated in the two X0X manuals.
   Real:
 - [ ] **Volume knob.** Sim: OFF (pointer at the OFF print, -57° from the top) plus 100 steps of 1 % up to about +78° (user observation). Real:
 - [ ] **Not simulated:** aux audio input, TANDEM / RCU6201 second controller, PC database upload, SWAP MIKE IC / MIKE_SW, sidetone level.
+
+## 4d. Cockpit light (photocell), all units that have one
+The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell. The AR6201 manuals mention none, so it has no slider.
+- [ ] **GTR / GNC.** Sim: brightness 0.55 + 0.75 × light (about unchanged at 60 %), times the pilot DSPL BRT offset; key lighting fades in below the KEY CO default 80 %. Real:
+- [ ] **TT31.** Sim: LCD brightness 0.55 + 0.75 × light. Real:
 
 ## 5. Simulator-only (no device check needed)
 These exist only to make practice possible:

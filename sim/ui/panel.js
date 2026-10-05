@@ -1,6 +1,9 @@
 // Side panels: status line, external (yoke) controls and the simulation panel.
 import { fmtFreq } from '../core/freq.js';
 
+export const ambWord = v => (v < 15 ? 'night' : v > 85 ? 'sunlight' : v < 50 ? 'dusk' : 'day');
+const KEY_CUTOFF = 80;   // KEY CO default (Installation Manual 190-01182-02 Table 6-4)
+
 export function bindPanel(radio, { $, send, render, audio, positions, messages }) {
   const posSel = $('posSel');
   positions.forEach(p => posSel.add(new Option(p.label, p.id)));
@@ -33,6 +36,11 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
   $('usbSel').onchange = e => { radio.s.usb = e.target.value; radio.save(); };
   // aircraft (avionics bus) power switch
   $('busSw').onchange = e => { if (e.target.checked) radio.restoreAircraftPower(); else radio.removeAircraftPower(); render(); };
+  // cockpit light on the photocell: display backlight and key lighting (Installation Manual 190-01182-02 6.4.1.4-5)
+  const amb = $('ambSl');
+  const ambSync = () => { amb.value = radio.ambient; $('ambVal').textContent = ambWord(radio.ambient); };
+  amb.oninput = () => { radio.ambient = +amb.value; ambSync(); render(); };
+  ambSync();
   const msgSel = $('msgSel');
   Object.entries(messages).forEach(([id, t]) => msgSel.add(new Option(t.length > 60 ? t.slice(0, 58) + '…' : t, id)));
 
@@ -76,6 +84,8 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
     $('hearing').textContent = txt + extra + (nav ? ` · NAV ident ${nav.ident} (vol ${nav.vol}%)` : '');
     $('usbSlot').classList.toggle('inserted', s.usb !== 'none');
     $('busSw').checked = radio.bus;
+    // bezel key lighting tracks the photocell and switches off above KEY CO (default 80 %)
+    $('bezel').style.setProperty('--keylit', radio.power && radio.ambient < KEY_CUTOFF ? (1 - radio.ambient / KEY_CUTOFF).toFixed(2) : 0);
     // status dot: off / on / no aircraft power / receiving / transmitting
     $('statusBar').dataset.state = !radio.bus && radio.switchOn ? 'nopower'
       : a.src === 'off' ? 'off' : a.src === 'tx' ? 'tx' : (a.src === 'act' || a.src === 'stb') ? 'rx' : 'on';
