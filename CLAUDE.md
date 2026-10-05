@@ -1,6 +1,6 @@
-# Garmin radio simulators
+# RadioRack
 
-A local web app with simulators of Garmin radios, so the owner can practise operating them on the ground.
+A local web app with simulators of avionics units (Garmin, Trig, Becker), so the owner can practise operating them on the ground.
 - Landing page: `sim/index.html`, one card per simulator.
 - **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
 - **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
