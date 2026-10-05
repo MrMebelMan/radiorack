@@ -13,6 +13,8 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
   posSel.onchange = () => { radio.s.posId = posSel.value; radio.save(); };
   $('gpsOn').onchange = e => { radio.s.gps = e.target.checked; radio.save(); };
   $('usbSel').onchange = e => { radio.s.usb = e.target.value; radio.save(); };
+  // aircraft (avionics bus) power switch
+  $('busSw').onchange = e => { if (e.target.checked) radio.restoreAircraftPower(); else radio.removeAircraftPower(); render(); };
   const msgSel = $('msgSel');
   Object.entries(messages).forEach(([id, t]) => msgSel.add(new Option(t.length > 60 ? t.slice(0, 58) + '…' : t, id)));
 
@@ -24,7 +26,6 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
       case 'remoteIcs': send('remoteIcs'); break;
       case 'rxAct': audio.incomingCall('act'); break;
       case 'rxStb': audio.incomingCall('stb'); break;
-      case 'powerToggle': if (radio.bus) radio.removeAircraftPower(); else radio.restoreAircraftPower(); break;
       case 'msg': radio.triggerMessage(msgSel.value); break;
       case 'factory':
         if (confirm('Reset all settings, user frequencies and recent list?')) { radio.factoryReset(); syncInputs(); }
@@ -55,7 +56,10 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
     const extra = radio.power ? ` · vol ${s.vol}% · speaker ${s.speaker ? 'on' : 'off'} · ICS ${s.ics.on ? 'on' : 'off'}${s.ics.mute && (a.src === 'act' || a.src === 'stb') ? ' (muted on RX)' : ''}${radio.stuck ? ' · STUCK MIC' : ''}` : '';
     $('hearing').textContent = txt + extra;
     $('usbSlot').classList.toggle('inserted', s.usb !== 'none');
-    $('busBtn').textContent = radio.bus ? 'Remove aircraft power' : 'Restore aircraft power';
+    $('busSw').checked = radio.bus;
+    // status dot: off / on / no aircraft power / receiving / transmitting
+    $('statusBar').dataset.state = !radio.bus && radio.switchOn ? 'nopower'
+      : a.src === 'off' ? 'off' : a.src === 'tx' ? 'tx' : (a.src === 'act' || a.src === 'stb') ? 'rx' : 'on';
     $('xfr').classList.toggle('down', !!radio.hold.xfr);
     $('ptt').classList.toggle('down', radio.tx);
   };

@@ -14,9 +14,6 @@
       <h1>GTR 225A COM simulator</h1>
       <span class="sub">Practice trainer based on the GTR 225/225A/225B Pilot's Guide (190-01182-00 Rev D, SW v2.10).</span>
       <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. On the TUNE knob, the outer ring and the centre are separate. Click the centre for PUSH CRSR, click the volume knob for PUSH SQ.</span>
-      <nav class="manuals">
-        <a class="manual-btn" href="manuals/gtr225-pilots-guide.pdf" target="_blank" rel="noopener" title="GTR 225/225A/225B Pilot's Guide (190-01182-00 Rev D) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>GTR 225 Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
       <div class="bezel" id="bezel">
@@ -50,56 +47,68 @@
       </div>
     </div>
 
-    <div class="card status">
-      <div id="hint" class="hint"></div>
-      <div id="hearingRow"><b>Audio:</b> <span id="hearing"></span></div>
-    </div>
-
-    <div class="panels">
-    <div class="card">
-      <h2>External / yoke controls</h2>
-      <div class="btns">
-        <button id="ptt" class="hold">PTT (hold)</button>
-        <button id="xfr" class="hold" title="Remote flip/flop on the yoke. Tap = flip; hold 2 s = 121.5 + lock (hold again to unlock)">COM RMT XFR (remote flip/flop)</button>
-        <button data-sim="recall" title="Loads the next user preset into standby">Remote recall</button>
-        <button data-sim="chanDn">COM CHAN DN</button>
-        <button data-sim="chanUp">COM CHAN UP</button>
-        <button data-sim="remoteIcs">Remote ICS on/off</button>
+    <div class="card status" id="statusBar" data-state="off">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="status-text">
+        <div id="hint" class="hint"></div>
+        <div id="hearingRow"><b>Audio:</b> <span id="hearing"></span></div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Simulation</h2>
-      <div class="btns">
-        <button data-sim="rxAct">Incoming call on ACTIVE</button>
-        <button data-sim="rxStb">Incoming call on STANDBY</button>
-        <label><input type="checkbox" id="audioOn" checked> Sound effects</label>
+    <div class="panel-grid">
+      <div class="panel-col">
+        <section class="card">
+          <h2>Yoke &amp; remote</h2>
+          <button id="ptt" class="hold btn-primary">PTT <small>hold to transmit</small></button>
+          <button id="xfr" class="hold btn-wide" title="Remote flip/flop on the yoke. Tap = flip; hold 2 s = 121.5 + lock (hold again to unlock)">COM RMT XFR <small>tap = flip · hold 2 s = 121.5 lock</small></button>
+          <div class="btn-row">
+            <button data-sim="recall" title="Loads the next user preset into standby">Remote recall</button>
+            <div class="seg" role="group" aria-label="COM channel">
+              <button data-sim="chanDn" title="COM CHAN DN">CHAN &#9660;</button>
+              <button data-sim="chanUp" title="COM CHAN UP">CHAN &#9650;</button>
+            </div>
+            <button data-sim="remoteIcs" title="Remote intercom on/off switch">Remote ICS</button>
+          </div>
+        </section>
+        <nav class="manuals">
+          <a class="manual-btn" href="manuals/gtr225-pilots-guide.pdf" target="_blank" rel="noopener" title="GTR 225/225A/225B Pilot's Guide (190-01182-00 Rev D) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>GTR 225 Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
       </div>
-      <div class="row">
-        <label><input type="checkbox" id="gpsOn"> GPS position source</label>
-        <select id="posSel"></select>
-      </div>
-      <div class="row">
-        <label>USB drive:
+
+      <section class="card">
+        <h2>Traffic &amp; audio</h2>
+        <div class="field">
+          <span class="lbl-t">Incoming call</span>
+          <div class="btn-row">
+            <button data-sim="rxAct">Active</button>
+            <button data-sim="rxStb">Standby</button>
+          </div>
+          <label class="lbl-t" for="audioOn">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Aircraft &amp; installation</h2>
+        <div class="field">
+          <label class="lbl-t" for="busSw">Aircraft power</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked></div>
+          <label class="lbl-t" for="gpsOn">GPS source</label>
+          <div class="ctl-row"><input type="checkbox" id="gpsOn" class="switch"><select id="posSel" aria-label="GPS position"></select></div>
+          <label class="lbl-t" for="usbSel">USB drive</label>
           <select id="usbSel">
             <option value="none">not inserted</option>
             <option value="valid">valid database (cycle 2611)</option>
             <option value="corrupt">corrupt / wrong system ID</option>
             <option value="nounlock">missing unlock file</option>
           </select>
-        </label>
-      </div>
-      <div class="row">
-        <button data-sim="powerToggle" id="busBtn">Remove aircraft power</button>
-      </div>
-      <div class="row">
-        <select id="msgSel"></select>
-        <button data-sim="msg">Raise message</button>
-      </div>
-      <div class="row">
-        <button data-sim="factory" class="danger">Reset to factory settings</button>
-      </div>
-    </div>
+          <label class="lbl-t" for="msgSel">Message</label>
+          <div class="ctl-row"><select id="msgSel"></select><button data-sim="msg">Raise</button></div>
+        </div>
+        <div class="card-foot">
+          <button data-sim="factory" class="btn-danger-quiet">Reset to factory settings</button>
+        </div>
+      </section>
     </div>
   </section>
 

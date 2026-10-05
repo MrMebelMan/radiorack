@@ -16,6 +16,8 @@
   --key: #2f3133;
   --key-text: #e6e6e6;
   --label: #c9c9c9;
+  --ctl-h: 34px;
+  --line: #2d343e;
 }
 
 * { box-sizing: border-box; }
@@ -28,7 +30,7 @@ body {
 header { padding: 0 0 12px; }
 header h1 { margin: 0; font-size: 20px; font-weight: 600; }
 header .sub { display: block; color: var(--muted); font-size: 12px; }
-.manuals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.manuals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .manual-btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 12px; border-radius: 8px;
@@ -50,8 +52,6 @@ main {
 }
 @media (max-width: 1000px) { main { grid-template-columns: minmax(0, 1fr); } }
 .help-col > .card:first-child { margin-top: 0; }
-/* yoke + simulation panels side by side under the radio */
-.panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); column-gap: 12px; align-items: start; }
 @media (max-width: 600px) { main { padding: 10px 16px 30px; } }
 
 .card {
@@ -61,39 +61,86 @@ main {
   padding: 12px 14px;
   margin-top: 12px;
 }
-.card h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #c9d4e3; }
 .small { color: var(--muted); font-size: 12px; }
-.btns, .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+
+/* ---------- panels under the radio ---------- */
+.card h2 {
+  margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+}
+.status { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+.status .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; background: #59616c; }
+.status[data-state="on"] .dot { background: #3fb950; box-shadow: 0 0 6px rgba(63,185,80,.6); }
+.status[data-state="nopower"] .dot { background: #d29922; box-shadow: 0 0 6px rgba(210,153,34,.6); }
+.status[data-state="rx"] .dot { background: var(--accent); box-shadow: 0 0 8px rgba(90,169,255,.8); animation: pulse 1s ease-in-out infinite; }
+.status[data-state="tx"] .dot { background: #f85149; box-shadow: 0 0 8px rgba(248,81,73,.8); }
+@keyframes pulse { 50% { opacity: .45; } }
+.status-text { display: grid; gap: 2px; min-width: 0; }
+
+.panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; align-items: stretch; margin-top: 12px; }
+.panel-grid .card { margin-top: 0; display: flex; flex-direction: column; }
+.panel-col { display: flex; flex-direction: column; }
+.panel-col .card { flex: 1; }
+
+/* label -> control rows */
+.field { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px 12px; align-items: center; }
+.lbl-t { color: var(--muted); font-size: 12px; cursor: default; }
+label.lbl-t { cursor: pointer; }
+.btn-row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
+.ctl-row { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.ctl-row select { flex: 1; min-width: 0; }
+.field > select { width: 100%; }
+select { min-height: var(--ctl-h); border-radius: 8px; padding: 0 8px; font-size: 13px; }
+select:hover { border-color: var(--accent); }
+
+/* yoke buttons */
+.btn-primary, .btn-wide { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.btn-primary { min-height: 46px; font-weight: 600; font-size: 14px; background: #233a55; border-color: #35618f; }
+.btn-primary:hover { background: #2a4566; }
+.btn-primary.down { background: #5a1f1f; border-color: #f85149; box-shadow: 0 0 0 1px #f85149 inset; }
+.btn-wide.down { background: #34506e; border-color: var(--accent); }
+.btn-primary small, .btn-wide small { color: var(--muted); font-size: 11px; font-weight: 400; }
+
+/* segmented pair */
+.seg { display: flex; }
+.seg button { flex: 1; padding: 0 6px; }
+.seg button:first-child { border-radius: 8px 0 0 8px; }
+.seg button:last-child { border-radius: 0 8px 8px 0; margin-left: -1px; }
+.seg button:hover { position: relative; }
+
+/* toggle switch (checkbox) */
+input.switch {
+  appearance: none; -webkit-appearance: none; margin: 0; flex: none; cursor: pointer;
+  width: 38px; height: 22px; border-radius: 11px; position: relative; vertical-align: middle;
+  background: #3a4350; border: 1px solid #47515f; transition: background .15s, border-color .15s;
+}
+input.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: #cfd6de; transition: transform .15s ease-out;
+}
+input.switch:checked { background: var(--accent); border-color: var(--accent); }
+input.switch:checked::after { transform: translateX(16px); background: #fff; }
+input.switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.card-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
+.panel-grid .card .field + .card-foot { margin-top: 14px; }
+.btn-danger-quiet { background: transparent; border-color: #6e2e2e; color: #f0a3a3; }
+.btn-danger-quiet:hover { background: #5a1f1f; border-color: #f85149; color: #fff; }
+.panel-col .manuals { margin-top: 12px; }
 button {
   background: var(--panel-2); color: var(--text);
-  border: 1px solid #3a4350; border-radius: 6px;
-  padding: 6px 10px; font: inherit; cursor: pointer;
+  border: 1px solid #3a4350; border-radius: 8px;
+  min-height: var(--ctl-h); padding: 0 12px; font: inherit; font-size: 13px; cursor: pointer;
+  transition: border-color .15s, background .15s;
 }
 button:hover { border-color: var(--accent); }
 button:active, button.down { background: #34506e; }
-button.danger { border-color: #7a3a3a; }
 label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-input[type="checkbox"] {
-  appearance: none; -webkit-appearance: none; margin: 0;
-  width: 16px; height: 16px; flex: none;
-  background: var(--panel-2); border: 1px solid #3a4350; border-radius: 4px;
-  display: inline-grid; place-content: center; cursor: pointer;
-}
-input[type="checkbox"]:hover { border-color: var(--accent); }
-input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-input[type="checkbox"]::after {
-  content: ""; width: 9px; height: 5px; margin-top: -2px;
-  border: solid #0d1117; border-width: 0 0 2px 2px; transform: rotate(-45deg) scale(0);
-  transition: transform .08s ease-out;
-}
-input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
-input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
-select { background: var(--panel-2); color: var(--text); border: 1px solid #3a4350; border-radius: 6px; padding: 5px; font: inherit; }
+select { background: var(--panel-2); color: var(--text); border: 1px solid #3a4350; font-family: inherit; }
 .procs details { border-top: 1px solid #2d343e; padding: 6px 0; }
 .procs summary { cursor: pointer; font-weight: 600; color: #cfe0f5; }
 .procs ul, .procs ol { margin: 6px 0 2px; padding-left: 20px; }
 .procs li { margin: 2px 0; }
-.status { display: grid; gap: 4px; }
 .hint { color: #ffd479; }
 .hint:empty { display: none; }
 
