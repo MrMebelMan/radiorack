@@ -18,6 +18,8 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 - Raised round front (panel cut-out ring): nearly as big as the face, dark step outside, a glare line all round that is thicker/brighter top-left. Controls sit inside it.
 - Recesses (screw mounts): only a little darker than the face, never black; there is still material in them.
 - Printed legends: white, bold; use a **rounded** font if the unit's legends are rounded (Nunito, bundled). Keep legend positions from the photo.
+- A legend set into a printed line (KMA 20 SPEAKER / PHONE): **break the line** around it, never cover it with a background patch. Center the *glyphs* on the line both ways: measure their bounds in a render (threshold the crop) and offset the box, since the text box's leading and trailing letter spacing shift it. Equal gaps on both sides.
+- Bat toggle switches (KMA 20 `.tgl`): dark bushing nut, lever, chrome ball; center = the ball seen end-on, up / down = a short lever with the ball above / below. Click the upper / lower half to move one step, wheel too.
 
 ## Screws and holes
 - Domed radial gradient with a soft glare top-left; the cross as two `::before/::after` bars rotated by `--rot`; give each screw a different angle.
