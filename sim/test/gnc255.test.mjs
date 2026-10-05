@@ -38,7 +38,7 @@ test('C/N switches COM / NAV; NAV tuning, flip and annunciator (manual 2.2.1)', 
   r.input('flipDown'); r.input('flipUp');
   assert.equal(r.s.nav.act, 113300);
   assert.equal(r.s.nav.recent[0], 113300);
-  assert.equal(r.s.act, 120335, 'COM untouched');
+  assert.equal(r.s.act, 123610, 'COM untouched');
   r.input('CN');
   assert.equal(r.mode, 'com');
 });

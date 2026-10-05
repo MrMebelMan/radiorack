@@ -14,7 +14,7 @@ import { AIRPORTS, STATIONS, FIR, POSITIONS, DB_INFO, USB_DB_INFO } from '../../
 import { NAVAIDS } from '../../data/lk-nav.js';
 import { UNIT_INFO } from './info.js';
 
-export const PERSIST_KEY = 'gnc255-sim-v1';
+export const PERSIST_KEY = 'gnc255-sim-v2';
 export const FLIGHT_VAR = 5;            // magnetic variation used to turn the flown track into true (Czech ~5E)
 export const NAV_SIGNAL_NM = 150;       // simulator assumption: VOR/LOC usable within 150 NM (no altitude model)
 const LOC_FULL_DEG = 2.5;               // simulator assumption: localizer full-scale deflection
@@ -41,6 +41,8 @@ export const MENU = [
 export function defaultSettings() {
   return {
     ...comDefaults(DB_INFO),
+    act: 123610, stb: 120880,                // BOLESLAV RADIO (LKMB), KBELY TOWER (LKKB)
+    recent: [123610, 120880],
     nav: {
       act: 112600, stb: 112250,              // OKL Praha DVOR/DME, NER Neratovice VOR/DME
       recent: [112600, 112250],
