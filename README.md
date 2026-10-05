@@ -42,6 +42,12 @@ Standard, Direct Tune and Channel modes, scan with priority, 99 labeled user cha
 
 The microphone selector, a SPEAKER / OFF / PHONE toggle for every receiver, the AUTO switch that follows the transmitter you talk on, mic muting, and the marker lamps and tones (HI / LO / TEST) while you fly a real Czech ILS approach with outer and middle markers. Every input plays a real signal: COM calls and the Morse idents of the tuned VOR, ILS, NDB and DME. Built from the King brochure "Operating your KMA 20 Audio Control System" (006-8200-05) and the KMA 20/KR 21 Installation Manual (006-0044-02 Rev 2); neither is published by Honeywell (Bendix/King), so they are only in `sim/manuals/`.
 
+### Bendix/King KN 64 — DME
+
+![Bendix/King KN 64](sim/previews/kn64.png)
+
+The RMT / FREQ / GS/T function switch, the concentric knobs with the pull-out 0.05 MHz, the frequency hold in GS/T, dashes while searching, and slant range, ground speed and time-to-station on the gas discharge display while you fly toward real Czech DMEs (ENR 4.1 and the ILS DMEs of AD 2.19, at their published antenna elevation). Built from the Bendix/King Silver Crown Plus Pilot's Guide (KN 62A and KN 64) and the KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7).
+
 ## Running it
 
 You need Python 3 and a browser.
@@ -55,13 +61,14 @@ Open <http://localhost:8225> and pick a unit.
 ## How to use a simulator
 
 - **Turn a knob:** drag it up or down, or scroll over it.
-- **Push a knob:** click it.
+- **Push a knob:** click it. On the KN 64 a click pulls the small knob out or pushes it in.
+- **Move a slide switch:** drag it sideways, click where you want it, or scroll over it (KN 64).
 - **Press a key:** click it. Hold it for a long press where the unit has one.
 - **Keep a key pressed:** right-click it (GTX 328), click again to release.
 - **Flip a toggle switch:** click its upper or lower half, or scroll over it (KMA 20).
 - **Hover anything** for a tooltip that says what it does.
 
-Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, switch off the avionics master, set the GPS position, fly a track or an ILS approach, tune the receivers behind the audio panel, put the headset on, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
+Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, switch off the avionics master, set the GPS position, fly a track or an ILS approach, set the altitude, tune the NAV receiver that channels the DME, tune the receivers behind the audio panel, put the headset on, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
 
 Settings, frequencies and stored channels are kept in your browser.
 

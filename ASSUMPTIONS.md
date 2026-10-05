@@ -5,7 +5,7 @@ This file covers everything the simulators do that the Pilot's Guides **don't sp
 - GTR 225: Pilot's Guide 190-01182-00 Rev D (SW 2.10), `sim/manuals/gtr225-pilots-guide.pdf`
 - GNC 255: Pilot's Guide 190-01182-01 Rev E, `sim/manuals/gnc255-pilots-guide.pdf`
 - Both: TSO Installation Manual 190-01182-02 Rev L, `sim/manuals/gtr225-gnc255-installation-manual.pdf`
-- Trig TT31, Garmin GTX 328, Becker AR6201 and King KMA 20: see their sections.
+- Trig TT31, Garmin GTX 328, Becker AR6201, King KMA 20 and Bendix/King KN 64: see their sections.
 
 **Rule:** screen text that isn't in a manual screenshot or photo has been **removed**. Where a screen has to show *something* but its look is undocumented, it is kept to the bare minimum and listed here.
 
@@ -276,8 +276,31 @@ Everything below is **not** stated in B or the IM.
 - [ ] **Receiver idents.** Sim: VOR / ILS and NDB idents at 1020 Hz every 8 s; DME at 1350 Hz every 30 s (the AIP doesn't publish NDB tones). Every tuned station is received at full strength. Real:
 - [ ] **Not simulated:** the non-switched input (radar altimeter), KA 40 remote lamps, the speaker / ramp hailer load resistors, panel lighting from the instrument light dimmer.
 
+## 4f. Bendix/King KN 64 DME (066-1088-00)
+Sources:
+- the Silver Crown Plus Pilot's Guide R4 (2002), "KN 62A and KN 64" pages 25-26 (`sim/manuals/kn64-pilots-guide.pdf`), marked PG;
+- the KN 62/62A/64 Installation Manual 006-00144-0007 Rev 7, Nov 2004 (`sim/manuals/kn64-installation-manual.pdf`), marked IM;
+- photos of real units: one unlit straight-on (layout), two lit in FREQ ("---  108.80", "---  108.60");
+- DME antenna positions and elevations from the Czech eAIP ENR 4.1 and AD 2.19 (AIRAC 01 OCT 2026).
+
+Everything below is **not** stated in the PG or the IM (no public maintenance manual).
+
+- [ ] **Knob wrap.** Sim: the outer knob wraps 117 → 108 and back; the inner knob wraps .9 → .0 without carrying into the MHz. Real:
+- [ ] **Pull / push in GS/T.** Sim: turning the knobs does nothing (PG "Frequency Hold"); pulling or pushing the inner knob is kept and shows when you go back to FREQ (the held frequency doesn't change). Real:
+- [ ] **Power-on display.** Sim: dashes (search) straight away, no segment test. Real:
+- [ ] **Range of 100 NM and more.** Sim: three whole digits, e.g. "125", decimal point off. Real:
+- [ ] **Flying away from the station.** Sim: ground speed is the size of the range rate and time-to-station is range ÷ ground speed, whichever way you fly (the PG only says they are accurate tracking directly to or from / to the station). Real:
+- [ ] **Leading blanks.** Sim: ground speed and time-to-station are right-aligned with blanks (" 90", " 5"), not zeros. Real:
+- [ ] **Ground speed after lock-on.** Sim: the range rate over the last 3 s, so it shows 0 at lock-on and settles within 3 s; time-to-station shows 99 while the ground speed is 0. Real:
+- [ ] **Memory.** Sim: the last reading is held 13 s after the signal is lost (IM "11 to 15 seconds"), then dashes; no ident while on memory. Real:
+- [ ] **Reception.** Sim: line of sight 1.23 × √(altitude − DME antenna elevation, ft) NM, up to 389 NM; every DME in range locks (no power or sensitivity model, the published protection ranges are not used). Real:
+- [ ] **Ident.** Sim: Morse at 1350 Hz about every 30 s while locked (ICAO values). Real:
+- [ ] **Display brightness.** Sim: the lit segments go from a dim red at night to full orange-red with glow in sunlight, following the Cockpit light slider (IM 3.1: photocell dimming; curve not stated). The unlit segments and legends stay faintly visible at a fixed level (as at dusk); only the lit ones change. Real:
+- [ ] **Glass marks.** Sim: the two unlabeled marks under the digits (left of RMT, right of MIN, seen on the unlit photo) never light. Real:
+- [ ] **Switch positions.** Sim: ON/OFF slide right = on (Fig 3-1); function slider RMT left, FREQ center, GS/T right. Real:
+
 ## 4d. Cockpit light (photocell), all units that have one
-The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell; the KMA 20 dims its marker lamps with one (see 4e). The AR6201 manuals mention none, so it has no slider.
+The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell; the KMA 20 dims its marker lamps with one (see 4e), the KN 64 its display (see 4f). The AR6201 manuals mention none, so it has no slider.
 - [ ] **GTR / GNC.** Sim: brightness 0.55 + 0.75 × light (about unchanged at 60 %), times the pilot DSPL BRT offset; key lighting fades in below the KEY CO default 80 %. Real:
 - [ ] **TT31.** Sim: LCD brightness 0.55 + 0.75 × light. Real:
 
@@ -285,7 +308,7 @@ The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Inst
 These exist only to make practice possible:
 - Incoming-call sound clips, static levels, the "Audio" status line.
 - KMA 20: the Headset switch (phones in the ears plus the speaker muffled through the ear cups), the approach slider and Fly button, the station lists.
-- GPS start positions, the Flight panel (ground speed/track; track converted to true with a fixed 5°E variation).
+- GPS start positions, the Flight panel (ground speed/track; track converted to true with a fixed 5°E variation); KN 64: the altitude slider and the NAV receiver list for RMT.
 - USB-drive selector, message raiser, aircraft-power switch, factory reset.
 - Keyboard shortcuts.
 - Frequency and navaid data: Czech AIP, AIRAC 01 OCT 2026 (re-check each cycle).

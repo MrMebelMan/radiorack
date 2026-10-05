@@ -1,0 +1,120 @@
+/* Bendix/King KN 64 bezel (880 x 181 = 6.312" x 1.300", IM Figure 2-13), laid out from a
+   straight-on photo of an unlit unit; display colors from photos of lit units. Black face plate,
+   a thin silver rim round the upper band, white legends. Light from the top left. */
+
+.bezel.kn {
+  height: 181px; border-radius: 4px; border-color: #111214;
+  background: var(--bezel-grain), linear-gradient(#232427, #1c1d20 60%, #18191b);
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);
+}
+/* the upper band: black, framed by a thin silver rim (catches the light on top) */
+.bezel.kn .rim {
+  position: absolute; left: 10px; top: 33px; width: 860px; height: 81px; box-sizing: border-box;
+  border-radius: 3px; border: 2px solid #8d989f; border-top-color: #b9c3c8; border-bottom-color: #6c757b;
+  background: linear-gradient(#101114, #0c0d10);
+  box-shadow: inset 1px 2px 3px rgba(0,0,0,.8), 0 1px 0 rgba(0,0,0,.6);
+  cursor: help;
+}
+
+.bezel.kn .print {
+  position: absolute; color: #eceeee; font: 700 12.5px/1 Arial, Helvetica, sans-serif; letter-spacing: .4px;
+  white-space: nowrap; cursor: help;
+}
+.bezel.kn .print.c { transform: translateX(-50%); }
+.bezel.kn .model {
+  position: absolute; padding: 2px 6px 1px; border: 1px solid #6f767c; border-radius: 4px;
+  color: #d6d9db; font: 700 11px/1 Arial, Helvetica, sans-serif; letter-spacing: 1.2px; cursor: help;
+}
+.bezel.kn .logo { position: absolute; color: #c9cdd0; font: italic 900 12.5px/1 Arial, Helvetica, sans-serif; letter-spacing: .3px; cursor: help; }
+
+/* photocell: a small round window left of the display */
+.bezel.kn .photocell {
+  position: absolute; width: 18px; height: 18px; border-radius: 50%; cursor: help;
+  background: radial-gradient(circle at 40% 36%, rgba(255,230,190,.18) 0 18%, transparent 40%), radial-gradient(circle, #2b2320, #15110f 75%);
+  box-shadow: 0 0 0 1.5px #3b3f44, inset 1px 1px 3px rgba(0,0,0,.9);
+}
+/* hold-down screw hole */
+.bezel.kn .hole {
+  position: absolute; width: 12px; height: 12px; border-radius: 50%; cursor: help;
+  background: radial-gradient(circle at 50% 55%, #000 0 55%, #121316 75%);
+  box-shadow: -1px -1px 0 rgba(255,255,255,.08), inset 1px 1px 2px rgba(0,0,0,.9);
+}
+
+/* gas discharge display behind amber glass */
+.bezel.kn .window {
+  position: absolute; left: 71px; top: 41px; width: 358px; height: 65px; overflow: hidden; cursor: help;
+  background: radial-gradient(ellipse at 35% 20%, rgba(255,200,160,.06), transparent 60%), linear-gradient(#2c1d18, #241612);
+  box-shadow: inset 2px 2px 4px rgba(0,0,0,.85), inset -1px -1px 0 rgba(255,255,255,.04);
+  --lvl: 1;
+  /* unlit segments and legends: always as faint as at dusk; only the lit ones follow the photocell */
+  --unlit: color-mix(in srgb, #5c4740 30%, #2a1a15);
+}
+.bezel.kn .window::after {   /* glass sheen, top-left */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(165deg, rgba(255,255,255,.07), transparent 35%);
+}
+.seg7 { display: block; }
+.seg7 .seg { fill: var(--unlit); transition: fill .15s, filter .15s; }
+.seg7 .ann { font: 700 12px/1 Arial, Helvetica, sans-serif; letter-spacing: .5px; }
+.seg7 .mark { fill: var(--unlit); }
+.seg7 .mark.ol { fill: none; stroke: var(--unlit); stroke-width: 1.2; }
+/* lit: orange-red glow, brightness from the photocell */
+.window.on .seg7 .seg.lit {
+  fill: color-mix(in srgb, #ff4d22 calc(30% + var(--lvl) * 70%), #2a1712);
+  filter: drop-shadow(0 0 calc(var(--lvl) * 3px) rgba(255, 70, 20, calc(var(--lvl) * .8)));
+}
+
+/* slide switches: a dark slot with a knurled slider */
+.bezel.kn .slide {
+  /* the rail: a recessed slot inside a gray raised lip (photo); its lower inner slope catches the light */
+  position: absolute; height: 23px; border-radius: 4px; cursor: pointer; touch-action: none;
+  background: linear-gradient(#050505 45%, #1d1d1c);
+  box-shadow:
+    inset 2px 3px 4px rgba(0,0,0,.95), inset 0 -1px 0 rgba(255,255,255,.1),
+    0 0 0 2px #464644, 0 0 0 3px #0a0a0a, -1px -1px 0 3px rgba(255,255,255,.06), 1px 2px 3px 3px rgba(0,0,0,.5);
+}
+.bezel.kn .slide.func { width: 89px; }
+.bezel.kn .slide.pwr { width: 59px; height: 21px; }
+.bezel.kn .slide .slider {
+  position: absolute; top: 1px; bottom: 1px; width: 34px; border-radius: 2px; transition: left .08s;
+  box-shadow: 2px 2px 3px rgba(0,0,0,.7), inset 1px 1px 0 rgba(255,255,255,.35);
+}
+.bezel.kn .slide.func .slider {
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3.5px), linear-gradient(#f1ecdc, #d9d1bb);
+}
+.bezel.kn .slide.func[data-pos="RMT"] .slider { left: 2px; }
+.bezel.kn .slide.func[data-pos="FREQ"] .slider { left: 27.5px; }
+.bezel.kn .slide.func[data-pos="GS/T"] .slider { left: 53px; }
+.bezel.kn .slide.pwr .slider {
+  width: 30px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 3.5px), linear-gradient(#2b2c2f, #18191b);
+  box-shadow: 2px 2px 3px rgba(0,0,0,.7), inset 1px 1px 0 rgba(255,255,255,.12);
+}
+.bezel.kn .slide.pwr[data-pos="off"] .slider { left: 2px; }
+.bezel.kn .slide.pwr[data-pos="on"] .slider { left: 27px; }
+.bezel.kn .slide:hover .slider { filter: brightness(1.08); }
+
+/* concentric frequency selector knobs: knurled outer, smaller inner (pull out = drawn standing proud) */
+.bezel.kn .dual { left: 742px; top: 68px; width: 90px; height: 90px; }
+.bezel.kn .dual .outer {
+  background: radial-gradient(circle at 35% 30%, #3a3b3e, #121214 72%);
+  box-shadow: 5px 7px 10px rgba(0,0,0,.65), inset 0 0 0 1.5px rgba(200,205,210,.55);
+}
+.bezel.kn .dual .outer > .grip {
+  background: repeating-conic-gradient(rgba(255,255,255,.1) 0 5deg, rgba(0,0,0,.35) 5deg 10deg);
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%); mask: radial-gradient(circle, transparent 60%, #000 62%);
+}
+.bezel.kn .dual .inner {
+  left: 19px; top: 19px; width: 52px; height: 52px;
+  background: radial-gradient(circle at 36% 30%, #4a4b4f, #1a1a1c 70%);
+  box-shadow: 0 0 0 2px #0b0b0c, inset 0 0 0 2px rgba(215,220,224,.7), 3px 4px 6px rgba(0,0,0,.8);
+  transition: transform .1s, box-shadow .1s;
+}
+.bezel.kn .dual .inner > .grip {
+  background: repeating-conic-gradient(rgba(255,255,255,.08) 0 6deg, rgba(0,0,0,.3) 6deg 12deg);
+  -webkit-mask: radial-gradient(circle, transparent 74%, #000 76%); mask: radial-gradient(circle, transparent 74%, #000 76%);
+}
+.bezel.kn .dual .inner.pulled {
+  transform: translate(-1.5px, -2px) scale(1.04);
+  box-shadow: 0 0 0 2px #0b0b0c, inset 0 0 0 2px rgba(215,220,224,.7), 1px 1px 0 3px #2a2b2e, 6px 8px 9px rgba(0,0,0,.85);
+}
