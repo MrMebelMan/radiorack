@@ -132,7 +132,7 @@
 
 /* wide screens: the square unit leaves room on its right, so the panels stack beside it */
 @media (min-width: 1400px) {
-  .ar-col { display: grid; grid-template-columns: minmax(440px, 700px) minmax(320px, 1fr); column-gap: 16px; align-items: start; }
+  .ar-col { display: grid; grid-template-columns: max(440px, min(714px, 62vh)) minmax(320px, 1fr);   /* = the bezel's size (fitBezel: width or 62 % of the window height) */ column-gap: 16px; align-items: start; }
   .ar-col > header { grid-column: 1 / -1; }
   .ar-col { grid-template-rows: auto auto 1fr; }
   .ar-col > .bezel-wrap { grid-column: 1; grid-row: 2; }
