@@ -1,0 +1,216 @@
+:root {
+  --bg: #15181d;
+  --panel: #1f242b;
+  --panel-2: #262c35;
+  --text: #dfe4ea;
+  --muted: #9aa4b1;
+  --accent: #5aa9ff;
+  --lcd-fg: #e9f1ff;
+  --lcd-bg: #000;
+  --bezel: #2b2c2e;
+  --bezel-edge: #1a1b1c;
+  --key: #2f3133;
+  --key-text: #e6e6e6;
+  --label: #d8d8d8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+header { padding: 0 0 12px; }
+header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+header .sub { display: block; color: var(--muted); font-size: 12px; }
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  padding: 16px 20px 30px;
+  align-items: start;
+}
+@media (max-width: 1000px) { main { grid-template-columns: minmax(0, 1fr); } }
+.help-col > .card:first-child { margin-top: 0; }
+@media (max-width: 600px) { main { padding: 10px 16px 30px; } }
+
+.card {
+  background: var(--panel);
+  border: 1px solid #2d343e;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+.card h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #c9d4e3; }
+.small { color: var(--muted); font-size: 12px; }
+.btns, .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+button {
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid #3a4350; border-radius: 6px;
+  padding: 6px 10px; font: inherit; cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button:active, button.down { background: #34506e; }
+button.danger { border-color: #7a3a3a; }
+label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none; margin: 0;
+  width: 16px; height: 16px; flex: none;
+  background: var(--panel-2); border: 1px solid #3a4350; border-radius: 4px;
+  display: inline-grid; place-content: center; cursor: pointer;
+}
+input[type="checkbox"]:hover { border-color: var(--accent); }
+input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+input[type="checkbox"]::after {
+  content: ""; width: 9px; height: 5px; margin-top: -2px;
+  border: solid #0d1117; border-width: 0 0 2px 2px; transform: rotate(-45deg) scale(0);
+  transition: transform .08s ease-out;
+}
+input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
+select { background: var(--panel-2); color: var(--text); border: 1px solid #3a4350; border-radius: 6px; padding: 5px; font: inherit; }
+.procs details { border-top: 1px solid #2d343e; padding: 6px 0; }
+.procs summary { cursor: pointer; font-weight: 600; color: #cfe0f5; }
+.procs ul, .procs ol { margin: 6px 0 2px; padding-left: 20px; }
+.procs li { margin: 2px 0; }
+.status { display: grid; gap: 4px; }
+.hint { color: #ffd479; }
+.hint:empty { display: none; }
+
+/* ---------- bezel ---------- */
+.bezel-wrap { width: 100%; overflow: hidden; }
+.bezel {
+  position: relative;
+  width: 880px; height: 210px;
+  transform-origin: 0 0;
+  background: linear-gradient(#323335, #262729 60%, #1f2022);
+  border: 3px solid var(--bezel-edge);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.07);
+  user-select: none; -webkit-user-select: none;
+}
+/* labels show a tooltip but never block the controls */
+.lbl[title] { pointer-events: auto; cursor: help; }
+.lbl {
+  position: absolute; color: var(--label);
+  font: 600 9px/1.05 Arial, Helvetica, sans-serif; letter-spacing: .3px; text-align: center;
+  pointer-events: none;
+}
+.key {
+  position: absolute; width: 50px; height: 28px; padding: 0;
+  background: linear-gradient(#3a3c3f, #2a2b2d);
+  color: var(--key-text);
+  border: 1px solid #111; border-radius: 4px;
+  box-shadow: 0 2px 0 #0d0d0d, inset 0 1px 0 rgba(255,255,255,.12);
+  font: 600 11px Arial, Helvetica, sans-serif;
+}
+.key:hover { border-color: #555; }
+.key:active, .key.down { transform: translateY(1px); box-shadow: 0 1px 0 #0d0d0d; background: #222; }
+.key.flip { display: flex; align-items: center; justify-content: center; }
+.key.flip svg { display: block; }
+
+.knob {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #4a4b4e, #1c1d1f 70%);
+  border: 1px solid #0c0c0c;
+  box-shadow: 0 3px 6px rgba(0,0,0,.6);
+  cursor: pointer;
+}
+.knob .grip, .dual .grip {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-conic-gradient(rgba(255,255,255,.07) 0 6deg, rgba(0,0,0,.18) 6deg 12deg);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%);
+          mask: radial-gradient(circle, transparent 62%, #000 64%);
+  pointer-events: none;
+  transition: transform .08s ease-out;
+}
+.knob, .dual .outer, .dual .inner { touch-action: none; cursor: ns-resize; }
+.knob.dragging, .dual .dragging { cursor: grabbing; }
+.knob.vol { left: 40px; top: 24px; width: 46px; height: 46px; }
+.sensor {
+  position: absolute; left: 104px; top: 26px; width: 15px; height: 15px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #6b6e5f, #3a3b33);
+  border: 1px solid #111;
+}
+.screw { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(#111, #333); border: 1px solid #000; }
+.garmin { position: absolute; right: 18px; top: 9px; color: #cfcfcf; font: 700 10px Arial, sans-serif; letter-spacing: 1px; }
+.usb { position: absolute; left: 752px; top: 26px; width: 110px; height: 24px; background: #1a1a1b; border: 1px solid #0b0b0b; border-radius: 2px; box-shadow: inset 0 2px 4px rgba(0,0,0,.7); }
+.usb.inserted::after { content: "USB"; position: absolute; right: -2px; top: 4px; width: 46px; height: 14px; background: #d9d9d9; color: #333; font: 700 9px/14px Arial; text-align: center; border-radius: 2px; }
+
+.dual { position: absolute; left: 782px; top: 96px; width: 80px; height: 80px; }
+.dual .outer {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #4b4c4f, #19191b 72%);
+  border: 1px solid #0a0a0a; box-shadow: 0 4px 8px rgba(0,0,0,.6);
+}
+.dual .inner {
+  position: absolute; left: 17px; top: 17px; width: 44px; height: 44px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #57585b, #222325 70%);
+  border: 1px solid #0a0a0a; box-shadow: 0 2px 6px rgba(0,0,0,.8);
+}
+.dual .inner.down:not(.dragging) { filter: brightness(.8); }
+
+/* ---------- LCD ---------- */
+.lcd-frame {
+  position: absolute; left: 172px; top: 16px; width: 556px; height: 116px;
+  background: #050505; border: 2px solid #0b0b0b; border-radius: 4px;
+  box-shadow: inset 0 0 0 4px #121314, inset 0 0 18px rgba(0,0,0,.9);
+  padding: 8px 10px;
+}
+.lcd {
+  width: 100%; height: 100%;
+  background: var(--lcd-bg); color: var(--lcd-fg);
+  font-family: "DejaVu Sans Mono", "Menlo", "Consolas", ui-monospace, monospace;
+  font-size: 13px; font-weight: 600; text-transform: uppercase;
+  text-shadow: 0 0 3px rgba(150,190,255,.45);
+  position: relative; overflow: hidden;
+  display: grid;
+  grid-template-columns: 26px 214px 1fr;
+  grid-template-rows: 68px 28px;
+  column-gap: 4px;
+}
+.lcd.off { background: #020202; }
+.lcd .ann { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; justify-content: center; gap: 6px; font-size: 11px; line-height: 1; letter-spacing: -0.5px; }
+.lcd .ann .top { height: 12px; }
+.lcd .act { grid-column: 2; grid-row: 1; align-self: center; }
+.big {
+  font-family: "Roboto Condensed", "Arial Narrow", "Liberation Sans Narrow", "DejaVu Sans Condensed", "Helvetica Neue", Arial, sans-serif;
+  font-stretch: condensed; font-weight: 700;
+  font-size: 56px; line-height: 1; letter-spacing: -2px;
+  display: inline-block; transform: scaleX(.92); transform-origin: left center;
+}
+.lcd .bl { grid-column: 1 / 3; grid-row: 2; align-self: center; white-space: nowrap; overflow: hidden; padding-left: 2px; }
+.lcd .br { grid-column: 3; grid-row: 2; align-self: center; white-space: nowrap; overflow: hidden; text-align: right; padding-right: 4px; }
+.lcd .bfull { grid-column: 1 / 4; grid-row: 2; align-self: center; white-space: nowrap; overflow: hidden; padding-left: 2px; }
+.lcd .bl.wide { grid-column: 1 / 4; }
+.lcd .rcom { grid-column: 3; grid-row: 1; display: flex; align-items: center; gap: 4px; }
+.lcd .rcom .labs { display: flex; flex-direction: column; justify-content: space-between; height: 54px; font-size: 11px; letter-spacing: -0.5px; width: 30px; }
+.lcd .rpage { grid-column: 3; grid-row: 1 / 3; display: flex; flex-direction: column; overflow: hidden; padding-right: 4px; }
+.lcd .rpage.short { grid-row: 1; }
+/* bottom line taken by a prompt: keep title + first line only (as on the real unit) */
+.lcd .rpage.short .row ~ .row { display: none; }
+.lcd .rpage.short .title { margin: 1px 0 2px; }
+.lcd .rpage .title {
+  text-align: center; border-top: 2px solid var(--lcd-fg); border-bottom: 2px solid var(--lcd-fg);
+  font-size: 12px; line-height: 14px; letter-spacing: 1px; margin: 2px 0 3px;
+}
+.lcd .rpage .row { white-space: nowrap; overflow: hidden; line-height: 1.15; display: flex; align-items: baseline; gap: 0; }
+.lcd .rpage .row .big { font-size: 40px; letter-spacing: -1px; }
+.lcd .rpage.three .row { font-size: 12px; line-height: 1.25; }
+.lcd .msg { grid-column: 3; grid-row: 1 / 3; font-size: 12px; line-height: 1.3; padding-right: 4px; overflow: hidden; }
+.lcd .msg .title { text-align: center; border-top: 2px solid var(--lcd-fg); border-bottom: 2px solid var(--lcd-fg); margin: 2px 0 4px; letter-spacing: 1px; }
+.lcd .inv { background: var(--lcd-fg); color: #000; text-shadow: none; padding: 0 1px; }
+.lcd .big.inv { padding: 0 2px; }
+.lcd .ul { text-decoration: underline; text-underline-offset: 2px; }
+.lcd .small { font-size: 11px; }
+.lcd .dim { opacity: .55; }
+.lcd .boxed { border: 1px solid var(--lcd-fg); padding: 0 4px; }
+.lcd .bar { display: inline-block; width: 200px; height: 10px; border: 1px solid var(--lcd-fg); vertical-align: middle; position: relative;
+  background-image: repeating-linear-gradient(90deg, transparent 0 19px, var(--lcd-fg) 19px 20px); }
+.lcd .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--lcd-fg); }
+.lcd .lockbadge { position: absolute; right: 2px; top: 0; font-size: 9px; }
+.lcd .splash { grid-column: 1 / 4; grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.lcd .splash .logo { font: 700 30px Arial, sans-serif; letter-spacing: 3px; text-transform: none; }
+
