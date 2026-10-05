@@ -1,0 +1,5 @@
+# Not served by the deployed site (wrangler.jsonc). The deploy job appends manuals/ unless SELF_HOST_MANUALS is set.
+.assetsignore
+test/
+serve.py
+package.json

@@ -1,0 +1,72 @@
+name: CI
+
+# Lint and test every change to the site; deploy master to radiorack.dr1v3.cz.
+# Docs-only changes (*.md, .claude/, root PDFs) trigger nothing.
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'sim/**'
+      - '!**/*.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'biome.json'
+      - 'wrangler.jsonc'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'sim/**'
+      - '!**/*.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'biome.json'
+      - 'wrangler.jsonc'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+
+  deploy:
+    needs: check
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://radiorack.dr1v3.cz
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+      # Repository variable SELF_HOST_MANUALS=true serves the PDFs from sim/manuals/;
+      # otherwise the manual buttons link to each manual's public source and the PDFs are not uploaded.
+      - name: Link manuals to their sources
+        if: vars.SELF_HOST_MANUALS != 'true'
+        run: |
+          sed -i 's/^export const SELF_HOST_MANUALS = true;$/export const SELF_HOST_MANUALS = false;/' sim/config.js
+          grep -q '^export const SELF_HOST_MANUALS = false;$' sim/config.js
+          echo 'manuals/' >> sim/.assetsignore
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.147.0'
+          command: deploy

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": { "includes": ["sim/**", "!sim/manuals", "!sim/previews"] },
+  "formatter": { "enabled": false },
+  "assist": { "enabled": false },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": { "useButtonType": "off", "useSemanticElements": "off" },
+      "complexity": { "useOptionalChain": "off", "noAdjacentSpacesInRegex": "off" },
+      "correctness": { "noUnusedFunctionParameters": "off" },
+      "style": { "useTemplate": "off", "useConst": "off", "noDescendingSpecificity": "off" },
+      "suspicious": { "useIterableCallbackReturn": "off", "noAssignInExpressions": "off" }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["sim/shared/style.css"],
+      "linter": { "rules": { "correctness": { "noUnknownProperty": "off" } } }
+    }
+  ]
+}
