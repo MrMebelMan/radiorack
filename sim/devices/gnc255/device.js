@@ -2,7 +2,7 @@
 // (GNC 255A/255B Pilot's Guide 190-01182-01 Rev E).
 import { clamp, wrap, S } from '../../core/util.js';
 import { fmtTime } from '../../core/time.js';
-import { radialFrom, wrap180, vorCdi, movePos, CDI_FULL_DEG } from '../../core/nav.js';
+import { radialFrom, wrap180, vorCdi, movePos, CDI_FULL_DEG, FLIGHT_VAR } from '../../core/nav.js';
 import { ComRadio } from '../../com/com-radio.js';
 import { COM_BAND } from '../../com/band.js';
 import { COM_MESSAGES, COM_SETTINGS, comDefaults } from '../../com/garmin-defs.js';
@@ -15,7 +15,7 @@ import { NAVAIDS } from '../../data/lk-nav.js';
 import { UNIT_INFO } from './info.js';
 
 export const PERSIST_KEY = 'gnc255-sim-v2';
-export const FLIGHT_VAR = 5;            // magnetic variation used to turn the flown track into true (Czech ~5E)
+export { FLIGHT_VAR };
 export const NAV_SIGNAL_NM = 150;       // simulator assumption: VOR/LOC usable within 150 NM (no altitude model)
 const LOC_FULL_DEG = 2.5;               // simulator assumption: localizer full-scale deflection
 

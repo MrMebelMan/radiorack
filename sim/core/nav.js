@@ -16,6 +16,9 @@ export function bearingTrue(a, b) {
 export const radialFrom = (st, pos) => wrap360(bearingTrue(st, pos) - (st.var || 0));
 export const bearingTo = (st, pos) => wrap360(bearingTrue(pos, st) - (st.var || 0));
 
+// magnetic variation used to turn a simulated flight's track into true (Czech ~5E)
+export const FLIGHT_VAR = 5;
+
 export const CDI_FULL_DEG = 10;   // manual 2.3: 5 dots each side, 2 degrees per dot
 
 /**
