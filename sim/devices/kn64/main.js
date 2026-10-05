@@ -1,4 +1,5 @@
 // KN 64 page entry: builds the display, binds the switches and knobs and the simulation panels.
+import '../../ui/manuals.js';
 import { KN64, FUNCS, NAV_LIST } from './device.js';
 import { createSound } from './sound.js';
 import { createSeg7 } from '../../ui/lcd-seg7.js';

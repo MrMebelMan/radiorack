@@ -1,4 +1,5 @@
 // AR6201 page entry: builds the transceiver and wires the shared UI modules to index.html.
+import '../../ui/manuals.js';
 import { AR6201, KNOB_STEPS } from './device.js';
 import { createLcd } from '../../ui/lcd.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';

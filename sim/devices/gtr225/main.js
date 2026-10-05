@@ -1,4 +1,5 @@
 // GTR 225 page entry: builds the device and wires the shared UI modules to index.html.
+import '../../ui/manuals.js';
 import { GTR225, MESSAGES } from './device.js';
 import { POSITIONS } from '../../data/lk.js';
 import { createLcd } from '../../ui/lcd.js';

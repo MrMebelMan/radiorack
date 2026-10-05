@@ -1,4 +1,5 @@
 // GTX 328 page entry: builds the transponder and wires the shared UI modules to index.html.
+import '../../ui/manuals.js';
 import { GTX328 } from './device.js';
 import { createGtxLcd } from '../../ui/lcd-gtx.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';

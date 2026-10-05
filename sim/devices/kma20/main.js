@@ -1,4 +1,5 @@
 // KMA 20 page entry: builds the audio panel, its toggles and the simulation panels.
+import '../../ui/manuals.js';
 import { KMA20, NAV_LIST, ADF_LIST, DME_LIST, stationKey } from './device.js';
 import { createSound } from './sound.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';

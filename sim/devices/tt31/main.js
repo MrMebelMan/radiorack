@@ -1,10 +1,10 @@
 // TT31 page entry: builds the transponder and wires the shared UI modules to index.html.
+import '../../ui/manuals.js';
 import { TT31, MODES } from './device.js';
 import { createLcd } from '../../ui/lcd.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
 import { createAudio } from '../../ui/audio.js';
 import { TRIG_LOGO } from '../../ui/logos.js';
-import { ambWord } from '../../ui/panel.js';
 
 let storage = null;
 try { storage = window.localStorage; storage.getItem('x'); } catch { storage = null; }
