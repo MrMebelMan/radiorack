@@ -59,7 +59,7 @@ function buildCluster(svg) {
     h += `<path class="well" d="${sectorPath(R1 - 2, R2 + 2, a0 - 2.5, a1 + 2.5, [RC[0] + 2, RC[1] + 2])}"/>`;
     h += `<g class="mkey" data-key="${k.key}"><title>${k.title}</title><g class="lift">
       <path class="cap" d="${sectorPath(R1, R2, a0, a1, RC)}"/>
-      <g transform="rotate(${rot} ${tx.toFixed(1)} ${ty.toFixed(1)})"><text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="central">${k.key}</text></g></g></g>`;   // rotation on its own group, the press offset on .lift: they never replace each other
+      <g transform="rotate(${rot} ${tx.toFixed(1)} ${ty.toFixed(1)})"><text class="${k.key.toLowerCase()}" x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="central">${k.key}</text></g></g></g>`;   // rotation on its own group, the press offset on .lift: they never replace each other
   }
   h += `<circle class="well" cx="${CX}" cy="${CY}" r="28"/>`;
   h += `<g class="mkey" data-key="ALT"><title>ALT: selects Mode A and Mode C (and Mode S). Replies include the pressure altitude from the altitude source. Powers the unit on.</title>
