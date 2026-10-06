@@ -201,4 +201,5 @@ export function fitBezel(bezel, wrap, { width, height, maxScale = 1.25, maxViewp
   new ResizeObserver(fit).observe(wrap);
   window.addEventListener('resize', fit);
   fit();
+  wrap.classList.add('fitted');
 }
