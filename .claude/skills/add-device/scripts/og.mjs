@@ -23,11 +23,11 @@ const html = (img, cap, sub) => `<!doctype html><html><head><style>
   html, body { margin: 0; width: ${W}px; height: ${H}px; overflow: hidden; }
   body { display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: radial-gradient(ellipse at 50% 35%, #7d8a99, #5b6676 70%, #4c5664);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #fff; }
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #10151c; }
   .unit { overflow: hidden; border-radius: 6px; box-shadow: 0 18px 44px rgba(0,0,0,.5); line-height: 0; }
   .unit img { margin: -2px; max-width: 1040px; max-height: 330px; }
-  h1 { margin: 52px 0 0; font-size: 72px; font-weight: 700; line-height: 1; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
-  p { margin: 16px 0 0; font-size: 34px; line-height: 1; color: #e3e8ee; }
+  h1 { margin: 48px 0 0; font-size: 72px; font-weight: 700; line-height: 1; }
+  p { margin: 18px 0 0; font-size: 50px; font-weight: 500; line-height: 1; color: #1f2833; }
 </style></head><body><div class="unit"><img src="${BASE}/previews/${img}.png"></div><h1>${cap}</h1><p>${sub}</p></body></html>`;
 
 const pages = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(PAGES);
