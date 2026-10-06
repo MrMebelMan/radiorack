@@ -24,6 +24,7 @@ if (nav) {
     const title = Object.assign(document.createElement('span'), { className: 'nav-title', textContent: h1.textContent });
     if (h1.dataset.i18n) title.dataset.i18n = h1.dataset.i18n;
     nav.querySelector('.lang').before(title);
+    nav.classList.add('has-title');
   }
 }
 const foot = document.querySelector('footer.site-foot');
