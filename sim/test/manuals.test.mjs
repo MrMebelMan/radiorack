@@ -28,6 +28,10 @@ test('every manual has its PDF and an http(s) source, and is linked', () => {
   }
 });
 
+test('the landing page has no manual links', () => {
+  assert.ok(!readFileSync(new URL('index.html', root), 'utf8').includes('data-manual'));
+});
+
 test('no manual link bypasses the switch', () => {
   for (const p of pages) {
     const html = readFileSync(new URL(p, root), 'utf8');

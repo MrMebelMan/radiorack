@@ -18,7 +18,7 @@ header .sub { margin: 4px 0 0; color: var(--muted); }
 .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .body h2 { margin: 0; font-size: 18px; font-weight: 600; }
 .body p { margin: 0; color: var(--muted); flex: 1; }
-.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.actions { display: flex; gap: 10px; margin-top: 6px; }
 .btn {
   display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 8px;
   border: 1px solid #3a4350; background: var(--panel-2); color: var(--text); text-decoration: none; font-weight: 500;

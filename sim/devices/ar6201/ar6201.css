@@ -138,4 +138,5 @@
   .ar-col > .bezel-wrap { grid-column: 1; grid-row: 2; }
   .ar-col > .status { grid-column: 1; grid-row: 3; align-self: start; }
   .ar-col > .panel-grid { grid-column: 2; grid-row: 2 / span 2; margin-top: 0; grid-template-columns: minmax(0, 1fr); }
+  .ar-col > .manuals { grid-column: 1 / -1; }
 }
