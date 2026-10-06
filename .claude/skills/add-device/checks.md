@@ -27,6 +27,8 @@ magick out.png -crop WxH+X+Y -scale 300% zoom.png   # details: corners, knobs, d
 Look at it. Fix differences before reporting.
 
 ## Landing preview — `scripts/preview.mjs`
+`S=$S node .claude/skills/add-device/scripts/og.mjs [page …]` renders the link-preview images `sim/og/<page>.jpg` from the previews (server running).
+
 `S=$S node .claude/skills/add-device/scripts/preview.mjs <device> [power-on js]` writes `sim/previews/<device>.png` (README) and `.webp` (landing page) (powered-on bezel). The power-on JS turns the unit on the way a user would (e.g. scroll the volume knob); default sends wheel events to the first `.knob` and waits 4 s.
 
 ## Display vs the native manual figures
