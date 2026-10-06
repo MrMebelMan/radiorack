@@ -3,9 +3,9 @@ html.i18n-pending body { visibility: hidden; }   /* until ui/i18n.js has transla
 
 .topbar {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 10px 20px; border-bottom: 1px solid var(--line); background: var(--panel);
+  min-height: 55px; padding: 10px 20px; border-bottom: 1px solid var(--line); background: var(--panel);   /* height kept while ui/chrome.js fills it */
 }
-@media (max-width: 600px) { .topbar { padding: 8px 16px; } }
+@media (max-width: 600px) { .topbar { min-height: 51px; padding: 8px 16px; } }
 .topbar .back-btn, .lang-btn {
   display: inline-flex; align-items: center; gap: 8px; min-height: 34px;
   padding: 0 12px; border-radius: 8px; border: 1px solid #3a4350;

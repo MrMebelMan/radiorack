@@ -3,6 +3,7 @@
 //   data-i18n="key" (text), data-i18n-html="key" (markup), data-i18n-title / -aria / -alt="key" (attributes)
 // and i18n/<lang>/common.js + i18n/<lang>/<page>.js hold the translations (<page> = <body data-page>).
 // Strings built in JS go through t(); their English is in i18n/en.js. Language picked by ui/i18n-boot.js.
+import './chrome.js';   // navbar and footer first, so they get translated too
 import EN from '../i18n/en.js';
 
 export const LANGS = ['en', 'uk', 'cs', 'sk'];

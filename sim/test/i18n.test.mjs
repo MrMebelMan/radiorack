@@ -27,6 +27,8 @@ for (const [page, file] of Object.entries(PAGES)) {
     } else htmlKeys[key] ??= null;
   }
 }
+// the navbar and footer markup of ui/chrome.js (common keys, plain text)
+for (const m of read('ui/chrome.js').matchAll(/data-i18n(?:-title|-aria)?="([^"]+)"/g)) htmlKeys[m[1]] ??= null;
 
 const dicts = {};
 for (const l of LANGS)
@@ -68,16 +70,17 @@ test('JS t() keys exist in i18n/en.js', () => {
     for (const m of read(f).matchAll(/\bt\('([^']+)'/g)) assert.ok(m[1] in EN, `${f}: t('${m[1]}') not in i18n/en.js`);
 });
 
-test('every page has the navbar with the language picker and the contact footer', () => {
+test('every page has the navbar and footer placeholders filled by ui/chrome.js', () => {
   for (const [page, file] of Object.entries(PAGES)) {
     const html = read(file), base = page === 'landing' ? '' : '../../';
     assert.ok(html.includes(`<script src="${base}ui/i18n-boot.js"></script>`), `${file}: boot script`);
     assert.ok(html.includes(`<link rel="stylesheet" href="${base}shared/topbar.css">`), `${file}: topbar.css`);
-    assert.match(html, /<nav class="topbar">/, `${file}: navbar`);
-    assert.ok(html.includes('<a href="mailto:pulse_dr1v3@proton.me">'), `${file}: contact footer`);
-    assert.equal(html.includes('class="back-btn" href="../../"'), page !== 'landing', `${file}: back button`);
-    const opts = [...html.matchAll(/<div role="option" data-lang="(\w+)"[^>]*><img src="([^"]+)"/g)];
-    assert.deepEqual(opts.map(o => o[1]), ['en', ...LANGS], `${file}: languages`);
-    for (const o of opts) assert.ok(existsSync(new URL(o[2], new URL(file, root))), `${file}: ${o[2]}`);
+    assert.match(html, page === 'landing' ? /<nav class="topbar">/ : /<nav class="topbar" data-back><\/nav>/, `${file}: navbar`);
+    assert.ok(html.includes('<footer class="site-foot"></footer>'), `${file}: footer`);
   }
+  const chrome = read('ui/chrome.js');
+  assert.ok(chrome.includes("CONTACT = 'pulse_dr1v3@proton.me'") && chrome.includes('href="mailto:'), 'contact link');
+  const langs = [...chrome.matchAll(/\['(\w+)', '(\w+)', '\w+', '[^']+'\]/g)];
+  assert.deepEqual(langs.map(l => l[1]), ['en', ...LANGS], 'languages');
+  for (const l of langs) assert.ok(existsSync(new URL(`flags/${l[2]}.svg`, root)), `flags/${l[2]}.svg`);
 });
