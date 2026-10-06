@@ -93,8 +93,7 @@ test('PRESSURE ALT: flight level, feet, meters; trend arrow above VS RATE', () =
   assert.ok(txt().includes('FL 123'));
   x.c.format = 'FEET'; assert.ok(txt().includes('12300'));
   x.c.format = 'METERS'; assert.ok(txt().includes('3761'));
-  x.c.format = 'FLIGHT LVL'; x.s.sim.alt = -1000; assert.ok(txt().includes('FL -010'), 'below sea level: three digits with a minus');
-  x.s.sim.alt = 12340;
+  x.c.format = 'FLIGHT LVL';
   x.s.sim.vs = 300; assert.deepEqual(arrows(), []);
   x.s.sim.vs = 600; assert.deepEqual(arrows(), ['up']);
   x.s.sim.vs = -1200; assert.deepEqual(arrows(), ['dnL']);

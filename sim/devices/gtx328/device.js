@@ -507,7 +507,7 @@ export class GTX328 {
         const valid = this.altValid;
         let items;
         if (c.format === 'FLIGHT LVL') {
-          const fl = Math.round(alt / 100), v = !valid ? '---' : (fl < 0 ? '-' : '') + String(Math.abs(fl)).padStart(3, '0');   // three digits, minus in front below sea level (not shown in the manuals)
+          const fl = Math.round(alt / 100), v = !valid ? '---' : String(fl).padStart(3, '0');
           items = [{ w: textWidth('a', 'FL'), op: x => T('a', x, 23, 'FL') }, { gap: 3, w: textWidth('m', v), op: x => T('m', x, 18, v) }];
         } else {
           const v = !valid ? '-----' : String(c.format === 'METERS' ? Math.round(alt * 0.3048) : Math.round(alt / 100) * 100);

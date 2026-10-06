@@ -11,6 +11,7 @@ let storage = null;
 try { storage = window.localStorage; storage.getItem('x'); } catch { storage = null; }
 
 const xpdr = new GTX328({ storage });
+xpdr.s.sim.alt = Math.max(0, xpdr.s.sim.alt);   // saved below 0 by an older version; the slider starts at 0
 const $ = id => document.getElementById(id);
 
 // ---------- mode cluster: ON / OFF / STBY around the round ALT key (positions measured from the photo) ----------
