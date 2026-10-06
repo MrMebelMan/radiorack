@@ -39,6 +39,7 @@
 .bezel.gtx .cluster text { fill: #ececec; font: 400 15px Arial, Helvetica, sans-serif; letter-spacing: .3px; pointer-events: none; }
 .bezel.gtx .cluster text.stby { font-size: 13.5px; letter-spacing: -.2px; }   /* four letters fit the key as on the unit (photo) */
 .bezel.gtx .cluster .mkey:hover { filter: brightness(1.12); }
+.bezel.gtx .cluster .mkey:hover .cap { stroke: var(--accent); }
 .bezel.gtx .cluster .mkey.down .lift { transform: translateY(1px); }
 .bezel.gtx .cluster .mkey.down .cap { filter: url(#gtxKeyShadowDown); }
 

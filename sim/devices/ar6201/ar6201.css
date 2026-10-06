@@ -72,6 +72,7 @@
 }
 .bezel.ar .combo span { position: absolute; left: 50%; top: -2px; transform: translateX(-50%); padding: 0 6px; background: #2e322f; color: #ececec; font: 800 15px "BRND", Arial, sans-serif; line-height: 1; }
 .bezel.ar .combo::before { content: ""; position: absolute; left: 10px; right: 10px; top: -6px; height: 16px; }   /* bigger hit area */
+.bezel.ar .combo:hover, .bezel.ar .combo:hover span { outline: 1px solid var(--accent); }   /* the bracket and its label, not the hit strip */
 .bezel.ar .combo.down span { color: #fff; }
 .bezel.ar .combo.down { border-color: #fff; }
 

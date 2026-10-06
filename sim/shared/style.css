@@ -121,9 +121,11 @@ input.switch::after {
 }
 input.switch:checked { background: var(--accent); border-color: var(--accent); }
 input.switch:checked::after { transform: translateX(16px); background: #fff; }
+input.switch:hover { border-color: var(--accent); }
 input.switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); }
+input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); border-radius: 8px; }
+input[type="range"]:hover { outline: 1px solid var(--accent); outline-offset: 2px; }
 .val { min-width: 46px; text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
 .card-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
 .panel-grid .card .field + .card-foot { margin-top: 14px; }
@@ -178,9 +180,12 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
   font: 400 14px Arial, Helvetica, sans-serif;
   text-shadow: 0 0 calc(var(--keylit, 0) * 4px) rgba(255, 255, 240, calc(var(--keylit, 0) * .55));   /* key lighting in the dark */
 }
-/* hover, the same on every unit: a faint lift on keys and knobs (dark or light caps) */
+/* hover, the same on every unit: a faint lift on keys and knobs (dark or light caps), and the accent outline every
+   control gets around its visible part (keys: the button border; never the touch hit areas) */
 .bezel .key:hover { filter: brightness(1.12); }
 .bezel .knob:hover, .bezel .dual .inner:hover { filter: brightness(1.12); }
+.bezel .knob:hover, .bezel .dual .inner:hover, .bezel .dual .outer:hover:not(:has(.inner:hover)) { outline: 1px solid var(--accent); }
+.bezel .key:hover { outline: 1px solid var(--accent); outline-offset: -1px; }   /* on the border, which some units restyle */
 /* the inner knob sits inside the outer one: light only the outer ring (an overlay under the inner knob) */
 .bezel .dual .outer::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.07); opacity: 0; pointer-events: none; }
 .bezel .dual .outer:hover:not(:has(.inner:hover))::after { opacity: 1; }

@@ -29,7 +29,7 @@ Reference implementations: `sim/devices/ar6201/ar6201.css` (most refined), `sim/
 ## Keys
 - Keys set at an angle (a mode cluster): draw them as SVG paths with the gradient in page space; keep the rotation of a legend on its own group, the press offset on a wrapper, so neither replaces the other.
 - Rubber caps: dome gradient, inset highlight on top, inset shade at the bottom, outer drop shadow to the bottom-right. Pressed = `translateY(1px)` and a smaller shadow.
-- Hover is one shared rule in `shared/style.css` (`filter: brightness(1.12)` on keys and knobs). For a knob nested in another (dual encoder), light only the outer ring with an overlay so the inner one doesn't light up too.
+- Hover is one shared rule in `shared/style.css`: `filter: brightness(1.12)` on keys and knobs, plus a 1 px `var(--accent)` outline around every control's visible part (keys, knobs, dual rings, switches, sliders). For a knob nested in another (dual encoder), light and outline only the ring under the pointer. When the clickable element isn't the visible shape (a transparent box, a toggle's hit box, a hit strip, an SVG key), outline its visible parts instead (KMA 20 `.tgl` nut / lever / ball, mic skirt and bar; KN 64 slide with `outline-offset` past its lip; GTX 328 `.cap` stroke; AR6201 bracket and label), never the hit areas.
 - Key lighting (backlit legends) may follow the unit's brightness via a CSS variable.
 
 ## Knobs
