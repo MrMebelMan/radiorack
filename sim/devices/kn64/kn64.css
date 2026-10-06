@@ -92,8 +92,8 @@
 }
 .bezel.kn .slide.pwr[data-pos="off"] .slider { left: 2px; }
 .bezel.kn .slide.pwr[data-pos="on"] .slider { left: 27px; }
-.bezel.kn .slide:hover .slider { filter: brightness(1.08); }
-.bezel.kn .slide:hover { outline: 1px solid var(--accent); outline-offset: 3px; }   /* outside the 3 px lip of the box-shadow */
+@media (hover: hover) { .bezel.kn .slide:hover .slider { filter: brightness(1.08); } }
+@media (hover: hover) { .bezel.kn .slide:hover { outline: 1px solid var(--accent); outline-offset: 3px; } }   /* outside the 3 px lip of the box-shadow */
 
 /* concentric frequency selector knobs: knurled outer, smaller inner (pull out = drawn standing proud) */
 .bezel.kn .dual { left: 742px; top: 68px; width: 90px; height: 90px; }

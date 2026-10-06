@@ -39,7 +39,7 @@ header .sub { display: block; color: var(--muted); font-size: 12px; }
   color: var(--text); text-decoration: none; font-size: 13px; font-weight: 500;
   transition: border-color .15s, background .15s;
 }
-.manual-btn:hover { border-color: var(--accent); background: #2b3542; }
+@media (hover: hover) { .manual-btn:hover { border-color: var(--accent); background: #2b3542; } }
 .manual-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .manual-btn svg { color: var(--accent); flex: none; }
 .manual-btn .ext { color: var(--muted); }
@@ -99,12 +99,12 @@ label.lbl-t { cursor: pointer; }
 .ctl-row select { flex: 1; min-width: 0; }
 .field > select { width: 100%; }
 select { min-height: var(--ctl-h); border-radius: 8px; padding: 0 8px; font-size: 13px; }
-select:hover { border-color: var(--accent); }
+@media (hover: hover) { select:hover { border-color: var(--accent); } }
 
 /* yoke buttons */
 .btn-primary, .btn-wide { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .btn-primary { min-height: 46px; font-weight: 600; font-size: 14px; background: #233a55; border-color: #35618f; }
-.btn-primary:hover { background: #2a4566; }
+@media (hover: hover) { .btn-primary:hover { background: #2a4566; } }
 .btn-primary.down { background: #5a1f1f; border-color: #f85149; box-shadow: 0 0 0 1px #f85149 inset; }
 .btn-wide.down { background: #34506e; border-color: var(--accent); }
 .btn-primary small, .btn-wide small { color: var(--muted); font-size: 11px; font-weight: 400; }
@@ -128,23 +128,23 @@ input.switch::after {
 }
 input.switch:checked { background: var(--accent); border-color: var(--accent); }
 input.switch:checked::after { transform: translateX(16px); background: #fff; }
-input.switch:hover { border-color: var(--accent); }
+@media (hover: hover) { input.switch:hover { border-color: var(--accent); } }
 input.switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); border-radius: 8px; }
-input[type="range"]:hover { outline: 1px solid var(--accent); outline-offset: 2px; }
+@media (hover: hover) { input[type="range"]:hover { outline: 1px solid var(--accent); outline-offset: 2px; } }
 .val { min-width: 46px; text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
 .card-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
 .panel-grid .card .field + .card-foot { margin-top: 14px; }
 .btn-danger-quiet { background: transparent; border-color: #6e2e2e; color: #f0a3a3; }
-.btn-danger-quiet:hover { background: #5a1f1f; border-color: #f85149; color: #fff; }
+@media (hover: hover) { .btn-danger-quiet:hover { background: #5a1f1f; border-color: #f85149; color: #fff; } }
 button {
   background: var(--panel-2); color: var(--text);
   border: 1px solid #3a4350; border-radius: 8px;
   min-height: var(--ctl-h); padding: 0 12px; font: inherit; font-size: 13px; cursor: pointer;
   transition: border-color .15s, background .15s;
 }
-button:hover { border-color: var(--accent); }
+@media (hover: hover) { button:hover { border-color: var(--accent); } }
 button:active, button.down { background: #34506e; }
 label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
 select { background: var(--panel-2); color: var(--text); border: 1px solid #3a4350; font-family: inherit; }
@@ -188,14 +188,15 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
   text-shadow: 0 0 calc(var(--keylit, 0) * 4px) rgba(255, 255, 240, calc(var(--keylit, 0) * .55));   /* key lighting in the dark */
 }
 /* hover, the same on every unit: a faint lift on keys and knobs (dark or light caps), and the accent outline every
-   control gets around its visible part (keys: the button border; never the touch hit areas) */
-.bezel .key:hover { filter: brightness(1.12); }
-.bezel .knob:hover, .bezel .dual .inner:hover { filter: brightness(1.12); }
-.bezel .knob:hover, .bezel .dual .inner:hover, .bezel .dual .outer:hover:not(:has(.inner:hover)) { outline: 1px solid var(--accent); }
-.bezel .key:hover { outline: 1px solid var(--accent); outline-offset: -1px; }   /* on the border, which some units restyle */
+   control gets around its visible part (keys: the button border; never the touch hit areas). Every hover rule on the
+   site sits in @media (hover: hover): a touch screen keeps :hover on the last element touched. */
+@media (hover: hover) { .bezel .key:hover { filter: brightness(1.12); } }
+@media (hover: hover) { .bezel .knob:hover, .bezel .dual .inner:hover { filter: brightness(1.12); } }
+@media (hover: hover) { .bezel .knob:hover, .bezel .dual .inner:hover, .bezel .dual .outer:hover:not(:has(.inner:hover)) { outline: 1px solid var(--accent); } }
+@media (hover: hover) { .bezel .key:hover { outline: 1px solid var(--accent); outline-offset: -1px; } }   /* on the border, which some units restyle */
 /* the inner knob sits inside the outer one: light only the outer ring (an overlay under the inner knob) */
 .bezel .dual .outer::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.07); opacity: 0; pointer-events: none; }
-.bezel .dual .outer:hover:not(:has(.inner:hover))::after { opacity: 1; }
+@media (hover: hover) { .bezel .dual .outer:hover:not(:has(.inner:hover))::after { opacity: 1; } }
 .bezel .dual .inner { z-index: 1; }
 /* touch screens: the outer ring is a few px wide at phone scale, so it also takes touches just outside its edge */
 @media (pointer: coarse) { .bezel .dual .outer::before { content: ""; position: absolute; inset: -18px; border-radius: 50%; } }

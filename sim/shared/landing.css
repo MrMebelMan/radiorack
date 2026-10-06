@@ -11,7 +11,7 @@ header .sub { margin: 0; color: var(--muted); }
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 20px;
 }
 .sim-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: border-color .15s, transform .15s; color: inherit; text-decoration: none; }
-.sim-card:hover { border-color: #3d4b5c; transform: translateY(-2px); }
+@media (hover: hover) { .sim-card:hover { border-color: #3d4b5c; transform: translateY(-2px); } }
 .sim-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .preview { display: block; background: #0f1114; aspect-ratio: 880 / 262; overflow: hidden; border-bottom: 1px solid var(--line); }
 .preview img { display: block; width: 100%; height: 100%; object-fit: contain; }

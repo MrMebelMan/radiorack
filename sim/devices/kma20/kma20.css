@@ -75,12 +75,12 @@
 .bezel.kma .tgl[data-pos="1"] .ball { left: 9px; top: 6px; width: 12px; height: 12px; }
 .bezel.kma .tgl[data-pos="-1"] .lever { top: 27px; height: 25px; }
 .bezel.kma .tgl[data-pos="-1"] .ball { left: 9px; top: 45px; width: 12px; height: 12px; box-shadow: 2px 4px 4px rgba(0,0,0,.6); }
-.bezel.kma .tgl:hover .ball { filter: brightness(1.08); }
+@media (hover: hover) { .bezel.kma .tgl:hover .ball { filter: brightness(1.08); } }
 /* hover outline: the toggle's own parts, not its 30 x 60 box or the touch area */
-.bezel.kma .tgl:hover .nut, .bezel.kma .tgl:hover .lever, .bezel.kma .tgl:hover .ball { outline: 1px solid var(--accent); }
+@media (hover: hover) { .bezel.kma .tgl:hover .nut, .bezel.kma .tgl:hover .lever, .bezel.kma .tgl:hover .ball { outline: 1px solid var(--accent); } }
 /* the mic selector box is transparent: outline the skirt and the bar instead (the bar is drawn over the skirt) */
-.bezel.kma .knob.mic:hover { outline: none; }
-.bezel.kma .knob.mic:hover .skirt, .bezel.kma .knob.mic:hover .bar { outline: 1px solid var(--accent); }
+@media (hover: hover) { .bezel.kma .knob.mic:hover { outline: none; } }
+@media (hover: hover) { .bezel.kma .knob.mic:hover .skirt, .bezel.kma .knob.mic:hover .bar { outline: 1px solid var(--accent); } }
 
 /* marker lamps: one strip of three tinted lenses with engraved letters */
 .bezel.kma .lenses {
