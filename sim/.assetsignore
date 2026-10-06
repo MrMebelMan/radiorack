@@ -1,5 +1,7 @@
 # Not served by the deployed site (wrangler.jsonc). The deploy job appends manuals/ unless SELF_HOST_MANUALS is set.
+# previews/*.png are kept for the README; the landing page uses the .webp copies.
 .assetsignore
 test/
 serve.py
 package.json
+previews/*.png
