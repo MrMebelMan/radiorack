@@ -53,7 +53,7 @@ Plain ES modules with no build step. The layers depend downward only: `devices` 
   - `lcd.js` (view → LCD HTML; segments: inv/ul/big/tiny, `stack`, `cdi`, `bar`; full-width message screen; big digits in fixed slots so values never shift; `photo` in a view sets the backlight from the cockpit light)
   - `lcd-seg7.js` (KN 64 `seg7` view: SVG seven-segment gas discharge display)
   - `lcd-becker.js` (AR6201 `bk` view), `lcd-gtx.js` + `fonts-gtx.js` (GTX 328 `gtx` view: 200 x 33 dot matrix on a canvas, bitmap fonts from the manual figures)
-  - `controls.js` (the COM pot, further `pots`, optional encoders, keys, hold buttons, `latch`: right-click keeps a hold key pressed, keyboard)
+  - `controls.js` (the COM pot, further `pots`, optional encoders, keys, hold buttons, `latch`: right-click keeps a hold key pressed, keyboard; `fitBezel` scales to the small viewport height `100svh`, so a mobile address bar sliding in and out doesn't resize the bezel, and on screens under 500 px tall lets it use the height below the header)
   - `audio.js` (static, incoming-call clips, NAV Morse; exports `MORSE` / `scheduleMorse` for units with their own mixer)
   - `panel.js` (status line, yoke/simulation panels, Flight block when present, cockpit light slider and key lighting; `ambWord`)
   - `manuals.js` (manual link targets, see `manuals/` below)

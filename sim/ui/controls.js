@@ -181,10 +181,20 @@ export function bindControls(radio, after, cfg) {
 }
 
 // Scale a fixed-size bezel to its container's width.
-// Grows with the column, but never taller than maxViewport of the window height.
+// Grows with the column, but never taller than maxViewport of the screen height. On short screens (phone landscape)
+// it may use the whole height below the header instead.
+// The height is the small viewport (100svh): it stays the same while a mobile address bar slides in and out on
+// scroll, so the bezel doesn't resize then (window.innerHeight does change).
+const SHORT_SCREEN = 500;
 export function fitBezel(bezel, wrap, { width, height, maxScale = 1.25, maxViewport = 0.55 }) {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position: fixed; top: 0; height: 100svh; width: 0; visibility: hidden; pointer-events: none;';
+  document.body.append(probe);
   const fit = () => {
-    const s = Math.min(maxScale, wrap.clientWidth / (width + 6), window.innerHeight * maxViewport / (height + 6));
+    const vh = probe.offsetHeight || document.documentElement.clientHeight;
+    const top = wrap.getBoundingClientRect().top + window.scrollY;
+    const maxH = vh < SHORT_SCREEN ? Math.max(vh * maxViewport, vh - top - 12) : vh * maxViewport;
+    const s = Math.min(maxScale, wrap.clientWidth / (width + 6), maxH / (height + 6));
     bezel.style.transform = `scale(${s})`;
     wrap.style.height = `${(height + 6) * s}px`;
   };
