@@ -53,7 +53,7 @@ main {
   align-items: start;
 }
 @media (max-width: 1000px) { main { grid-template-columns: minmax(0, 1fr); } }
-.help-col > .card:first-child { margin-top: 0; }
+.help-col > .card:first-child, .help-col > .manuals { margin-top: 0; }
 @media (max-width: 600px) { main { padding: 10px 16px 30px; } }
 
 .card {
