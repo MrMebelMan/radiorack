@@ -50,6 +50,9 @@
 
 /* bat toggles: dark bushing nut, lever and chrome ball; up / center / down */
 .bezel.kma .tgl { position: absolute; top: 52px; width: 30px; height: 60px; margin-left: -15px; cursor: pointer; touch-action: none; }   /* a swipe on a toggle moves the lever, not the page */
+/* touch screens: each toggle takes touches in a 58 x 84 rectangle around it (the closest two, MKR audio and the MKR
+   switch, are 62 px apart, so the rectangles never overlap) */
+@media (pointer: coarse) { .bezel.kma .tgl::before { content: ""; position: absolute; inset: -12px -14px; } }
 .bezel.kma .tgl .nut {
   position: absolute; left: 4px; top: 19px; width: 22px; height: 22px; border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #3a3a37, #141413 70%);
