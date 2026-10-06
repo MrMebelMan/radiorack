@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GNC 255 Simulator</title>
+<title data-i18n="gnc255.gnc-255-simulator">GNC 255 Simulator</title>
 <meta name="description" content="Simulator of the Garmin GNC 255A NAV/COM: COM plus VOR/LOC with OBS, CDI and Morse ident.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RadioRack">
@@ -16,57 +16,70 @@
 <meta property="og:image:alt" content="Garmin GNC 255A bezel">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/topbar.css">
+<script src="../../ui/i18n-boot.js"></script>
 <link rel="stylesheet" href="gnc255.css">
 </head>
-<body>
+<body data-page="gnc255">
+<nav class="topbar">
+  <a class="back-btn" href="../../" title="Back to the list of simulators" data-i18n-title="common.tip.back-to-the-list-of-simulators"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="common.all-simulators">All simulators</span></a>
+  <div class="lang">
+    <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Language" title="Language" data-i18n-aria="common.tip.language" data-i18n-title="common.tip.language"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><svg class="caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="lang-list" id="langList" role="listbox" aria-label="Language" hidden data-i18n-aria="common.tip.language">
+      <div role="option" data-lang="en" tabindex="-1"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><span class="name" lang="en">English</span></div>
+      <div role="option" data-lang="uk" tabindex="-1"><img src="../../flags/ua.svg" alt=""><span class="code">UA</span><span class="name" lang="uk">Українська</span></div>
+      <div role="option" data-lang="cs" tabindex="-1"><img src="../../flags/cz.svg" alt=""><span class="code">CS</span><span class="name" lang="cs">Čeština</span></div>
+      <div role="option" data-lang="sk" tabindex="-1"><img src="../../flags/sk.svg" alt=""><span class="code">SK</span><span class="name" lang="sk">Slovenčina</span></div>
+    </div>
+  </div>
+</nav>
 
 <main>
   <section class="unit-col">
     <header>
-      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
-      <h1>GNC 255A NAV/COM simulator</h1>
-      <span class="sub">Practice trainer based on the GNC 255A/255B Pilot's Guide (190-01182-01 Rev E, SW v2.10).</span>
-      <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. On the TUNE knob, the outer ring and the center are separate. Click the center for PUSH CRSR, the COM knob for PUSH SQ, the NAV knob for PUSH ID.</span>
+      <h1 data-i18n="gnc255.gnc-255a-nav-com-simulator">GNC 255A NAV/COM simulator</h1>
+      <span class="sub" data-i18n="gnc255.practice-trainer-based-on-the-gnc">Practice trainer based on the GNC 255A/255B Pilot's Guide (190-01182-01 Rev E, SW v2.10).</span>
+      <span class="sub" data-i18n="gnc255.mouse-drag-a-knob-up-down">Mouse: drag a knob up/down or scroll over it to turn it. On the TUNE knob, the outer ring and the center are separate. Click the center for PUSH CRSR, the COM knob for PUSH SQ, the NAV knob for PUSH ID.</span>
       <nav class="manuals">
-        <a class="manual-btn" data-manual="gnc255-pilots-guide" href="../../manuals/gnc255-pilots-guide.pdf" target="_blank" rel="noopener" title="GNC 255A/255B Pilot's Guide (190-01182-01 Rev E) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>GNC 255 Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="gtr225-gnc255-installation-manual" href="../../manuals/gtr225-gnc255-installation-manual.pdf" target="_blank" rel="noopener" title="GTR 225/GNC 255 TSO Installation Manual (190-01182-02 Rev L; public copy with a previous reader's highlights) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="gnc255-pilots-guide" href="../../manuals/gnc255-pilots-guide.pdf" target="_blank" rel="noopener" title="GNC 255A/255B Pilot's Guide (190-01182-01 Rev E)" data-i18n-title="gnc255.tip.gnc-255a-255b-pilot-s-guide"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>GNC 255 Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="gtr225-gnc255-installation-manual" href="../../manuals/gtr225-gnc255-installation-manual.pdf" target="_blank" rel="noopener" title="GTR 225/GNC 255 TSO Installation Manual (190-01182-02 Rev L; public copy with a previous reader's highlights)" data-i18n-title="common.tip.gtr-225-gnc-255-tso-installation"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
       <div class="bezel gnc" id="bezel">
-        <div class="lbl" style="left:49px;top:5px;width:40px" title="COM: this knob controls the COM radio audio volume">COM</div>
-        <div class="knob vol" id="volKnob" title="Power / COM Volume / Squelch knob. Turn clockwise past the detent to power on, counter-clockwise past 0 to power off; turning adjusts COM volume (drag up/down or scroll). Press to toggle automatic squelch override (SQ shown). Press and hold about 2 s to tune 121.5."><div class="grip"></div></div>
-        <div class="lbl" style="left:6px;top:56px;text-align:left" title="PWR / VOL: turn the knob to power on/off and set COM volume">PWR<br>VOL</div>
-        <div class="lbl" style="left:42px;top:85px;width:60px" title="PUSH SQ: press the knob to toggle automatic squelch override">PUSH SQ</div>
+        <div class="lbl" style="left:49px;top:5px;width:40px" title="COM: this knob controls the COM radio audio volume" data-i18n-title="common.tip.com-this-knob-controls-the-com">COM</div>
+        <div class="knob vol" id="volKnob" title="Power / COM Volume / Squelch knob. Turn clockwise past the detent to power on, counter-clockwise past 0 to power off; turning adjusts COM volume (drag up/down or scroll). Press to toggle automatic squelch override (SQ shown). Press and hold about 2 s to tune 121.5." data-i18n-title="common.tip.power-com-volume-squelch-knob-turn"><div class="grip"></div></div>
+        <div class="lbl" style="left:6px;top:56px;text-align:left" title="PWR / VOL: turn the knob to power on/off and set COM volume" data-i18n-title="common.tip.pwr-vol-turn-the-knob-to">PWR<br>VOL</div>
+        <div class="lbl" style="left:42px;top:85px;width:60px" title="PUSH SQ: press the knob to toggle automatic squelch override" data-i18n-title="common.tip.push-sq-press-the-knob-to">PUSH SQ</div>
 
-        <div class="lbl" style="left:49px;top:132px;width:40px" title="NAV: this knob controls the NAV (VLOC) audio volume">NAV</div>
-        <div class="knob nav" id="navKnob" title="NAV Volume / ID knob: turn to set the NAV audio volume (drag up/down or scroll). Press, with the NAV display active, to hear the station's Morse ident; ID appears left of the active NAV frequency."><div class="grip"></div></div>
-        <div class="lbl" style="left:8px;top:187px;text-align:left" title="VOL: NAV audio volume">VOL</div>
-        <div class="lbl" style="left:42px;top:211px;width:60px" title="PUSH ID: press the knob to hear the NAV Morse ident">PUSH ID</div>
+        <div class="lbl" style="left:49px;top:132px;width:40px" title="NAV: this knob controls the NAV (VLOC) audio volume" data-i18n-title="gnc255.tip.nav-this-knob-controls-the-nav">NAV</div>
+        <div class="knob nav" id="navKnob" title="NAV Volume / ID knob: turn to set the NAV audio volume (drag up/down or scroll). Press, with the NAV display active, to hear the station's Morse ident; ID appears left of the active NAV frequency." data-i18n-title="gnc255.tip.nav-volume-id-knob-turn-to"><div class="grip"></div></div>
+        <div class="lbl" style="left:8px;top:187px;text-align:left" title="VOL: NAV audio volume" data-i18n-title="gnc255.tip.vol-nav-audio-volume">VOL</div>
+        <div class="lbl" style="left:42px;top:211px;width:60px" title="PUSH ID: press the knob to hear the NAV Morse ident" data-i18n-title="gnc255.tip.push-id-press-the-knob-to">PUSH ID</div>
 
-        <div class="sensor" title="Photo sensor: the unit automatically adjusts display brightness for the cabin lighting (manual offset under FUNC > SYS > DSPL BRT)"></div>
-        <button class="key" data-key="MON" style="left:117px;top:76px" title="MON (Monitor): listen to the standby COM frequency while still listening to the active one. MN replaces STB; press again to turn off. A signal on the active frequency takes priority. Monitoring is not canceled by switching to NAV mode.">MON</button>
+        <div class="sensor" title="Photo sensor: the unit automatically adjusts display brightness for the cabin lighting (manual offset under FUNC > SYS > DSPL BRT)" data-i18n-title="common.tip.photo-sensor-the-unit-automatically-adjusts"></div>
+        <button class="key" data-key="MON" style="left:117px;top:76px" title="MON (Monitor): listen to the standby COM frequency while still listening to the active one. MN replaces STB; press again to turn off. A signal on the active frequency takes priority. Monitoring is not canceled by switching to NAV mode." data-i18n-title="gnc255.tip.mon-monitor-listen-to-the-standby">MON</button>
 
-        <div class="lcd-frame" title="Display: active frequency (ACT) on the left, standby (STB, or MN when monitoring) on the right; COM or NAV annunciator on top. Top-left annunciator: SQ, TX or RX (COM), ID (NAV ident on). Bottom line: station ident/type, DST data, CDI, prompts and the running timer."><div class="lcd-recess"><div class="lcd off" id="lcd"></div></div></div>
+        <div class="lcd-frame" title="Display: active frequency (ACT) on the left, standby (STB, or MN when monitoring) on the right; COM or NAV annunciator on top. Top-left annunciator: SQ, TX or RX (COM), ID (NAV ident on). Bottom line: station ident/type, DST data, CDI, prompts and the running timer." data-i18n-title="gnc255.tip.display-active-frequency-act-on-the"><div class="lcd-recess"><div class="lcd off" id="lcd"></div></div></div>
 
-        <div class="garmin" title="Garmin GNC 255A NAV/COM: VHF COM 118.000-136.990 MHz (8.33 / 25 kHz), VOR/LOC 108.00-117.95 MHz with glideslope">GARMIN</div>
-        <div class="usb" id="usbSlot" title="USB port: used to update the frequency database (FUNC > SYS > LOAD DATABASE). Insert a drive from the Simulation panel."></div>
-        <button class="key flip" id="flip" style="left:708px;top:76px" title="FLIP/FLOP: press and release to swap the active and standby frequencies of the radio shown (COM or NAV; COM switching is disabled while transmitting). In a list, sends the selected frequency to active. Press and hold about 2 s for the emergency channel 121.5."><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><path d="M0 6 7 0v4.8h12V0l7 6-7 6V7.2H7V12z" fill="currentColor"/></svg></button>
-        <div class="lbl" style="left:798px;top:118px;width:40px" title="TUNE: dual concentric knob for frequency tuning and data entry">TUNE</div>
+        <div class="garmin" title="Garmin GNC 255A NAV/COM: VHF COM 118.000-136.990 MHz (8.33 / 25 kHz), VOR/LOC 108.00-117.95 MHz with glideslope" data-i18n-title="gnc255.tip.garmin-gnc-255a-nav-com-vhf">GARMIN</div>
+        <div class="usb" id="usbSlot" title="USB port: used to update the frequency database (FUNC > SYS > LOAD DATABASE). Insert a drive from the Simulation panel." data-i18n-title="common.tip.usb-port-used-to-update-the"></div>
+        <button class="key flip" id="flip" style="left:708px;top:76px" title="FLIP/FLOP: press and release to swap the active and standby frequencies of the radio shown (COM or NAV; COM switching is disabled while transmitting). In a list, sends the selected frequency to active. Press and hold about 2 s for the emergency channel 121.5." data-i18n-title="gnc255.tip.flip-flop-press-and-release-to"><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><path d="M0 6 7 0v4.8h12V0l7 6-7 6V7.2H7V12z" fill="currentColor"/></svg></button>
+        <div class="lbl" style="left:798px;top:118px;width:40px" title="TUNE: dual concentric knob for frequency tuning and data entry" data-i18n-title="common.tip.tune-dual-concentric-knob-for-frequency">TUNE</div>
         <div class="dual" id="tune">
-          <div class="outer" id="tuneOuter" title="Outer knob: MHz (COM 118-136, NAV 108-117) on the COM/NAV page; OBS in 10 degree steps on the OBS page; moves the cursor / selects the field or category on other pages. Drag up/down or scroll."><div class="grip"></div>
-            <div class="inner" id="tuneInner" title="Inner knob: kHz (COM 25 / 8.33 kHz, NAV 50 kHz) on the COM/NAV page; OBS in 1 degree steps on the OBS page; changes characters, values and list entries on other pages. Drag up/down or scroll. Press (PUSH CRSR) for database look-up, to edit a user frequency, or to set the countdown timer."><div class="grip"></div></div>
+          <div class="outer" id="tuneOuter" title="Outer knob: MHz (COM 118-136, NAV 108-117) on the COM/NAV page; OBS in 10 degree steps on the OBS page; moves the cursor / selects the field or category on other pages. Drag up/down or scroll." data-i18n-title="gnc255.tip.outer-knob-mhz-com-118-136"><div class="grip"></div>
+            <div class="inner" id="tuneInner" title="Inner knob: kHz (COM 25 / 8.33 kHz, NAV 50 kHz) on the COM/NAV page; OBS in 1 degree steps on the OBS page; changes characters, values and list entries on other pages. Drag up/down or scroll. Press (PUSH CRSR) for database look-up, to edit a user frequency, or to set the countdown timer." data-i18n-title="gnc255.tip.inner-knob-khz-com-25-8"><div class="grip"></div></div>
           </div>
         </div>
-        <div class="lbl" style="left:733px;top:194px;text-align:left" title="PUSH CRSR: press the inner knob to activate the cursor / database look-up">PUSH<br><span style="padding-left:12px">CRSR</span></div>
+        <div class="lbl" style="left:733px;top:194px;text-align:left" title="PUSH CRSR: press the inner knob to activate the cursor / database look-up" data-i18n-title="common.tip.push-crsr-press-the-inner-knob">PUSH<br><span style="padding-left:12px">CRSR</span></div>
 
-        <button class="key" data-key="CN" style="left:158px;top:174px" title="C/N: select the COM or NAV (VLOC) radio mode. Both are never shown at the same time.">C/N</button>
-        <button class="key" data-key="OBS" style="left:256px;top:174px" title="OBS: show the current OBS setting and graphic CDI (5 dots each side, 2 degrees per dot). Without an external CDI, the knobs set the OBS. Press OBS again to return.">OBS</button>
-        <button class="key" data-key="TF" style="left:353px;top:174px" title="T/F: toggle between the bearing TO and the radial FROM the active VOR; also shows Distance/Speed/Time (needs a GPS source, stations within 200 NM). Does not operate for localizer frequencies.">T/F</button>
-        <div class="screw" style="left:434px;top:192px" title="Locking screw: secures the unit in its mounting rack"></div>
-        <button class="key" data-key="FUNC" style="left:473px;top:174px" title="FUNC: open the Function menu (COM and NAV frequency lists, ICS, SYS and Timer configuration). Press again to exit.">FUNC</button>
-        <button class="key" data-key="CLR" style="left:570px;top:174px" title="CLR: erase information, cancel entries, and reset timers. On the COM/NAV page with a timer shown: CLR then ENT resets it.">CLR</button>
-        <button class="key" data-key="ENT" style="left:666px;top:174px" title="ENT: save values, confirm prompts and acknowledge messages. On the COM/NAV page: save the standby frequency as a user frequency (or stop the displayed timer).">ENT</button>
+        <button class="key" data-key="CN" style="left:158px;top:174px" title="C/N: select the COM or NAV (VLOC) radio mode. Both are never shown at the same time." data-i18n-title="gnc255.tip.c-n-select-the-com-or">C/N</button>
+        <button class="key" data-key="OBS" style="left:256px;top:174px" title="OBS: show the current OBS setting and graphic CDI (5 dots each side, 2 degrees per dot). Without an external CDI, the knobs set the OBS. Press OBS again to return." data-i18n-title="gnc255.tip.obs-show-the-current-obs-setting">OBS</button>
+        <button class="key" data-key="TF" style="left:353px;top:174px" title="T/F: toggle between the bearing TO and the radial FROM the active VOR; also shows Distance/Speed/Time (needs a GPS source, stations within 200 NM). Does not operate for localizer frequencies." data-i18n-title="gnc255.tip.t-f-toggle-between-the-bearing">T/F</button>
+        <div class="screw" style="left:434px;top:192px" title="Locking screw: secures the unit in its mounting rack" data-i18n-title="common.tip.locking-screw-secures-the-unit-in"></div>
+        <button class="key" data-key="FUNC" style="left:473px;top:174px" title="FUNC: open the Function menu (COM and NAV frequency lists, ICS, SYS and Timer configuration). Press again to exit." data-i18n-title="gnc255.tip.func-open-the-function-menu-com">FUNC</button>
+        <button class="key" data-key="CLR" style="left:570px;top:174px" title="CLR: erase information, cancel entries, and reset timers. On the COM/NAV page with a timer shown: CLR then ENT resets it." data-i18n-title="gnc255.tip.clr-erase-information-cancel-entries-and">CLR</button>
+        <button class="key" data-key="ENT" style="left:666px;top:174px" title="ENT: save values, confirm prompts and acknowledge messages. On the COM/NAV page: save the standby frequency as a user frequency (or stop the displayed timer)." data-i18n-title="gnc255.tip.ent-save-values-confirm-prompts-and">ENT</button>
       </div>
     </div>
 
@@ -74,77 +87,77 @@
       <span class="dot" aria-hidden="true"></span>
       <div class="status-text">
         <div id="hint" class="hint"></div>
-        <div id="hearingRow"><b>Audio:</b> <span id="hearing"></span></div>
+        <div id="hearingRow"><b data-i18n="common.audio">Audio:</b> <span id="hearing"></span></div>
       </div>
     </div>
 
     <div class="panel-grid">
       <div class="panel-col">
         <section class="card">
-          <h2>Yoke &amp; remote</h2>
-          <button id="ptt" class="hold btn-primary" title="Push-to-talk on the yoke: hold to transmit on the active frequency">PTT <small>hold to transmit</small></button>
-          <button id="xfr" class="hold btn-wide" title="Remote COM flip/flop on the yoke. Tap = flip; hold 2 s = 121.5 + lock (hold again to unlock)">COM RMT XFR <small>tap = flip · hold 2 s = 121.5 lock</small></button>
-          <button id="navXfr" class="hold btn-wide" title="Remote NAV flip/flop (not available in all installations). Tap = swap the NAV frequencies.">NAV RMT XFR <small>tap = NAV flip</small></button>
+          <h2 data-i18n="common.yoke-remote">Yoke &amp; remote</h2>
+          <button id="ptt" class="hold btn-primary" title="Push-to-talk on the yoke: hold to transmit on the active frequency" data-i18n-html="common.ptt-hold-to-transmit" data-i18n-title="common.tip.push-to-talk-on-the-yoke">PTT <small>hold to transmit</small></button>
+          <button id="xfr" class="hold btn-wide" title="Remote COM flip/flop on the yoke. Tap = flip; hold 2 s = 121.5 + lock (hold again to unlock)" data-i18n-html="common.com-rmt-xfr-tap-flip-hold" data-i18n-title="gnc255.tip.remote-com-flip-flop-on-the">COM RMT XFR <small>tap = flip · hold 2 s = 121.5 lock</small></button>
+          <button id="navXfr" class="hold btn-wide" title="Remote NAV flip/flop (not available in all installations). Tap = swap the NAV frequencies." data-i18n-html="gnc255.nav-rmt-xfr-tap-nav-flip" data-i18n-title="gnc255.tip.remote-nav-flip-flop-not-available">NAV RMT XFR <small>tap = NAV flip</small></button>
           <div class="btn-row">
-            <button data-sim="recall" title="Loads the next COM user preset into standby">Remote recall</button>
-            <div class="seg" role="group" aria-label="COM channel">
+            <button data-sim="recall" title="Loads the next COM user preset into standby" data-i18n="common.remote-recall" data-i18n-title="gnc255.tip.loads-the-next-com-user-preset">Remote recall</button>
+            <div class="seg" role="group" aria-label="COM channel" data-i18n-aria="common.tip.com-channel">
               <button data-sim="chanDn" title="COM CHAN DN">CHAN &#9660;</button>
               <button data-sim="chanUp" title="COM CHAN UP">CHAN &#9650;</button>
             </div>
-            <button data-sim="remoteIcs" title="Remote intercom on/off switch">Remote ICS</button>
+            <button data-sim="remoteIcs" title="Remote intercom on/off switch" data-i18n="common.remote-ics" data-i18n-title="common.tip.remote-intercom-on-off-switch">Remote ICS</button>
           </div>
         </section>
       </div>
 
       <section class="card">
-        <h2>Traffic &amp; audio</h2>
+        <h2 data-i18n="common.traffic-audio">Traffic &amp; audio</h2>
         <div class="field">
-          <span class="lbl-t" title="Simulate a station transmitting">Incoming call</span>
+          <span class="lbl-t" title="Simulate a station transmitting" data-i18n="common.incoming-call" data-i18n-title="common.tip.simulate-a-station-transmitting">Incoming call</span>
           <div class="btn-row">
-            <button data-sim="rxAct" title="Simulate a station transmitting on the active frequency">Active</button>
-            <button data-sim="rxStb" title="Simulate a station transmitting on the standby frequency (heard with MON)">Standby</button>
+            <button data-sim="rxAct" title="Simulate a station transmitting on the active frequency" data-i18n="common.active" data-i18n-title="common.tip.simulate-a-station-transmitting-on-the">Active</button>
+            <button data-sim="rxStb" title="Simulate a station transmitting on the standby frequency (heard with MON)" data-i18n="common.standby" data-i18n-title="common.tip.simulate-a-station-transmitting-on-the-2">Standby</button>
           </div>
-          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)">Sound</label>
-          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)"></div>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n="common.sound" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise"></div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Flight</h2>
+        <h2 data-i18n="common.flight">Flight</h2>
         <div class="field">
-          <label class="lbl-t" for="flightGs" title="Simulated ground speed">Ground speed</label>
-          <div class="ctl-row"><input type="range" id="flightGs" min="0" max="200" step="5" title="Simulated ground speed"><span id="flightGsVal" class="val"></span></div>
-          <label class="lbl-t" for="flightTrk" title="Simulated ground track">Track (MAG)</label>
-          <div class="ctl-row"><input type="range" id="flightTrk" min="0" max="359" step="1" title="Simulated ground track"><span id="flightTrkVal" class="val"></span></div>
-          <span class="lbl-t">Aircraft</span>
+          <label class="lbl-t" for="flightGs" title="Simulated ground speed" data-i18n="common.ground-speed" data-i18n-title="common.tip.simulated-ground-speed">Ground speed</label>
+          <div class="ctl-row"><input type="range" id="flightGs" min="0" max="200" step="5" title="Simulated ground speed" data-i18n-title="common.tip.simulated-ground-speed"><span id="flightGsVal" class="val"></span></div>
+          <label class="lbl-t" for="flightTrk" title="Simulated ground track" data-i18n="common.track-mag" data-i18n-title="common.tip.simulated-ground-track">Track (MAG)</label>
+          <div class="ctl-row"><input type="range" id="flightTrk" min="0" max="359" step="1" title="Simulated ground track" data-i18n-title="common.tip.simulated-ground-track"><span id="flightTrkVal" class="val"></span></div>
+          <span class="lbl-t" data-i18n="common.aircraft">Aircraft</span>
           <div class="btn-row">
-            <button id="flightRun" title="Start / pause the simulated flight (the position moves with ground speed and track)">Fly</button>
-            <button id="flightReset" title="Back to the start position chosen under GPS source">Back to start</button>
+            <button id="flightRun" title="Start / pause the simulated flight (the position moves with ground speed and track)" data-i18n="common.fly" data-i18n-title="common.tip.start-pause-the-simulated-flight-the">Fly</button>
+            <button id="flightReset" title="Back to the start position chosen under GPS source" data-i18n="common.back-to-start" data-i18n-title="gnc255.tip.back-to-the-start-position-chosen">Back to start</button>
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Aircraft &amp; installation</h2>
+        <h2 data-i18n="common.aircraft-installation">Aircraft &amp; installation</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
-          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically.">Cockpit light</label>
-          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically."><span id="ambVal" class="val"></span></div>
-          <label class="lbl-t" for="gpsOn" title="GPS position source connected (needed for nearest airports and station idents)">GPS source</label>
-          <div class="ctl-row"><input type="checkbox" id="gpsOn" class="switch" title="GPS position source connected (needed for nearest airports and station idents)"><select id="posSel" aria-label="Start position" title="Simulated GPS position"></select></div>
-          <label class="lbl-t" for="usbSel" title="USB drive in the bezel slot (for LOAD DATABASE)">USB drive</label>
-          <select id="usbSel" title="USB drive in the bezel slot (for LOAD DATABASE)">
-            <option value="none">not inserted</option>
-            <option value="valid">valid database (cycle 2611)</option>
-            <option value="corrupt">corrupt / wrong system ID</option>
-            <option value="nounlock">missing unlock file</option>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n="common.avionics-master" data-i18n-title="common.tip.avionics-master-switch-power-to-the">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n-title="common.tip.avionics-master-switch-power-to-the"></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n="common.cockpit-light" data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell"><span id="ambVal" class="val"></span></div>
+          <label class="lbl-t" for="gpsOn" title="GPS position source connected (needed for nearest airports and station idents)" data-i18n="common.gps-source" data-i18n-title="common.tip.gps-position-source-connected-needed-for">GPS source</label>
+          <div class="ctl-row"><input type="checkbox" id="gpsOn" class="switch" title="GPS position source connected (needed for nearest airports and station idents)" data-i18n-title="common.tip.gps-position-source-connected-needed-for"><select id="posSel" aria-label="Start position" title="Simulated GPS position" data-i18n-aria="gnc255.tip.start-position" data-i18n-title="common.tip.simulated-gps-position"></select></div>
+          <label class="lbl-t" for="usbSel" title="USB drive in the bezel slot (for LOAD DATABASE)" data-i18n="common.usb-drive" data-i18n-title="common.tip.usb-drive-in-the-bezel-slot">USB drive</label>
+          <select id="usbSel" title="USB drive in the bezel slot (for LOAD DATABASE)" data-i18n-title="common.tip.usb-drive-in-the-bezel-slot">
+            <option value="none" data-i18n="common.not-inserted">not inserted</option>
+            <option value="valid" data-i18n="common.valid-database-cycle-2611">valid database (cycle 2611)</option>
+            <option value="corrupt" data-i18n="common.corrupt-wrong-system-id">corrupt / wrong system ID</option>
+            <option value="nounlock" data-i18n="common.missing-unlock-file">missing unlock file</option>
           </select>
-          <label class="lbl-t" for="msgSel" title="System message to raise">Message</label>
-          <div class="ctl-row"><select id="msgSel" title="System message to raise"></select><button data-sim="msg" title="Raise the chosen message (MSG annunciator)">Raise</button></div>
+          <label class="lbl-t" for="msgSel" title="System message to raise" data-i18n="common.message" data-i18n-title="common.tip.system-message-to-raise">Message</label>
+          <div class="ctl-row"><select id="msgSel" title="System message to raise" data-i18n-title="common.tip.system-message-to-raise"></select><button data-sim="msg" title="Raise the chosen message (MSG annunciator)" data-i18n="common.raise" data-i18n-title="common.tip.raise-the-chosen-message-msg-annunciator">Raise</button></div>
         </div>
         <div class="card-foot">
-          <button data-sim="factory" class="btn-danger-quiet" title="Reset all settings, user frequencies and the recent list">Reset to factory settings</button>
+          <button data-sim="factory" class="btn-danger-quiet" title="Reset all settings, user frequencies and the recent list" data-i18n="common.reset-to-factory-settings" data-i18n-title="common.tip.reset-all-settings-user-frequencies-and">Reset to factory settings</button>
         </div>
       </section>
     </div>
@@ -153,59 +166,59 @@
   <aside class="help-col">
 
     <div class="card procs">
-      <h2>Procedures</h2>
-      <details open><summary>Power, volume, squelch, NAV volume</summary>
+      <h2 data-i18n="common.procedures">Procedures</h2>
+      <details open><summary data-i18n="gnc255.power-volume-squelch-nav-volume">Power, volume, squelch, NAV volume</summary>
         <ul>
-          <li>Power on: turn PWR/VOL clockwise past the detent. Power off: turn counter-clockwise past 0.</li>
-          <li>Press the COM knob to toggle the automatic squelch override. <b>SQ</b> appears top-left.</li>
-          <li>The NAV knob (bottom left) sets the NAV audio volume.</li>
+          <li data-i18n="gnc255.power-on-turn-pwr-vol-clockwise">Power on: turn PWR/VOL clockwise past the detent. Power off: turn counter-clockwise past 0.</li>
+          <li data-i18n-html="gnc255.press-the-com-knob-to-toggle">Press the COM knob to toggle the automatic squelch override. <b>SQ</b> appears top-left.</li>
+          <li data-i18n="gnc255.the-nav-knob-bottom-left-sets">The NAV knob (bottom left) sets the NAV audio volume.</li>
         </ul></details>
-      <details><summary>1.2 Keys: C/N, OBS, T/F</summary>
-        <ul><li><b>C/N</b> selects the COM or NAV (VLOC) radio mode. The COM or NAV annunciator shows on the top line.</li>
-        <li><b>OBS</b> shows the OBS setting and graphic CDI. <b>T/F</b> toggles bearing TO / radial FROM the active VOR, with distance/speed/time.</li>
-        <li>There is no MEM or ICS key: recent and user lists and the ICS settings are in the <b>FUNC</b> menu.</li></ul></details>
-      <details><summary>2.1 COM: select / flip / monitor</summary>
-        <ol><li>Press <b>C/N</b> if needed to reach COM.</li><li>Outer knob = MHz (118–136), inner knob = kHz (25 or 8.33 steps).</li>
-        <li>Press <b>&#x21C4;</b> to swap active and standby. Flip is disabled while transmitting.</li>
-        <li><b>MON</b>: MN replaces STB. A signal on the active frequency takes priority; monitoring stays on in NAV mode.</li></ol></details>
-      <details><summary>2.1.3 / 2.2.2 Save a channel</summary>
-        <ol><li>On the COM or NAV page press <b>ENT</b>.</li><li>Inner knob = character, outer knob = cursor.</li><li>After selecting characters, press <b>ENT</b>. Turn the <b>outer knob</b> to the TYPE field, inner knob selects the type (NAV: VOR, DME, LOC, ILS, 01–36).</li><li><b>ENT</b> saves (max 15), <b>CLR</b> cancels.</li></ol></details>
-      <details><summary>2.1.4 / 3.3.3 Database look-up</summary>
-        <ol><li>On the COM or NAV page press the inner knob (PUSH CRSR).</li><li>Inner knob = character, outer knob = cursor. COM: <b>LKLT</b>, <b>LKPR</b>, <b>LKAA</b>. NAV: <b>OKL</b>, <b>NER</b>, <b>VOZ</b>, <b>BNO</b>, <b>PR</b> (LKPR ILS 24).</li>
-        <li><b>ENT</b>, inner knob selects the type. NAV: if <b>DUPLICATES FOUND</b>, <b>ENT</b>, inner knob selects the station, <b>ENT</b>.</li><li><b>ENT</b> = standby, <b>&#x21C4;</b> = active.</li></ol></details>
-      <details><summary>2.2 NAV: select / ident</summary>
-        <ol><li>Press <b>C/N</b> to reach NAV.</li><li>Outer knob = MHz (108–117), inner knob = kHz (50 kHz steps).</li>
-        <li>The identifier shown comes from the database, not from the decoded Morse ident.</li>
-        <li><b>&#x21C4;</b> swaps the NAV frequencies.</li>
-        <li>Press the NAV knob (NAV display active): <b>ID</b> appears and the Morse ident is heard.</li></ol></details>
+      <details><summary data-i18n="gnc255.1-2-keys-c-n-obs">1.2 Keys: C/N, OBS, T/F</summary>
+        <ul><li data-i18n-html="gnc255.c-n-selects-the-com-or"><b>C/N</b> selects the COM or NAV (VLOC) radio mode. The COM or NAV annunciator shows on the top line.</li>
+        <li data-i18n-html="gnc255.obs-shows-the-obs-setting-and"><b>OBS</b> shows the OBS setting and graphic CDI. <b>T/F</b> toggles bearing TO / radial FROM the active VOR, with distance/speed/time.</li>
+        <li data-i18n-html="gnc255.there-is-no-mem-or-ics">There is no MEM or ICS key: recent and user lists and the ICS settings are in the <b>FUNC</b> menu.</li></ul></details>
+      <details><summary data-i18n="gnc255.2-1-com-select-flip-monitor">2.1 COM: select / flip / monitor</summary>
+        <ol><li data-i18n-html="gnc255.press-c-n-if-needed-to">Press <b>C/N</b> if needed to reach COM.</li><li data-i18n="common.outer-knob-mhz-118-136-inner">Outer knob = MHz (118–136), inner knob = kHz (25 or 8.33 steps).</li>
+        <li data-i18n-html="common.press-to-swap-active-and-standby">Press <b>&#x21C4;</b> to swap active and standby. Flip is disabled while transmitting.</li>
+        <li data-i18n-html="gnc255.mon-mn-replaces-stb-a-signal"><b>MON</b>: MN replaces STB. A signal on the active frequency takes priority; monitoring stays on in NAV mode.</li></ol></details>
+      <details><summary data-i18n="gnc255.2-1-3-2-2-2">2.1.3 / 2.2.2 Save a channel</summary>
+        <ol><li data-i18n-html="gnc255.on-the-com-or-nav-page">On the COM or NAV page press <b>ENT</b>.</li><li data-i18n="common.inner-knob-character-outer-knob-cursor">Inner knob = character, outer knob = cursor.</li><li data-i18n-html="gnc255.after-selecting-characters-press-ent-turn">After selecting characters, press <b>ENT</b>. Turn the <b>outer knob</b> to the TYPE field, inner knob selects the type (NAV: VOR, DME, LOC, ILS, 01–36).</li><li data-i18n-html="common.ent-saves-max-15-clr-cancels"><b>ENT</b> saves (max 15), <b>CLR</b> cancels.</li></ol></details>
+      <details><summary data-i18n="gnc255.2-1-4-3-3-3">2.1.4 / 3.3.3 Database look-up</summary>
+        <ol><li data-i18n="gnc255.on-the-com-or-nav-page-2">On the COM or NAV page press the inner knob (PUSH CRSR).</li><li data-i18n-html="gnc255.inner-knob-character-outer-knob-cursor">Inner knob = character, outer knob = cursor. COM: <b>LKLT</b>, <b>LKPR</b>, <b>LKAA</b>. NAV: <b>OKL</b>, <b>NER</b>, <b>VOZ</b>, <b>BNO</b>, <b>PR</b> (LKPR ILS 24).</li>
+        <li data-i18n-html="gnc255.ent-inner-knob-selects-the-type"><b>ENT</b>, inner knob selects the type. NAV: if <b>DUPLICATES FOUND</b>, <b>ENT</b>, inner knob selects the station, <b>ENT</b>.</li><li data-i18n-html="gnc255.ent-standby-active"><b>ENT</b> = standby, <b>&#x21C4;</b> = active.</li></ol></details>
+      <details><summary data-i18n="gnc255.2-2-nav-select-ident">2.2 NAV: select / ident</summary>
+        <ol><li data-i18n-html="gnc255.press-c-n-to-reach-nav">Press <b>C/N</b> to reach NAV.</li><li data-i18n="gnc255.outer-knob-mhz-108-117-inner">Outer knob = MHz (108–117), inner knob = kHz (50 kHz steps).</li>
+        <li data-i18n="gnc255.the-identifier-shown-comes-from-the">The identifier shown comes from the database, not from the decoded Morse ident.</li>
+        <li data-i18n-html="gnc255.swaps-the-nav-frequencies"><b>&#x21C4;</b> swaps the NAV frequencies.</li>
+        <li data-i18n-html="gnc255.press-the-nav-knob-nav-display">Press the NAV knob (NAV display active): <b>ID</b> appears and the Morse ident is heard.</li></ol></details>
       <details><summary>2.3 OBS / CDI</summary>
-        <ul><li>Press <b>OBS</b>. Bottom line: decoded ident, OBS setting, CDI (5 dots each side, 2° per dot, 10° full scale), TO/FROM triangle, active COM frequency.</li>
-        <li>Outer knob changes the OBS in 10° steps, inner knob in 1° steps. Fly towards the bar to be on course.</li>
-        <li>Use the Flight panel (ground speed, track, Fly) to practice intercepting radials.</li></ul></details>
-      <details><summary>2.4 T/F: distance / speed / time</summary>
-        <ul><li>Press <b>T/F</b>: the bottom line shows ident, bearing TO (or radial FROM), distance, ground speed, time to station and the active NAV frequency.</li>
-        <li>Press again to toggle TO / FROM. Needs a GPS source; stations within 200 NM. Does not operate on localizer frequencies.</li></ul></details>
-      <details><summary>2.1.5 Emergency / 2.1.6 stuck mic / 2.1.8 remote</summary>
-        <ul><li>Hold <b>&#x21C4;</b> (or COM RMT XFR) about 2 s: 121.500 becomes active, old active to standby.</li>
-        <li>Hold <b>COM RMT XFR</b> 2 s: COM locked to 121.5; hold again to unlock (or cycle power).</li>
-        <li>PTT held &gt; 30 s raises REMOTE KEY STUCK; at 35 s the radio returns to RX and shows STUCK MIC until released.</li>
-        <li>Remote recall loads the next COM user preset into standby.</li></ul></details>
-      <details><summary>3.2 / 3.3 FUNC: COM and NAV lists</summary>
-        <ol><li><b>FUNC</b>. Outer knob = category (COM FREQUENCY LIST, NAV FREQUENCY LIST, ICS, SYS, TMR), inner knob = item, <b>ENT</b> opens.</li>
-        <li>Lists: inner knob scrolls, <b>&#x21C4;</b> = active, <b>ENT</b> = standby, <b>CLR</b> returns to the functions display.</li>
-        <li>User freqs: <b>CLR</b> then <b>ENT</b> deletes; press the inner knob to edit.</li>
-        <li>NEAREST APT/ACC/FSS/WX and NEAREST VOR need a GPS position.</li></ol></details>
+        <ul><li data-i18n-html="gnc255.press-obs-bottom-line-decoded-ident">Press <b>OBS</b>. Bottom line: decoded ident, OBS setting, CDI (5 dots each side, 2° per dot, 10° full scale), TO/FROM triangle, active COM frequency.</li>
+        <li data-i18n="gnc255.outer-knob-changes-the-obs-in">Outer knob changes the OBS in 10° steps, inner knob in 1° steps. Fly towards the bar to be on course.</li>
+        <li data-i18n="gnc255.use-the-flight-panel-ground-speed">Use the Flight panel (ground speed, track, Fly) to practice intercepting radials.</li></ul></details>
+      <details><summary data-i18n="gnc255.2-4-t-f-distance-speed">2.4 T/F: distance / speed / time</summary>
+        <ul><li data-i18n-html="gnc255.press-t-f-the-bottom-line">Press <b>T/F</b>: the bottom line shows ident, bearing TO (or radial FROM), distance, ground speed, time to station and the active NAV frequency.</li>
+        <li data-i18n="gnc255.press-again-to-toggle-to-from">Press again to toggle TO / FROM. Needs a GPS source; stations within 200 NM. Does not operate on localizer frequencies.</li></ul></details>
+      <details><summary data-i18n="gnc255.2-1-5-emergency-2-1">2.1.5 Emergency / 2.1.6 stuck mic / 2.1.8 remote</summary>
+        <ul><li data-i18n-html="gnc255.hold-or-com-rmt-xfr-about">Hold <b>&#x21C4;</b> (or COM RMT XFR) about 2 s: 121.500 becomes active, old active to standby.</li>
+        <li data-i18n-html="gnc255.hold-com-rmt-xfr-2-s">Hold <b>COM RMT XFR</b> 2 s: COM locked to 121.5; hold again to unlock (or cycle power).</li>
+        <li data-i18n="gnc255.ptt-held-30-s-raises-remote">PTT held &gt; 30 s raises REMOTE KEY STUCK; at 35 s the radio returns to RX and shows STUCK MIC until released.</li>
+        <li data-i18n="gnc255.remote-recall-loads-the-next-com">Remote recall loads the next COM user preset into standby.</li></ul></details>
+      <details><summary data-i18n="gnc255.3-2-3-3-func-com">3.2 / 3.3 FUNC: COM and NAV lists</summary>
+        <ol><li data-i18n-html="gnc255.func-outer-knob-category-com-frequency"><b>FUNC</b>. Outer knob = category (COM FREQUENCY LIST, NAV FREQUENCY LIST, ICS, SYS, TMR), inner knob = item, <b>ENT</b> opens.</li>
+        <li data-i18n-html="gnc255.lists-inner-knob-scrolls-active-ent">Lists: inner knob scrolls, <b>&#x21C4;</b> = active, <b>ENT</b> = standby, <b>CLR</b> returns to the functions display.</li>
+        <li data-i18n-html="gnc255.user-freqs-clr-then-ent-deletes">User freqs: <b>CLR</b> then <b>ENT</b> deletes; press the inner knob to edit.</li>
+        <li data-i18n="gnc255.nearest-apt-acc-fss-wx-and">NEAREST APT/ACC/FSS/WX and NEAREST VOR need a GPS position.</li></ol></details>
       <details><summary>3.4 ICS / 3.5 SYS</summary>
-        <ul><li>FUNC &rarr; ICS CONFIGURATION: Adjust Intercom (needs intercom ON), AUX Audio, Intercom On/Off, Speaker On/Off.</li>
-        <li>FUNC &rarr; SYS CONFIGURATION: COM spacing, sidetone, DSPL BRT, DSPL CONTRAST, database info / load, software version, serial number.</li></ul></details>
-      <details><summary>3.6 Timers</summary>
-        <ul><li>FUNC &rarr; TMR CONFIGURATION &rarr; COUNT DOWN / COUNT UP.</li>
-        <li>Count down: press the inner knob to set the start time, <b>ENT</b> to accept; <b>ENT</b> start/stop, <b>CLR</b> reset to the start value.</li>
-        <li>Count up: <b>ENT</b> start/stop, <b>CLR</b> reset to 0.</li>
-        <li>On the COM/NAV page: <b>CLR</b> then <b>ENT</b> = reset, <b>ENT</b> twice = stop.</li></ul></details>
-      <details><summary>5.1 Messages</summary>
-        <ul><li>Messages take over the display. <b>ENT</b> acknowledges and returns to the previous page.</li>
-        <li>Raise any of them from the Simulation panel to practice.</li></ul></details>
+        <ul><li data-i18n="gnc255.func-ics-configuration-adjust-intercom-needs">FUNC &rarr; ICS CONFIGURATION: Adjust Intercom (needs intercom ON), AUX Audio, Intercom On/Off, Speaker On/Off.</li>
+        <li data-i18n="gnc255.func-sys-configuration-com-spacing-sidetone">FUNC &rarr; SYS CONFIGURATION: COM spacing, sidetone, DSPL BRT, DSPL CONTRAST, database info / load, software version, serial number.</li></ul></details>
+      <details><summary data-i18n="gnc255.3-6-timers">3.6 Timers</summary>
+        <ul><li data-i18n="gnc255.func-tmr-configuration-count-down-count">FUNC &rarr; TMR CONFIGURATION &rarr; COUNT DOWN / COUNT UP.</li>
+        <li data-i18n-html="gnc255.count-down-press-the-inner-knob">Count down: press the inner knob to set the start time, <b>ENT</b> to accept; <b>ENT</b> start/stop, <b>CLR</b> reset to the start value.</li>
+        <li data-i18n-html="common.count-up-ent-start-stop-clr">Count up: <b>ENT</b> start/stop, <b>CLR</b> reset to 0.</li>
+        <li data-i18n-html="gnc255.on-the-com-nav-page-clr">On the COM/NAV page: <b>CLR</b> then <b>ENT</b> = reset, <b>ENT</b> twice = stop.</li></ul></details>
+      <details><summary data-i18n="common.5-1-messages">5.1 Messages</summary>
+        <ul><li data-i18n-html="common.messages-take-over-the-display-ent">Messages take over the display. <b>ENT</b> acknowledges and returns to the previous page.</li>
+        <li data-i18n="common.raise-any-of-them-from-the">Raise any of them from the Simulation panel to practice.</li></ul></details>
     </div>
   </aside>
 </main>

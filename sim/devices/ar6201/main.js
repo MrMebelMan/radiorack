@@ -1,5 +1,6 @@
 // AR6201 page entry: builds the transceiver and wires the shared UI modules to index.html.
 import '../../ui/manuals.js';
+import { t } from '../../ui/i18n.js';
 import { AR6201, KNOB_STEPS } from './device.js';
 import { createLcd } from '../../ui/lcd.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
@@ -74,21 +75,14 @@ $('busSw').onchange = e => { radio.setAircraftPower(e.target.checked); render();
 $('failRun').onclick = () => { radio.raiseRunFailure(); render(); };
 document.querySelectorAll('[data-str]').forEach(b => { b.onclick = () => { sim().strength = b.dataset.str; radio.save(); sync(); }; });
 document.querySelectorAll('[data-sim]').forEach(b => { b.onclick = () => { audio.incomingCall(b.dataset.sim === 'rxAct' ? 'act' : 'stb'); render(); }; });
-$('factory').onclick = () => { if (confirm('Reset all settings, channels and labels to factory defaults?')) { radio.factoryReset(); sync(); render(); } };
+$('factory').onclick = () => { if (confirm(t('ar6201.confirm.factory'))) { radio.factoryReset(); sync(); render(); } };
 
 function renderPanel() {
   const a = radio.audio();
-  $('hint').textContent = !radio.bus ? 'Avionics master off.' : !radio.switchOn ? 'Transceiver OFF. Turn the volume knob clockwise (drag up or scroll up).' : '';
+  $('hint').textContent = !radio.bus ? t('sim.busOff') : !radio.switchOn ? t('ar6201.hint.off') : '';
   $('hearingRow').hidden = a.src === 'off';
-  const txt = {
-    tx: `transmitting on ${fmtFreq(a.freq || 0)}`,
-    act: `receiving on the ACTIVE frequency ${fmtFreq(a.freq || 0)}`,
-    stb: `receiving on the PRESET frequency ${fmtFreq(a.freq || 0)} (scan)`,
-    static: 'squelch off: receiver noise',
-    quiet: 'quiet (squelch)',
-    off: '',
-  }[a.src];
-  $('hearing').textContent = `${txt}${radio.power ? ` · vol ${radio.s.vol}%` : ''}${radio.icActive ? ' · intercom' : ''}`;
+  const txt = a.src === 'off' ? '' : t(`ar6201.hear.${a.src}`, { freq: fmtFreq(a.freq || 0) });
+  $('hearing').textContent = `${txt}${radio.power ? t('ar6201.hear.vol', { vol: radio.s.vol }) : ''}${radio.icActive ? t('ar6201.hear.intercom') : ''}`;
   $('statusBar').dataset.state = !radio.bus && radio.switchOn ? 'nopower'
     : a.src === 'off' ? 'off' : a.src === 'tx' ? 'tx' : (a.src === 'act' || a.src === 'stb') ? 'rx' : 'on';
   $('ptt').classList.toggle('down', radio.ptt);

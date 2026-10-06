@@ -1,5 +1,6 @@
 // TT31 page entry: builds the transponder and wires the shared UI modules to index.html.
 import '../../ui/manuals.js';
+import { t } from '../../ui/i18n.js';
 import { TT31, MODES } from './device.js';
 import { createLcd } from '../../ui/lcd.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
@@ -53,14 +54,14 @@ $('busSw').onchange = e => { xpdr.setAircraftPower(e.target.checked); render(); 
 $('antWarn').onclick = () => { xpdr.raiseWarning('ANTENNA'); render(); };
 $('faultRec').onclick = () => { xpdr.raiseFault(true); render(); };
 $('faultHard').onclick = () => { xpdr.raiseFault(false); render(); };
-$('factory').onclick = () => { if (confirm('Reset all settings to factory defaults?')) { xpdr.factoryReset(); sync(); render(); } };
+$('factory').onclick = () => { if (confirm(t('tt31.confirm.factory'))) { xpdr.factoryReset(); sync(); render(); } };
 
 function renderPanel() {
   const m = MODES[xpdr.mode];
-  $('hint').textContent = !xpdr.bus ? 'Avionics master off.' : m === 'OFF' ? 'Transponder OFF. Turn the mode knob clockwise (drag up or scroll up) to SBY.' : '';
+  $('hint').textContent = !xpdr.bus ? t('sim.busOff') : m === 'OFF' ? t('tt31.hint.off') : '';
   $('hearingRow').hidden = !xpdr.power;
-  const reply = xpdr.replying ? 'replying to interrogations' : 'not replying';
-  $('hearing').textContent = `${xpdr.opMode}${xpdr.opMode !== m ? ` (selected ${m}, squat switch: on ground)` : ''} · ${reply}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;
+  const reply = t(xpdr.replying ? 'xpdr.replying' : 'xpdr.notReplying');
+  $('hearing').textContent = `${xpdr.opMode}${xpdr.opMode !== m ? t('tt31.hear.squat', { mode: m }) : ''} · ${reply}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;
   $('statusBar').dataset.state = !xpdr.power ? 'off' : xpdr.altAlert ? 'nopower' : xpdr.replying ? 'rx' : 'on';
   $('altLamp').classList.toggle('on', xpdr.altAlert);
   $('busSw').checked = xpdr.bus;

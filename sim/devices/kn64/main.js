@@ -1,5 +1,6 @@
 // KN 64 page entry: builds the display, binds the switches and knobs and the simulation panels.
 import '../../ui/manuals.js';
+import { t, onLang } from '../../ui/i18n.js';
 import { KN64, FUNCS, NAV_LIST } from './device.js';
 import { createSound } from './sound.js';
 import { createSeg7 } from '../../ui/lcd-seg7.js';
@@ -76,7 +77,7 @@ function sync() {
   $('trkSl').value = sim().trk; $('trkVal').textContent = `${String(sim().trk).padStart(3, '0')}°`;
   $('ambSl').value = sim().ambient; $('ambVal').textContent = ambWord(sim().ambient);
 }
-sync();
+onLang(sync);   // also relabels the cockpit light value after a language change
 $('navSel').onchange = e => { kn.s.remote = +e.target.value; kn.save(); render(); };
 $('posSel').onchange = e => { kn.setStartPos(e.target.value); render(); };
 for (const [id, k] of [['altSl', 'alt'], ['gsSl', 'gs'], ['trkSl', 'trk'], ['ambSl', 'ambient']]) {
@@ -85,11 +86,11 @@ for (const [id, k] of [['altSl', 'alt'], ['gsSl', 'gs'], ['trkSl', 'trk'], ['amb
 $('flyBtn').onclick = () => { kn.setFlying(!kn.flying); render(); };
 $('resetPos').onclick = () => { kn.setStartPos($('posSel').value); render(); };
 $('busSw').onchange = e => { kn.setAircraftPower(e.target.checked); render(); };
-$('factory').onclick = () => { if (confirm('Reset the switches, frequencies and flight to the simulator defaults?')) { kn.factoryReset(); sync(); render(); } };
+$('factory').onclick = () => { if (confirm(t('kn64.confirm.factory'))) { kn.factoryReset(); sync(); render(); } };
 
 function renderPanel() {
   $('busSw').checked = kn.bus;
-  $('flyBtn').textContent = kn.flying ? 'Pause' : 'Fly';
+  $('flyBtn').textContent = t(kn.flying ? 'sim.pause' : 'sim.fly');
   $('flyBtn').classList.toggle('down', kn.flying);
 }
 

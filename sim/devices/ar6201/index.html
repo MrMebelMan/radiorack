@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AR6201 Simulator</title>
+<title data-i18n="ar6201.ar6201-simulator">AR6201 Simulator</title>
 <meta name="description" content="Simulator of the Becker AR6201 VHF COM: direct tune, channels, scan and the installation setup.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RadioRack">
@@ -16,20 +16,33 @@
 <meta property="og:image:alt" content="Becker AR6201 bezel">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/topbar.css">
+<script src="../../ui/i18n-boot.js"></script>
 <link rel="stylesheet" href="ar6201.css">
 </head>
-<body>
+<body data-page="ar6201">
+<nav class="topbar">
+  <a class="back-btn" href="../../" title="Back to the list of simulators" data-i18n-title="common.tip.back-to-the-list-of-simulators"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="common.all-simulators">All simulators</span></a>
+  <div class="lang">
+    <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Language" title="Language" data-i18n-aria="common.tip.language" data-i18n-title="common.tip.language"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><svg class="caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="lang-list" id="langList" role="listbox" aria-label="Language" hidden data-i18n-aria="common.tip.language">
+      <div role="option" data-lang="en" tabindex="-1"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><span class="name" lang="en">English</span></div>
+      <div role="option" data-lang="uk" tabindex="-1"><img src="../../flags/ua.svg" alt=""><span class="code">UA</span><span class="name" lang="uk">Українська</span></div>
+      <div role="option" data-lang="cs" tabindex="-1"><img src="../../flags/cz.svg" alt=""><span class="code">CS</span><span class="name" lang="cs">Čeština</span></div>
+      <div role="option" data-lang="sk" tabindex="-1"><img src="../../flags/sk.svg" alt=""><span class="code">SK</span><span class="name" lang="sk">Slovenčina</span></div>
+    </div>
+  </div>
+</nav>
 
 <main>
   <section class="unit-col ar-col">
     <header>
-      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
-      <h1>Becker AR6201 VHF transceiver simulator</h1>
-      <span class="sub">Practice trainer based on the AR6201-(X0X) Operating Instructions (Issue 5, 2013) and Installation and Operation Manual (DV 14300.03 Issue 5), software 3.05 / 1.49.</span>
-      <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it; click the big knob to push it. Keys: click = short press, hold 2 s = long press. Hold the 8/25 mark to press MDE and STO together.</span>
+      <h1 data-i18n="ar6201.becker-ar6201-vhf-transceiver-simulator">Becker AR6201 VHF transceiver simulator</h1>
+      <span class="sub" data-i18n="ar6201.practice-trainer-based-on-the-ar6201">Practice trainer based on the AR6201-(X0X) Operating Instructions (Issue 5, 2013) and Installation and Operation Manual (DV 14300.03 Issue 5), software 3.05 / 1.49.</span>
+      <span class="sub" data-i18n="ar6201.mouse-drag-a-knob-up-down">Mouse: drag a knob up/down or scroll over it to turn it; click the big knob to push it. Keys: click = short press, hold 2 s = long press. Hold the 8/25 mark to press MDE and STO together.</span>
       <nav class="manuals">
-        <a class="manual-btn" data-manual="ar6201-operating-instructions" href="../../manuals/ar6201-operating-instructions.pdf" target="_blank" rel="noopener" title="AR6201-(X0X) Operating Instructions, Issue 5 / November 2013 — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Instructions</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="ar6201-installation-manual" href="../../manuals/ar6201-installation-manual.pdf" target="_blank" rel="noopener" title="AR6201-(X0X) Installation and Operation Manual DV 14300.03, Issue 5 — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="ar6201-operating-instructions" href="../../manuals/ar6201-operating-instructions.pdf" target="_blank" rel="noopener" title="AR6201-(X0X) Operating Instructions, Issue 5 / November 2013" data-i18n-title="ar6201.tip.ar6201-x0x-operating-instructions-issue-5"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Instructions</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="ar6201-installation-manual" href="../../manuals/ar6201-installation-manual.pdf" target="_blank" rel="noopener" title="AR6201-(X0X) Installation and Operation Manual DV 14300.03, Issue 5" data-i18n-title="ar6201.tip.ar6201-x0x-installation-and-operation-manual"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
@@ -47,20 +60,20 @@
           <i class="cup" style="left:40px;top:38px;--rot:28deg"></i><i class="cup" style="left:388px;top:38px;--rot:-12deg"></i>
           <i class="cup" style="left:40px;top:390px;--rot:5deg"></i><i class="cup" style="left:388px;top:390px;--rot:40deg"></i>
 
-          <button class="key bk" data-key="MDE" style="left:141px;top:31px;width:63px;height:46px" title="MDE (Mode): short press changes the frequency selection mode (Standard, Direct Tune, Channel). Long press (2 s) opens the Pilots Menu (brightness, squelch).">MDE</button>
-          <button class="key bk" data-key="STO" style="left:223px;top:31px;width:63px;height:46px" title="STO (Store): short press starts storing the active frequency in a user channel.">STO</button>
-          <div class="combo" id="combo" title="8/25: press MDE and STO together for more than 2 seconds to change between 8.33 kHz and 25 kHz channel spacing (hold here)."><span>8/25</span></div>
+          <button class="key bk" data-key="MDE" style="left:141px;top:31px;width:63px;height:46px" title="MDE (Mode): short press changes the frequency selection mode (Standard, Direct Tune, Channel). Long press (2 s) opens the Pilots Menu (brightness, squelch)." data-i18n-title="ar6201.tip.mde-mode-short-press-changes-the">MDE</button>
+          <button class="key bk" data-key="STO" style="left:223px;top:31px;width:63px;height:46px" title="STO (Store): short press starts storing the active frequency in a user channel." data-i18n-title="ar6201.tip.sto-store-short-press-starts-storing">STO</button>
+          <div class="combo" id="combo" title="8/25: press MDE and STO together for more than 2 seconds to change between 8.33 kHz and 25 kHz channel spacing (hold here)." data-i18n-title="ar6201.tip.8-25-press-mde-and-sto"><span>8/25</span></div>
 
           <div class="lcd-frame"><div class="lcd-recess"><div class="glass"></div><div class="lcd pos off" id="lcd"></div></div></div>
 
-          <button class="key bk tall" data-key="ICSQL" style="left:25px;top:184px" title="IC/SQL (Intercom/Squelch): short press toggles the squelch ON/OFF. Long press (2 s) opens the Intercom Menu (intercom volume, VOX)."><span class="c1">I<br>C</span><span class="c2">S<br>Q<br>L</span></button>
-          <button class="key bk tall" data-key="SCN" style="left:358px;top:184px" title="↕/SCN (Exchange/Scan): short press exchanges active and preset frequency (Standard and Scan). Long press (2 s) starts or ends the Scan Function."><span class="c1 arr"><svg viewBox="0 0 8 30" width="8" height="30" aria-hidden="true"><path d="M4 2v26M1 6l3-4 3 4M1 24l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><span class="c2">S<br>C<br>N</span></button>
+          <button class="key bk tall" data-key="ICSQL" style="left:25px;top:184px" title="IC/SQL (Intercom/Squelch): short press toggles the squelch ON/OFF. Long press (2 s) opens the Intercom Menu (intercom volume, VOX)." data-i18n-title="ar6201.tip.ic-sql-intercom-squelch-short-press"><span class="c1">I<br>C</span><span class="c2">S<br>Q<br>L</span></button>
+          <button class="key bk tall" data-key="SCN" style="left:358px;top:184px" title="↕/SCN (Exchange/Scan): short press exchanges active and preset frequency (Standard and Scan). Long press (2 s) starts or ends the Scan Function." data-i18n-title="ar6201.tip.scn-exchange-scan-short-press-exchanges"><span class="c1 arr"><svg viewBox="0 0 8 30" width="8" height="30" aria-hidden="true"><path d="M4 2v26M1 6l3-4 3 4M1 24l3 4 3-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><span class="c2">S<br>C<br>N</span></button>
 
           <div class="print com">COM</div>
-          <div class="print off" title="Volume knob: OFF at the left stop">OFF</div>
+          <div class="print off" title="Volume knob: OFF at the left stop" data-i18n-title="ar6201.tip.volume-knob-off-at-the-left">OFF</div>
           <svg class="arc" viewBox="0 0 440 440" aria-hidden="true" style="left:5px"><path d="M81.6 284.7 L82.9 284.1 L84.2 283.5 L85.6 282.9 L86.9 282.4 L88.3 281.9 L89.7 281.5 L91.0 281.0 L92.4 280.6 L93.9 280.3 L95.3 279.9 L96.7 279.6 L98.2 279.4 L99.6 279.2 L101.1 279.0 L102.5 278.8 L104.0 278.7 L105.5 278.6 L107.0 278.6 L108.4 278.5 L109.9 278.6 L111.4 278.6 L112.9 278.7 L114.4 278.9 L115.9 279.0 L117.4 279.3 L118.9 279.5 L120.3 279.8 L121.8 280.1 L123.3 280.5 L124.8 280.9 L126.2 281.4 L127.7 281.8 L129.1 282.4 L130.5 282.9 L132.0 283.5 L133.4 284.1 L134.8 284.8 L136.1 285.5 L137.5 286.3 L138.8 287.0 L140.2 287.9 L141.5 288.7 L142.8 289.6 L144.1 290.5 L145.3 291.5 L146.5 292.5 L147.7 293.5 L148.9 294.5 L150.1 295.6 L151.2 296.8 L152.3 297.9 L153.4 299.1 L154.5 300.3 L155.5 301.6 L156.5 302.8 L157.4 304.2 L158.4 305.5 L159.3 306.8 L160.1 308.2 L161.0 309.6 L161.7 311.1 L162.5 312.5 L163.2 314.0 L163.9 315.5 L148.7 320.5 L148.5 319.3 L148.2 318.0 L147.9 316.8 L147.5 315.6 L147.2 314.4 L146.8 313.2 L146.3 312.0 L145.8 310.8 L145.3 309.7 L144.8 308.5 L144.2 307.4 L143.6 306.2 L142.9 305.1 L142.3 304.0 L141.6 302.9 L140.8 301.8 L140.0 300.8 L139.2 299.8 L138.4 298.7 L137.5 297.7 L136.7 296.8 L135.7 295.8 L134.8 294.9 L133.8 294.0 L132.8 293.1 L131.8 292.2 L130.7 291.4 L129.6 290.6 L128.5 289.8 L127.4 289.1 L126.2 288.4 L125.1 287.7 L123.9 287.0 L122.7 286.4 L121.4 285.8 L120.2 285.2 L118.9 284.7 L117.6 284.2 L116.3 283.8 L115.0 283.4 L113.6 283.0 L112.3 282.6 L110.9 282.3 L109.6 282.0 L108.2 281.8 L106.8 281.6 L105.4 281.4 L104.0 281.3 L102.6 281.2 L101.2 281.2 L99.8 281.2 L98.3 281.2 L96.9 281.3 L95.5 281.4 L94.1 281.6 L92.7 281.8 L91.3 282.0 L89.9 282.3 L88.5 282.6 L87.1 283.0 L85.7 283.4 L84.4 283.8 L83.0 284.3 L81.7 284.8 Z" fill="#f2f2f2"/></svg>
-          <div class="knob arvol" id="volKnob" title="Volume knob: turns the transceiver ON/OFF and adjusts the volume of the received signal. Drag up/down or scroll."><div class="grip"><i class="cap"></i><i class="ptr"></i></div></div>
-          <div class="knob arenc" id="encKnob" title="Rotary encoder: turning changes several parameters (frequency, IC volume, VOX…). Pushing toggles between the digits and acts as an enter key."><div class="grip"></div><i class="cap"></i></div>
+          <div class="knob arvol" id="volKnob" title="Volume knob: turns the transceiver ON/OFF and adjusts the volume of the received signal. Drag up/down or scroll." data-i18n-title="ar6201.tip.volume-knob-turns-the-transceiver-on"><div class="grip"><i class="cap"></i><i class="ptr"></i></div></div>
+          <div class="knob arenc" id="encKnob" title="Rotary encoder: turning changes several parameters (frequency, IC volume, VOX…). Pushing toggles between the digits and acts as an enter key." data-i18n-title="ar6201.tip.rotary-encoder-turning-changes-several-parameters"><div class="grip"></div><i class="cap"></i></div>
           <div class="print becker">BECKER</div>
           </div>
         </div>
@@ -71,61 +84,61 @@
       <span class="dot" aria-hidden="true"></span>
       <div class="status-text">
         <div id="hint" class="hint"></div>
-        <div id="hearingRow"><b>Audio:</b> <span id="hearing"></span></div>
+        <div id="hearingRow"><b data-i18n="common.audio">Audio:</b> <span id="hearing"></span></div>
       </div>
     </div>
 
     <div class="panel-grid">
       <div class="panel-col">
         <section class="card">
-          <h2>Pilot</h2>
-          <button id="ptt" class="hold btn-primary" title="Push-to-talk on the yoke: hold to transmit on the active frequency (TX). After 120 s of continuous transmitting the transceiver returns to receive (STUCK PTT).">PTT <small>hold to transmit</small></button>
+          <h2 data-i18n="common.pilot">Pilot</h2>
+          <button id="ptt" class="hold btn-primary" title="Push-to-talk on the yoke: hold to transmit on the active frequency (TX). After 120 s of continuous transmitting the transceiver returns to receive (STUCK PTT)." data-i18n-html="common.ptt-hold-to-transmit" data-i18n-title="ar6201.tip.push-to-talk-on-the-yoke">PTT <small>hold to transmit</small></button>
           <div class="field">
-            <label class="lbl-t" for="pttLatch" title="Keeps the PTT line active (stuck key)">PTT stuck</label>
-            <div><input type="checkbox" id="pttLatch" class="switch" title="Keeps the PTT line active (stuck key)"></div>
-            <span class="lbl-t" title="Speak into the microphone: hold Speak, set the level with the slider">Microphone</span>
-            <div class="ctl-row"><button id="speak" class="hold" title="Speak into the microphone (triggers VOX intercom when the level reaches the VOX threshold)">Speak</button><input type="range" id="micSl" min="-30" max="10" step="1" aria-label="Microphone level" title="Your voice level into the microphone while Speak is held, on the IC VOX scale (-30 … +10). VOX starts the intercom (IC) when this level reaches the IC VOX threshold set in the Intercom Menu."><span id="micVal" class="val"></span></div>
-            <label class="lbl-t" for="icSw" title="External intercom switch (/IC input): intercom on regardless of VOX">IC switch</label>
-            <div><input type="checkbox" id="icSw" class="switch" title="External intercom switch (/IC input)"></div>
+            <label class="lbl-t" for="pttLatch" title="Keeps the PTT line active (stuck key)" data-i18n="ar6201.ptt-stuck" data-i18n-title="ar6201.tip.keeps-the-ptt-line-active-stuck">PTT stuck</label>
+            <div><input type="checkbox" id="pttLatch" class="switch" title="Keeps the PTT line active (stuck key)" data-i18n-title="ar6201.tip.keeps-the-ptt-line-active-stuck"></div>
+            <span class="lbl-t" title="Speak into the microphone: hold Speak, set the level with the slider" data-i18n="ar6201.microphone" data-i18n-title="ar6201.tip.speak-into-the-microphone-hold-speak">Microphone</span>
+            <div class="ctl-row"><button id="speak" class="hold" title="Speak into the microphone (triggers VOX intercom when the level reaches the VOX threshold)" data-i18n="ar6201.speak" data-i18n-title="ar6201.tip.speak-into-the-microphone-triggers-vox">Speak</button><input type="range" id="micSl" min="-30" max="10" step="1" aria-label="Microphone level" title="Your voice level into the microphone while Speak is held, on the IC VOX scale (-30 … +10). VOX starts the intercom (IC) when this level reaches the IC VOX threshold set in the Intercom Menu." data-i18n-aria="ar6201.tip.microphone-level" data-i18n-title="ar6201.tip.your-voice-level-into-the-microphone"><span id="micVal" class="val"></span></div>
+            <label class="lbl-t" for="icSw" title="External intercom switch (/IC input): intercom on regardless of VOX" data-i18n="ar6201.ic-switch" data-i18n-title="ar6201.tip.external-intercom-switch-ic-input-intercom">IC switch</label>
+            <div><input type="checkbox" id="icSw" class="switch" title="External intercom switch (/IC input)" data-i18n-title="ar6201.tip.external-intercom-switch-ic-input"></div>
           </div>
         </section>
       </div>
 
       <section class="card">
-        <h2>Traffic &amp; audio</h2>
+        <h2 data-i18n="common.traffic-audio">Traffic &amp; audio</h2>
         <div class="field">
-          <span class="lbl-t" title="Simulate a station transmitting">Incoming call</span>
+          <span class="lbl-t" title="Simulate a station transmitting" data-i18n="common.incoming-call" data-i18n-title="common.tip.simulate-a-station-transmitting">Incoming call</span>
           <div class="btn-row">
-            <button data-sim="rxAct" title="A station transmits on the active frequency">Active</button>
-            <button data-sim="rxStb" title="A station transmits on the preset frequency">Preset</button>
+            <button data-sim="rxAct" title="A station transmits on the active frequency" data-i18n="common.active" data-i18n-title="ar6201.tip.a-station-transmits-on-the-active">Active</button>
+            <button data-sim="rxStb" title="A station transmits on the preset frequency" data-i18n="ar6201.preset" data-i18n-title="ar6201.tip.a-station-transmits-on-the-preset">Preset</button>
           </div>
-          <span class="lbl-t" title="Strength of the simulated incoming signals: poor and good sound distorted and noisy, strong is clean; the field strength triangle shows it">Signal</span>
-          <div class="seg" role="group" aria-label="Signal strength">
-            <button data-str="poor" title="Weak signal (about -95 dBm)">Poor</button>
-            <button data-str="good" title="Good signal (about -85 dBm)">Good</button>
-            <button data-str="strong" title="Strong signal (about -75 dBm)">Strong</button>
+          <span class="lbl-t" title="Strength of the simulated incoming signals: poor and good sound distorted and noisy, strong is clean; the field strength triangle shows it" data-i18n="ar6201.signal" data-i18n-title="ar6201.tip.strength-of-the-simulated-incoming-signals">Signal</span>
+          <div class="seg" role="group" aria-label="Signal strength" data-i18n-aria="ar6201.tip.signal-strength">
+            <button data-str="poor" title="Weak signal (about -95 dBm)" data-i18n="ar6201.poor" data-i18n-title="ar6201.tip.weak-signal-about-95-dbm">Poor</button>
+            <button data-str="good" title="Good signal (about -85 dBm)" data-i18n="ar6201.good" data-i18n-title="ar6201.tip.good-signal-about-85-dbm">Good</button>
+            <button data-str="strong" title="Strong signal (about -75 dBm)" data-i18n="ar6201.strong" data-i18n-title="ar6201.tip.strong-signal-about-75-dbm">Strong</button>
           </div>
-          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)">Sound</label>
-          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)"></div>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n="common.sound" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise"></div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Aircraft &amp; faults</h2>
+        <h2 data-i18n="common.aircraft-faults">Aircraft &amp; faults</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
-          <label class="lbl-t" for="voltSl" title="Aircraft supply voltage at the transceiver. Below the LOW BATT threshold (Installation Setup, factory 10.5 V) LOW BATT appears; below 10 V the speaker output is off; at 9 V the backlight goes off.">Supply voltage</label>
-          <div class="ctl-row"><input type="range" id="voltSl" min="8" max="30" step="0.05" title="Aircraft supply voltage at the transceiver. Below the LOW BATT threshold (Installation Setup, factory 10.5 V) LOW BATT appears; below 10 V the speaker output is off; at 9 V the backlight goes off."><span id="voltVal" class="val"></span></div>
-          <label class="lbl-t" for="dimSl" title="Aircraft dimming bus voltage. Used only when DIMMING INPUT in the Installation Setup is 0–14V or 0–28V (brightness then follows the ILLUM CURVE).">Dimming bus</label>
-          <div class="ctl-row"><input type="range" id="dimSl" min="0" max="28" step="0.5" title="Aircraft dimming bus voltage. Used only when DIMMING INPUT in the Installation Setup is 0–14V or 0–28V (brightness then follows the ILLUM CURVE)."><span id="dimVal" class="val"></span></div>
-          <label class="lbl-t" for="hotSw" title="Internal temperature above +90 °C (TX HOT)">Overheated</label>
-          <div><input type="checkbox" id="hotSw" class="switch" title="Internal temperature above +90 °C (TX HOT)"></div>
-          <span class="lbl-t" title="Simulated internal failures">Failure</span>
-          <div class="btn-row"><button id="failRun" title="Internal failure during operation (clears when switched off)">In operation</button><label class="chk" title="Make the next power-on built-in test (PBIT) fail: FAILURE / PRESS ANY KEY"><input type="checkbox" id="failStart" title="Make the next power-on built-in test (PBIT) fail: FAILURE / PRESS ANY KEY"> at start-up</label></div>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n="common.avionics-master" data-i18n-title="common.tip.avionics-master-switch-power-to-the">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n-title="common.tip.avionics-master-switch-power-to-the"></div>
+          <label class="lbl-t" for="voltSl" title="Aircraft supply voltage at the transceiver. Below the LOW BATT threshold (Installation Setup, factory 10.5 V) LOW BATT appears; below 10 V the speaker output is off; at 9 V the backlight goes off." data-i18n="ar6201.supply-voltage" data-i18n-title="ar6201.tip.aircraft-supply-voltage-at-the-transceiver">Supply voltage</label>
+          <div class="ctl-row"><input type="range" id="voltSl" min="8" max="30" step="0.05" title="Aircraft supply voltage at the transceiver. Below the LOW BATT threshold (Installation Setup, factory 10.5 V) LOW BATT appears; below 10 V the speaker output is off; at 9 V the backlight goes off." data-i18n-title="ar6201.tip.aircraft-supply-voltage-at-the-transceiver"><span id="voltVal" class="val"></span></div>
+          <label class="lbl-t" for="dimSl" title="Aircraft dimming bus voltage. Used only when DIMMING INPUT in the Installation Setup is 0–14V or 0–28V (brightness then follows the ILLUM CURVE)." data-i18n="ar6201.dimming-bus" data-i18n-title="ar6201.tip.aircraft-dimming-bus-voltage-used-only">Dimming bus</label>
+          <div class="ctl-row"><input type="range" id="dimSl" min="0" max="28" step="0.5" title="Aircraft dimming bus voltage. Used only when DIMMING INPUT in the Installation Setup is 0–14V or 0–28V (brightness then follows the ILLUM CURVE)." data-i18n-title="ar6201.tip.aircraft-dimming-bus-voltage-used-only"><span id="dimVal" class="val"></span></div>
+          <label class="lbl-t" for="hotSw" title="Internal temperature above +90 °C (TX HOT)" data-i18n="ar6201.overheated" data-i18n-title="ar6201.tip.internal-temperature-above-90-c-tx">Overheated</label>
+          <div><input type="checkbox" id="hotSw" class="switch" title="Internal temperature above +90 °C (TX HOT)" data-i18n-title="ar6201.tip.internal-temperature-above-90-c-tx"></div>
+          <span class="lbl-t" title="Simulated internal failures" data-i18n="ar6201.failure" data-i18n-title="ar6201.tip.simulated-internal-failures">Failure</span>
+          <div class="btn-row"><button id="failRun" title="Internal failure during operation (clears when switched off)" data-i18n="ar6201.in-operation" data-i18n-title="ar6201.tip.internal-failure-during-operation-clears-when">In operation</button><label class="chk" title="Make the next power-on built-in test (PBIT) fail: FAILURE / PRESS ANY KEY" data-i18n-title="ar6201.tip.make-the-next-power-on-built"><input type="checkbox" id="failStart" title="Make the next power-on built-in test (PBIT) fail: FAILURE / PRESS ANY KEY" data-i18n-title="ar6201.tip.make-the-next-power-on-built"> <span data-i18n="ar6201.at-start-up">at start-up</span></label></div>
         </div>
         <div class="card-foot">
-          <button id="factory" class="btn-danger-quiet" title="Erase all simulator state: settings, channels, labels and the installation setup">Reset to factory settings</button>
+          <button id="factory" class="btn-danger-quiet" title="Erase all simulator state: settings, channels, labels and the installation setup" data-i18n="common.reset-to-factory-settings" data-i18n-title="ar6201.tip.erase-all-simulator-state-settings-channels">Reset to factory settings</button>
         </div>
       </section>
     </div>
@@ -133,37 +146,37 @@
 
   <aside class="help-col">
     <div class="card procs">
-      <h2>Procedures</h2>
-      <details open><summary>4.2 Start-up / 4.3 receive &amp; transmit</summary>
-        <ul><li>Turn the volume knob clockwise: <b>WAIT</b> with the software versions, then the mode used last.</li>
-        <li><b>FAILURE / PRESS ANY KEY</b>: the start-up test found an error.</li>
-        <li>PTT: <b>TX</b> top-left. Most actions are blocked while transmitting; in Standard Mode the preset can still be changed. After 120 s the transceiver returns to receive (<b>STUCK PTT</b>); release PTT before transmitting again.</li></ul></details>
-      <details><summary>4.4 Frequency selection modes</summary>
-        <ul><li>Short <b>MDE</b>: Standard → Direct Tune → Channel → Standard.</li>
-        <li><b>Standard</b>: active on top, preset below. Push the knob: MHz inverted; push again: 100 kHz; again: 25/8.33 kHz digits. Turn to change the preset. Short <b>↕</b> exchanges active and preset.</li>
-        <li><b>Direct Tune</b>: the same on the active frequency (takes effect immediately); bottom line shows the battery voltage.</li>
-        <li><b>Channel</b>: short push or one clockwise turn → channel number inverted, turn to select (tunes at once). Counter-clockwise turn → LAST channels. Short push or 5 s leaves.</li></ul></details>
-      <details><summary>4.4.4 Scan / 4.5 squelch / 4.7 spacing</summary>
-        <ul><li>Long <b>↕/SCN</b>: Scan (watches active and preset; active has priority). Short <b>MDE</b> or long <b>SCN</b> ends it.</li>
-        <li>Short <b>IC/SQL</b>: squelch ON/OFF (<b>SQL</b> shown when on). With squelch off the arrow ► stays in front of the active frequency.</li>
-        <li>► empty / half / full: poor / good / strong signal.</li>
-        <li>Hold the <b>8/25</b> mark (MDE + STO) 2 s: 8.33 ↔ 25 kHz spacing.</li></ul></details>
-      <details><summary>4.8 Store a channel and label</summary>
-        <ol><li><b>STO</b>: STO page, the proposed channel inverted (FREE / USED). Turn to choose 1–99.</li>
-        <li><b>STO</b> again: label edit (10 characters). Turn = character, push = next position.</li>
-        <li>Short <b>STO</b> stores, long <b>STO</b> clears the label. No action for 7 s: back without storing.</li>
-        <li>LAST1…9: a new active frequency kept 10 s is stored automatically.</li></ol></details>
-      <details><summary>4.12 Menus</summary>
-        <ul><li>Long <b>IC/SQL</b>: IC VOLUME (0–46) and IC VOX (−30…+10, above +10 = OFF). Short IC/SQL toggles the pages; long MDE or 5 s ends.</li>
-        <li>Long <b>MDE</b>: BRIGHTNESS (0–100) and SQUELCH (6–26). Short MDE or push toggles; push on SQUELCH, long MDE or a few seconds ends.</li></ul></details>
-      <details><summary>4.13 Warnings</summary>
-        <ul><li>LOW BATT, STUCK PTT, TX HOT, FAILURE appear in the bottom line every 5 seconds.</li>
-        <li>Below 10 V the speaker output switches off.</li></ul></details>
-      <details><summary>Installation Setup (installer)</summary>
-        <ol><li>Hold <b>MDE</b> while switching on (keep the mouse button down on MDE, move over the volume knob and scroll up).</li>
-        <li>PASSWORD: enter <b>6435</b> (turn = digit, push = next digit), short <b>STO</b>.</li>
-        <li><b>↕/SCN</b> or push = next page, <b>IC/SQL</b> = previous page. Turn to change, <b>STO</b> to select / toggle / confirm. Values are stored at once.</li>
-        <li>Switch off to leave.</li></ol></details>
+      <h2 data-i18n="common.procedures">Procedures</h2>
+      <details open><summary data-i18n="ar6201.4-2-start-up-4-3">4.2 Start-up / 4.3 receive &amp; transmit</summary>
+        <ul><li data-i18n-html="ar6201.turn-the-volume-knob-clockwise-wait">Turn the volume knob clockwise: <b>WAIT</b> with the software versions, then the mode used last.</li>
+        <li data-i18n-html="ar6201.failure-press-any-key-the-start"><b>FAILURE / PRESS ANY KEY</b>: the start-up test found an error.</li>
+        <li data-i18n-html="ar6201.ptt-tx-top-left-most-actions">PTT: <b>TX</b> top-left. Most actions are blocked while transmitting; in Standard Mode the preset can still be changed. After 120 s the transceiver returns to receive (<b>STUCK PTT</b>); release PTT before transmitting again.</li></ul></details>
+      <details><summary data-i18n="ar6201.4-4-frequency-selection-modes">4.4 Frequency selection modes</summary>
+        <ul><li data-i18n-html="ar6201.short-mde-standard-direct-tune-channel">Short <b>MDE</b>: Standard → Direct Tune → Channel → Standard.</li>
+        <li data-i18n-html="ar6201.standard-active-on-top-preset-below"><b>Standard</b>: active on top, preset below. Push the knob: MHz inverted; push again: 100 kHz; again: 25/8.33 kHz digits. Turn to change the preset. Short <b>↕</b> exchanges active and preset.</li>
+        <li data-i18n-html="ar6201.direct-tune-the-same-on-the"><b>Direct Tune</b>: the same on the active frequency (takes effect immediately); bottom line shows the battery voltage.</li>
+        <li data-i18n-html="ar6201.channel-short-push-or-one-clockwise"><b>Channel</b>: short push or one clockwise turn → channel number inverted, turn to select (tunes at once). Counter-clockwise turn → LAST channels. Short push or 5 s leaves.</li></ul></details>
+      <details><summary data-i18n="ar6201.4-4-4-scan-4-5">4.4.4 Scan / 4.5 squelch / 4.7 spacing</summary>
+        <ul><li data-i18n-html="ar6201.long-scn-scan-watches-active-and">Long <b>↕/SCN</b>: Scan (watches active and preset; active has priority). Short <b>MDE</b> or long <b>SCN</b> ends it.</li>
+        <li data-i18n-html="ar6201.short-ic-sql-squelch-on-off">Short <b>IC/SQL</b>: squelch ON/OFF (<b>SQL</b> shown when on). With squelch off the arrow ► stays in front of the active frequency.</li>
+        <li data-i18n="ar6201.empty-half-full-poor-good-strong">► empty / half / full: poor / good / strong signal.</li>
+        <li data-i18n-html="ar6201.hold-the-8-25-mark-mde">Hold the <b>8/25</b> mark (MDE + STO) 2 s: 8.33 ↔ 25 kHz spacing.</li></ul></details>
+      <details><summary data-i18n="ar6201.4-8-store-a-channel-and">4.8 Store a channel and label</summary>
+        <ol><li data-i18n-html="ar6201.sto-sto-page-the-proposed-channel"><b>STO</b>: STO page, the proposed channel inverted (FREE / USED). Turn to choose 1–99.</li>
+        <li data-i18n-html="ar6201.sto-again-label-edit-10-characters"><b>STO</b> again: label edit (10 characters). Turn = character, push = next position.</li>
+        <li data-i18n-html="ar6201.short-sto-stores-long-sto-clears">Short <b>STO</b> stores, long <b>STO</b> clears the label. No action for 7 s: back without storing.</li>
+        <li data-i18n="ar6201.last1-9-a-new-active-frequency">LAST1…9: a new active frequency kept 10 s is stored automatically.</li></ol></details>
+      <details><summary data-i18n="ar6201.4-12-menus">4.12 Menus</summary>
+        <ul><li data-i18n-html="ar6201.long-ic-sql-ic-volume-0">Long <b>IC/SQL</b>: IC VOLUME (0–46) and IC VOX (−30…+10, above +10 = OFF). Short IC/SQL toggles the pages; long MDE or 5 s ends.</li>
+        <li data-i18n-html="ar6201.long-mde-brightness-0-100-and">Long <b>MDE</b>: BRIGHTNESS (0–100) and SQUELCH (6–26). Short MDE or push toggles; push on SQUELCH, long MDE or a few seconds ends.</li></ul></details>
+      <details><summary data-i18n="ar6201.4-13-warnings">4.13 Warnings</summary>
+        <ul><li data-i18n="ar6201.low-batt-stuck-ptt-tx-hot">LOW BATT, STUCK PTT, TX HOT, FAILURE appear in the bottom line every 5 seconds.</li>
+        <li data-i18n="ar6201.below-10-v-the-speaker-output">Below 10 V the speaker output switches off.</li></ul></details>
+      <details><summary data-i18n="ar6201.installation-setup-installer">Installation Setup (installer)</summary>
+        <ol><li data-i18n-html="ar6201.hold-mde-while-switching-on-keep">Hold <b>MDE</b> while switching on (keep the mouse button down on MDE, move over the volume knob and scroll up).</li>
+        <li data-i18n-html="ar6201.password-enter-6435-turn-digit-push">PASSWORD: enter <b>6435</b> (turn = digit, push = next digit), short <b>STO</b>.</li>
+        <li data-i18n-html="ar6201.scn-or-push-next-page-ic"><b>↕/SCN</b> or push = next page, <b>IC/SQL</b> = previous page. Turn to change, <b>STO</b> to select / toggle / confirm. Values are stored at once.</li>
+        <li data-i18n="ar6201.switch-off-to-leave">Switch off to leave.</li></ol></details>
     </div>
   </aside>
 </main>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTX 328 Simulator</title>
+<title data-i18n="gtx328.gtx-328-simulator">GTX 328 Simulator</title>
 <meta name="description" content="Simulator of the Garmin GTX 328 Mode S transponder: code entry, IDENT, altitude monitor and timers.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RadioRack">
@@ -16,52 +16,65 @@
 <meta property="og:image:alt" content="Garmin GTX 328 bezel">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/topbar.css">
+<script src="../../ui/i18n-boot.js"></script>
 <link rel="stylesheet" href="gtx328.css">
 </head>
-<body>
+<body data-page="gtx328">
+<nav class="topbar">
+  <a class="back-btn" href="../../" title="Back to the list of simulators" data-i18n-title="common.tip.back-to-the-list-of-simulators"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="common.all-simulators">All simulators</span></a>
+  <div class="lang">
+    <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Language" title="Language" data-i18n-aria="common.tip.language" data-i18n-title="common.tip.language"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><svg class="caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="lang-list" id="langList" role="listbox" aria-label="Language" hidden data-i18n-aria="common.tip.language">
+      <div role="option" data-lang="en" tabindex="-1"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><span class="name" lang="en">English</span></div>
+      <div role="option" data-lang="uk" tabindex="-1"><img src="../../flags/ua.svg" alt=""><span class="code">UA</span><span class="name" lang="uk">Українська</span></div>
+      <div role="option" data-lang="cs" tabindex="-1"><img src="../../flags/cz.svg" alt=""><span class="code">CS</span><span class="name" lang="cs">Čeština</span></div>
+      <div role="option" data-lang="sk" tabindex="-1"><img src="../../flags/sk.svg" alt=""><span class="code">SK</span><span class="name" lang="sk">Slovenčina</span></div>
+    </div>
+  </div>
+</nav>
 
 <main>
   <section class="unit-col">
     <header>
-      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
-      <h1>Garmin GTX 328 Mode S transponder simulator</h1>
-      <span class="sub">Practice trainer based on the GTX 328 Pilot's Guide (190-00420-03 Rev A), Installation Manual (190-00420-04 Rev C) and Maintenance Manual (190-00420-05 Rev A), software 5.00.</span>
-      <span class="sub">Mouse: click a key to press it, hold the mouse button to hold it. Right-click a key to keep it pressed (click it again to release), e.g. FUNC while pressing ON for the configuration pages.</span>
+      <h1 data-i18n="gtx328.garmin-gtx-328-mode-s-transponder">Garmin GTX 328 Mode S transponder simulator</h1>
+      <span class="sub" data-i18n="gtx328.practice-trainer-based-on-the-gtx">Practice trainer based on the GTX 328 Pilot's Guide (190-00420-03 Rev A), Installation Manual (190-00420-04 Rev C) and Maintenance Manual (190-00420-05 Rev A), software 5.00.</span>
+      <span class="sub" data-i18n="gtx328.mouse-click-a-key-to-press">Mouse: click a key to press it, hold the mouse button to hold it. Right-click a key to keep it pressed (click it again to release), e.g. FUNC while pressing ON for the configuration pages.</span>
       <nav class="manuals">
-        <a class="manual-btn" data-manual="gtx328-pilots-guide" href="../../manuals/gtx328-pilots-guide.pdf" target="_blank" rel="noopener" title="GTX 328 Pilot's Guide (190-00420-03 Rev A) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="gtx328-installation-manual" href="../../manuals/gtx328-installation-manual.pdf" target="_blank" rel="noopener" title="GTX 328 Installation Manual (190-00420-04 Rev C) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="gtx328-maintenance-manual" href="../../manuals/gtx328-maintenance-manual.pdf" target="_blank" rel="noopener" title="GTX 328 Maintenance Manual (190-00420-05 Rev A) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Maintenance Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="gtx328-pilots-guide" href="../../manuals/gtx328-pilots-guide.pdf" target="_blank" rel="noopener" title="GTX 328 Pilot's Guide (190-00420-03 Rev A)" data-i18n-title="gtx328.tip.gtx-328-pilot-s-guide-190"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="gtx328-installation-manual" href="../../manuals/gtx328-installation-manual.pdf" target="_blank" rel="noopener" title="GTX 328 Installation Manual (190-00420-04 Rev C)" data-i18n-title="gtx328.tip.gtx-328-installation-manual-190-00420"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="gtx328-maintenance-manual" href="../../manuals/gtx328-maintenance-manual.pdf" target="_blank" rel="noopener" title="GTX 328 Maintenance Manual (190-00420-05 Rev A)" data-i18n-title="gtx328.tip.gtx-328-maintenance-manual-190-00420"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Maintenance Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
       <div class="bezel gtx" id="bezel">
-        <div class="print garmin" style="left:24px;top:15px" title="Garmin">GARMIN</div>
-        <div class="print model" style="left:800px;top:14px" title="GTX 328 Mode S transponder">GTX 328</div>
+        <div class="print garmin" style="left:24px;top:15px" title="Garmin" data-i18n-title="gtx328.tip.garmin">GARMIN</div>
+        <div class="print model" style="left:800px;top:14px" title="GTX 328 Mode S transponder" data-i18n-title="gtx328.tip.gtx-328-mode-s-transponder">GTX 328</div>
 
-        <button class="key" data-key="IDENT" style="left:27px;top:40px;width:53px;height:37px" title="IDENT: activates the Special Position Identification (SPI) pulse for 18 seconds, identifying your return on the controller's screen. IDENT appears in the upper left corner of the display.">IDENT</button>
-        <button class="key" data-key="VFR" style="left:29px;top:97px;width:53px;height:35px" title="VFR: sets the code to the pre-programmed VFR code (7000 from the factory). Press again to restore the previous code.">VFR</button>
+        <button class="key" data-key="IDENT" style="left:27px;top:40px;width:53px;height:37px" title="IDENT: activates the Special Position Identification (SPI) pulse for 18 seconds, identifying your return on the controller's screen. IDENT appears in the upper left corner of the display." data-i18n-title="gtx328.tip.ident-activates-the-special-position-identification">IDENT</button>
+        <button class="key" data-key="VFR" style="left:29px;top:97px;width:53px;height:35px" title="VFR: sets the code to the pre-programmed VFR code (7000 from the factory). Press again to restore the previous code." data-i18n-title="gtx328.tip.vfr-sets-the-code-to-the">VFR</button>
 
         <svg class="cluster" id="cluster" width="880" height="219" viewBox="0 0 880 219" aria-label="Mode selection keys"></svg>
 
-        <div class="lcd-frame gtx" title="Display: mode (STBY, ON, ALT, GND), the reply symbol, the code and the function page (pressure altitude, timers, altitude monitor)"><div class="lcd-recess"><canvas id="lcd" width="1600" height="264"></canvas></div></div>
+        <div class="lcd-frame gtx" title="Display: mode (STBY, ON, ALT, GND), the reply symbol, the code and the function page (pressure altitude, timers, altitude monitor)" data-i18n-title="gtx328.tip.display-mode-stby-on-alt-gnd"><div class="lcd-recess"><canvas id="lcd" width="1600" height="264"></canvas></div></div>
 
-        <button class="key" data-key="FUNC" style="left:726px;top:35px;width:54px;height:40px" title="FUNC: changes the page shown on the right side of the display: pressure altitude, flight time, altitude monitor, count up and count down timers (and OAT, contrast, display when configured). In configuration mode, steps through the pages.">FUNC</button>
-        <button class="key" data-key="CRSR" style="left:800px;top:35px;width:56px;height:40px" title="CRSR: starts the entry of the count down time and cancels code entry. In configuration mode, selects the changeable fields.">CRSR</button>
-        <button class="key two" data-key="START" style="left:726px;top:93px;width:54px;height:38px" title="START/STOP: starts and stops the altitude monitor, count up, count down and flight timers. In configuration mode, steps back through the pages."><span>START</span><span>STOP</span></button>
-        <button class="key" data-key="CLR" style="left:800px;top:93px;width:56px;height:38px" title="CLR: resets the count up, count down and flight timers; goes back one digit during code entry (on the first digit it cancels the entry); within 5 seconds after code entry it returns the cursor to the fourth digit.">CLR</button>
+        <button class="key" data-key="FUNC" style="left:726px;top:35px;width:54px;height:40px" title="FUNC: changes the page shown on the right side of the display: pressure altitude, flight time, altitude monitor, count up and count down timers (and OAT, contrast, display when configured). In configuration mode, steps through the pages." data-i18n-title="gtx328.tip.func-changes-the-page-shown-on">FUNC</button>
+        <button class="key" data-key="CRSR" style="left:800px;top:35px;width:56px;height:40px" title="CRSR: starts the entry of the count down time and cancels code entry. In configuration mode, selects the changeable fields." data-i18n-title="gtx328.tip.crsr-starts-the-entry-of-the">CRSR</button>
+        <button class="key two" data-key="START" style="left:726px;top:93px;width:54px;height:38px" title="START/STOP: starts and stops the altitude monitor, count up, count down and flight timers. In configuration mode, steps back through the pages." data-i18n-title="gtx328.tip.start-stop-starts-and-stops-the"><span>START</span><span>STOP</span></button>
+        <button class="key" data-key="CLR" style="left:800px;top:93px;width:56px;height:38px" title="CLR: resets the count up, count down and flight timers; goes back one digit during code entry (on the first digit it cancels the entry); within 5 seconds after code entry it returns the cursor to the fourth digit." data-i18n-title="gtx328.tip.clr-resets-the-count-up-count">CLR</button>
 
-        <button class="key num" data-key="0" style="left:33px" title="0: code digit (count down entry). Letters A B C for the Flight ID.">0</button>
-        <button class="key num" data-key="1" style="left:110px" title="1: code digit. Letters D E F for the Flight ID.">1</button>
-        <button class="key num" data-key="2" style="left:186px" title="2: code digit. Letters G H I for the Flight ID.">2</button>
-        <button class="key num" data-key="3" style="left:263px" title="3: code digit. Letters J K L for the Flight ID.">3</button>
-        <button class="key num" data-key="4" style="left:340px" title="4: code digit. Letters M N O for the Flight ID.">4</button>
-        <div class="hole" style="left:408px;top:183px" title="Access hole of the rack locking mechanism"></div>
-        <button class="key num" data-key="5" style="left:437px" title="5: code digit. Letters P Q R for the Flight ID.">5</button>
-        <button class="key num" data-key="6" style="left:513px" title="6: code digit. Letters S T U for the Flight ID.">6</button>
-        <button class="key num" data-key="7" style="left:590px" title="7: code digit. Letters V W X for the Flight ID.">7</button>
-        <div class="photocell" style="left:655px;top:175px" title="Ambient light sensor (photocell): sets the display and key lighting and, in AUTO display mode, switches between the day (positive) and night (negative) display"></div>
-        <button class="key num" data-key="8" style="left:723px" title="8: not used for codes. Count down entry; reduces contrast and display brightness on those pages; letters Y Z for the Flight ID.">8</button>
-        <button class="key num" data-key="9" style="left:797px" title="9: not used for codes. Count down entry; increases contrast and display brightness on those pages.">9</button>
+        <button class="key num" data-key="0" style="left:33px" title="0: code digit (count down entry). Letters A B C for the Flight ID." data-i18n-title="gtx328.tip.0-code-digit-count-down-entry">0</button>
+        <button class="key num" data-key="1" style="left:110px" title="1: code digit. Letters D E F for the Flight ID." data-i18n-title="gtx328.tip.1-code-digit-letters-d-e">1</button>
+        <button class="key num" data-key="2" style="left:186px" title="2: code digit. Letters G H I for the Flight ID." data-i18n-title="gtx328.tip.2-code-digit-letters-g-h">2</button>
+        <button class="key num" data-key="3" style="left:263px" title="3: code digit. Letters J K L for the Flight ID." data-i18n-title="gtx328.tip.3-code-digit-letters-j-k">3</button>
+        <button class="key num" data-key="4" style="left:340px" title="4: code digit. Letters M N O for the Flight ID." data-i18n-title="gtx328.tip.4-code-digit-letters-m-n">4</button>
+        <div class="hole" style="left:408px;top:183px" title="Access hole of the rack locking mechanism" data-i18n-title="gtx328.tip.access-hole-of-the-rack-locking"></div>
+        <button class="key num" data-key="5" style="left:437px" title="5: code digit. Letters P Q R for the Flight ID." data-i18n-title="gtx328.tip.5-code-digit-letters-p-q">5</button>
+        <button class="key num" data-key="6" style="left:513px" title="6: code digit. Letters S T U for the Flight ID." data-i18n-title="gtx328.tip.6-code-digit-letters-s-t">6</button>
+        <button class="key num" data-key="7" style="left:590px" title="7: code digit. Letters V W X for the Flight ID." data-i18n-title="gtx328.tip.7-code-digit-letters-v-w">7</button>
+        <div class="photocell" style="left:655px;top:175px" title="Ambient light sensor (photocell): sets the display and key lighting and, in AUTO display mode, switches between the day (positive) and night (negative) display" data-i18n-title="gtx328.tip.ambient-light-sensor-photocell-sets-the"></div>
+        <button class="key num" data-key="8" style="left:723px" title="8: not used for codes. Count down entry; reduces contrast and display brightness on those pages; letters Y Z for the Flight ID." data-i18n-title="gtx328.tip.8-not-used-for-codes-count">8</button>
+        <button class="key num" data-key="9" style="left:797px" title="9: not used for codes. Count down entry; increases contrast and display brightness on those pages." data-i18n-title="gtx328.tip.9-not-used-for-codes-count">9</button>
       </div>
     </div>
 
@@ -76,56 +89,56 @@
     <div class="panel-grid">
       <div class="panel-col">
         <section class="card">
-          <h2>Flight</h2>
+          <h2 data-i18n="common.flight">Flight</h2>
           <div class="field">
-            <label class="lbl-t" for="altSl" title="Pressure altitude from the altitude encoder (reported in ALT mode, shown on the PRESSURE ALT page)">Pressure altitude</label>
-            <div class="ctl-row"><input type="range" id="altSl" min="-1000" max="25000" step="50" title="Pressure altitude from the altitude encoder (reported in ALT mode, shown on the PRESSURE ALT page)"><span id="altVal" class="val"></span></div>
-            <label class="lbl-t" for="vsSl" title="Vertical speed: climbing or descending shows the altitude trend arrow">Vertical speed</label>
-            <div class="ctl-row"><input type="range" id="vsSl" min="-3000" max="3000" step="100" title="Vertical speed: climbing or descending shows the altitude trend arrow"><span id="vsVal" class="val"></span></div>
-            <label class="lbl-t" for="gsSl" title="GPS ground speed (used for automatic airborne / ground detection when a GPS input is configured)">GPS ground speed</label>
-            <div class="ctl-row"><input type="range" id="gsSl" min="0" max="250" step="1" title="GPS ground speed (used for automatic airborne / ground detection when a GPS input is configured)"><span id="gsVal" class="val"></span></div>
-            <label class="lbl-t" for="oatSl" title="Outside air temperature from the temperature probe (OAT/DALT page)">OAT</label>
-            <div class="ctl-row"><input type="range" id="oatSl" min="-50" max="50" step="1" title="Outside air temperature from the temperature probe (OAT/DALT page)"><span id="oatVal" class="val"></span></div>
-            <label class="lbl-t" for="gndSw" title="Aircraft on the ground: the squat switch is closed">On ground (squat switch)</label>
-            <div><input type="checkbox" id="gndSw" class="switch" title="Aircraft on the ground: the squat switch is closed"></div>
-            <label class="lbl-t" for="radarSw" title="Radar coverage: interrogations are received and the transponder replies (reply symbol)">Radar coverage</label>
-            <div><input type="checkbox" id="radarSw" class="switch" title="Radar coverage: interrogations are received and the transponder replies (reply symbol)"></div>
+            <label class="lbl-t" for="altSl" title="Pressure altitude from the altitude encoder (reported in ALT mode, shown on the PRESSURE ALT page)" data-i18n="common.pressure-altitude" data-i18n-title="gtx328.tip.pressure-altitude-from-the-altitude-encoder">Pressure altitude</label>
+            <div class="ctl-row"><input type="range" id="altSl" min="-1000" max="25000" step="50" title="Pressure altitude from the altitude encoder (reported in ALT mode, shown on the PRESSURE ALT page)" data-i18n-title="gtx328.tip.pressure-altitude-from-the-altitude-encoder"><span id="altVal" class="val"></span></div>
+            <label class="lbl-t" for="vsSl" title="Vertical speed: climbing or descending shows the altitude trend arrow" data-i18n="gtx328.vertical-speed" data-i18n-title="gtx328.tip.vertical-speed-climbing-or-descending-shows">Vertical speed</label>
+            <div class="ctl-row"><input type="range" id="vsSl" min="-3000" max="3000" step="100" title="Vertical speed: climbing or descending shows the altitude trend arrow" data-i18n-title="gtx328.tip.vertical-speed-climbing-or-descending-shows"><span id="vsVal" class="val"></span></div>
+            <label class="lbl-t" for="gsSl" title="GPS ground speed (used for automatic airborne / ground detection when a GPS input is configured)" data-i18n="gtx328.gps-ground-speed" data-i18n-title="gtx328.tip.gps-ground-speed-used-for-automatic">GPS ground speed</label>
+            <div class="ctl-row"><input type="range" id="gsSl" min="0" max="250" step="1" title="GPS ground speed (used for automatic airborne / ground detection when a GPS input is configured)" data-i18n-title="gtx328.tip.gps-ground-speed-used-for-automatic"><span id="gsVal" class="val"></span></div>
+            <label class="lbl-t" for="oatSl" title="Outside air temperature from the temperature probe (OAT/DALT page)" data-i18n-title="gtx328.tip.outside-air-temperature-from-the-temperature">OAT</label>
+            <div class="ctl-row"><input type="range" id="oatSl" min="-50" max="50" step="1" title="Outside air temperature from the temperature probe (OAT/DALT page)" data-i18n-title="gtx328.tip.outside-air-temperature-from-the-temperature"><span id="oatVal" class="val"></span></div>
+            <label class="lbl-t" for="gndSw" title="Aircraft on the ground: the squat switch is closed" data-i18n="gtx328.on-ground-squat-switch" data-i18n-title="gtx328.tip.aircraft-on-the-ground-the-squat">On ground (squat switch)</label>
+            <div><input type="checkbox" id="gndSw" class="switch" title="Aircraft on the ground: the squat switch is closed" data-i18n-title="gtx328.tip.aircraft-on-the-ground-the-squat"></div>
+            <label class="lbl-t" for="radarSw" title="Radar coverage: interrogations are received and the transponder replies (reply symbol)" data-i18n="common.radar-coverage" data-i18n-title="gtx328.tip.radar-coverage-interrogations-are-received-and">Radar coverage</label>
+            <div><input type="checkbox" id="radarSw" class="switch" title="Radar coverage: interrogations are received and the transponder replies (reply symbol)" data-i18n-title="gtx328.tip.radar-coverage-interrogations-are-received-and"></div>
           </div>
         </section>
       </div>
 
       <section class="card">
-        <h2>Aircraft &amp; lighting</h2>
+        <h2 data-i18n="gtx328.aircraft-lighting">Aircraft &amp; lighting</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
-          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight">Cockpit light</label>
-          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight"><span id="ambVal" class="val"></span></div>
-          <label class="lbl-t" for="busV" title="Aircraft panel lighting bus (dimmer); used when the backlight source is set to a lighting bus">Lighting bus</label>
-          <div class="ctl-row"><input type="range" id="busV" min="0" max="28" step="0.5" title="Aircraft panel lighting bus (dimmer); used when the backlight source is set to a lighting bus"><span id="busVal" class="val"></span></div>
-          <span class="lbl-t" title="Altitude alert annunciator (output of the altitude monitor)">Altitude alert</span>
-          <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light"></span></div>
-          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (alert tones and voice messages)">Sound</label>
-          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (alert tones and voice messages)"></div>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n="common.avionics-master" data-i18n-title="common.tip.avionics-master-switch-power-to-the">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n-title="common.tip.avionics-master-switch-power-to-the"></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight" data-i18n="common.cockpit-light" data-i18n-title="gtx328.tip.cockpit-light-falling-on-the-photocell">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight" data-i18n-title="gtx328.tip.cockpit-light-falling-on-the-photocell"><span id="ambVal" class="val"></span></div>
+          <label class="lbl-t" for="busV" title="Aircraft panel lighting bus (dimmer); used when the backlight source is set to a lighting bus" data-i18n="gtx328.lighting-bus" data-i18n-title="gtx328.tip.aircraft-panel-lighting-bus-dimmer-used">Lighting bus</label>
+          <div class="ctl-row"><input type="range" id="busV" min="0" max="28" step="0.5" title="Aircraft panel lighting bus (dimmer); used when the backlight source is set to a lighting bus" data-i18n-title="gtx328.tip.aircraft-panel-lighting-bus-dimmer-used"><span id="busVal" class="val"></span></div>
+          <span class="lbl-t" title="Altitude alert annunciator (output of the altitude monitor)" data-i18n="gtx328.altitude-alert" data-i18n-title="gtx328.tip.altitude-alert-annunciator-output-of-the">Altitude alert</span>
+          <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light" data-i18n-title="common.tip.altitude-alert-annunciator-light"></span></div>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (alert tones and voice messages)" data-i18n="common.sound" data-i18n-title="gtx328.tip.simulator-sound-on-off-alert-tones">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (alert tones and voice messages)" data-i18n-title="gtx328.tip.simulator-sound-on-off-alert-tones"></div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Installation &amp; faults</h2>
+        <h2 data-i18n="gtx328.installation-faults">Installation &amp; faults</h2>
         <div class="field">
-          <label class="lbl-t" for="masterSw" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way.">Turns on with the master</label>
-          <div><input type="checkbox" id="masterSw" class="switch" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way."></div>
-          <label class="lbl-t" for="encSw" title="An altitude encoder is connected and supplies pressure altitude">Altitude encoder</label>
-          <div><input type="checkbox" id="encSw" class="switch" title="An altitude encoder is connected and supplies pressure altitude"></div>
-          <span class="lbl-t" title="Remote IDENT switch (e.g. on the yoke), wired to the EXTERNAL IDENT input">External IDENT</span>
-          <div class="btn-row"><button id="extIdent" title="Hold to ground the EXTERNAL IDENT input">IDENT</button></div>
-          <label class="lbl-t" for="extStby" title="EXTERNAL STANDBY input grounded (e.g. dual transponder installation): the unit stays in standby">External STANDBY</label>
-          <div><input type="checkbox" id="extStby" class="switch" title="EXTERNAL STANDBY input grounded (e.g. dual transponder installation): the unit stays in standby"></div>
-          <label class="lbl-t" for="failSw" title="Simulated internal failure: the display shows FAIL and no transponder data is transmitted">Internal failure</label>
-          <div><input type="checkbox" id="failSw" class="switch" title="Simulated internal failure: the display shows FAIL and no transponder data is transmitted"></div>
+          <label class="lbl-t" for="masterSw" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way." data-i18n="gtx328.turns-on-with-the-master" data-i18n-title="gtx328.tip.installation-option-the-avionics-master-on">Turns on with the master</label>
+          <div><input type="checkbox" id="masterSw" class="switch" title="Installation option: the AVIONICS MASTER ON SELECT pin is wired, so the unit turns on by itself, in the last mode used, when the avionics master is switched on. Switching the avionics master off turns the unit off either way." data-i18n-title="gtx328.tip.installation-option-the-avionics-master-on"></div>
+          <label class="lbl-t" for="encSw" title="An altitude encoder is connected and supplies pressure altitude" data-i18n="gtx328.altitude-encoder" data-i18n-title="gtx328.tip.an-altitude-encoder-is-connected-and">Altitude encoder</label>
+          <div><input type="checkbox" id="encSw" class="switch" title="An altitude encoder is connected and supplies pressure altitude" data-i18n-title="gtx328.tip.an-altitude-encoder-is-connected-and"></div>
+          <span class="lbl-t" title="Remote IDENT switch (e.g. on the yoke), wired to the EXTERNAL IDENT input" data-i18n="gtx328.external-ident" data-i18n-title="gtx328.tip.remote-ident-switch-e-g-on">External IDENT</span>
+          <div class="btn-row"><button id="extIdent" title="Hold to ground the EXTERNAL IDENT input" data-i18n-title="gtx328.tip.hold-to-ground-the-external-ident">IDENT</button></div>
+          <label class="lbl-t" for="extStby" title="EXTERNAL STANDBY input grounded (e.g. dual transponder installation): the unit stays in standby" data-i18n="gtx328.external-standby" data-i18n-title="gtx328.tip.external-standby-input-grounded-e-g">External STANDBY</label>
+          <div><input type="checkbox" id="extStby" class="switch" title="EXTERNAL STANDBY input grounded (e.g. dual transponder installation): the unit stays in standby" data-i18n-title="gtx328.tip.external-standby-input-grounded-e-g"></div>
+          <label class="lbl-t" for="failSw" title="Simulated internal failure: the display shows FAIL and no transponder data is transmitted" data-i18n="gtx328.internal-failure" data-i18n-title="gtx328.tip.simulated-internal-failure-the-display-shows">Internal failure</label>
+          <div><input type="checkbox" id="failSw" class="switch" title="Simulated internal failure: the display shows FAIL and no transponder data is transmitted" data-i18n-title="gtx328.tip.simulated-internal-failure-the-display-shows"></div>
         </div>
         <div class="card-foot">
-          <button id="factory" class="btn-danger-quiet" title="Reset the code and all configuration settings to the simulator defaults">Reset to factory settings</button>
+          <button id="factory" class="btn-danger-quiet" title="Reset the code and all configuration settings to the simulator defaults" data-i18n="common.reset-to-factory-settings" data-i18n-title="gtx328.tip.reset-the-code-and-all-configuration">Reset to factory settings</button>
         </div>
       </section>
     </div>
@@ -133,35 +146,35 @@
 
   <aside class="help-col">
     <div class="card procs">
-      <h2>Procedures</h2>
-      <details open><summary>Mode selection keys</summary>
-        <ul><li><b>STBY</b>, <b>ON</b> or <b>ALT</b> powers on with the last code; a start-up page shows during the self test. <b>OFF</b> powers off.</li>
-        <li><b>STBY</b> no replies · <b>ON</b> Mode A (and S), no altitude · <b>ALT</b> Mode A, C and S with pressure altitude.</li>
-        <li>Press and hold <b>STBY</b>: GND (when not selected automatically). With automatic airborne determination GND is shown on the ground.</li>
-        <li>The reply symbol ® shows when the transponder replies.</li></ul></details>
-      <details><summary>Code selection</summary>
-        <ol><li>Keys <b>0–7</b>: the first key starts the entry; digits not yet entered appear as dashes.</li>
-        <li>The new code is active when the fourth digit is entered.</li>
-        <li><b>CLR</b> goes back one digit; on the first digit (or <b>CRSR</b>) the entry is cancelled and the previous code restored.</li>
-        <li><b>CLR</b> up to five seconds after the entry returns the cursor to the fourth digit.</li>
-        <li>1200 VFR (USA) · 7000 VFR (Europe) · 7500 hijack · 7600 loss of communications · 7700 emergency.</li></ol></details>
+      <h2 data-i18n="common.procedures">Procedures</h2>
+      <details open><summary data-i18n="gtx328.mode-selection-keys">Mode selection keys</summary>
+        <ul><li data-i18n-html="gtx328.stby-on-or-alt-powers-on"><b>STBY</b>, <b>ON</b> or <b>ALT</b> powers on with the last code; a start-up page shows during the self test. <b>OFF</b> powers off.</li>
+        <li data-i18n-html="gtx328.stby-no-replies-on-mode-a"><b>STBY</b> no replies · <b>ON</b> Mode A (and S), no altitude · <b>ALT</b> Mode A, C and S with pressure altitude.</li>
+        <li data-i18n-html="gtx328.press-and-hold-stby-gnd-when">Press and hold <b>STBY</b>: GND (when not selected automatically). With automatic airborne determination GND is shown on the ground.</li>
+        <li data-i18n="gtx328.the-reply-symbol-shows-when-the">The reply symbol ® shows when the transponder replies.</li></ul></details>
+      <details><summary data-i18n="gtx328.code-selection">Code selection</summary>
+        <ol><li data-i18n-html="gtx328.keys-0-7-the-first-key">Keys <b>0–7</b>: the first key starts the entry; digits not yet entered appear as dashes.</li>
+        <li data-i18n="gtx328.the-new-code-is-active-when">The new code is active when the fourth digit is entered.</li>
+        <li data-i18n-html="gtx328.clr-goes-back-one-digit-on"><b>CLR</b> goes back one digit; on the first digit (or <b>CRSR</b>) the entry is cancelled and the previous code restored.</li>
+        <li data-i18n-html="gtx328.clr-up-to-five-seconds-after"><b>CLR</b> up to five seconds after the entry returns the cursor to the fourth digit.</li>
+        <li data-i18n="common.1200-vfr-usa-7000-vfr-europe">1200 VFR (USA) · 7000 VFR (Europe) · 7500 hijack · 7600 loss of communications · 7700 emergency.</li></ol></details>
       <details><summary>IDENT / VFR</summary>
-        <ul><li><b>IDENT</b>: SPI pulse for 18 s, IDENT in the upper left corner.</li>
-        <li><b>VFR</b>: the pre-programmed VFR code; press again to restore the previous code.</li></ul></details>
-      <details><summary>FUNC pages and timers</summary>
+        <ul><li data-i18n-html="gtx328.ident-spi-pulse-for-18-s"><b>IDENT</b>: SPI pulse for 18 s, IDENT in the upper left corner.</li>
+        <li data-i18n-html="gtx328.vfr-the-pre-programmed-vfr-code"><b>VFR</b>: the pre-programmed VFR code; press again to restore the previous code.</li></ul></details>
+      <details><summary data-i18n="gtx328.func-pages-and-timers">FUNC pages and timers</summary>
         <ul><li><b>FUNC</b>: PRESSURE ALT, FLIGHT TIME, ALT MONITOR, (OAT/DALT), COUNT UP, COUNT DOWN, (CONTRAST, DISPLAY).</li>
-        <li>Flight time: <b>START/STOP</b> pauses or restarts, <b>CLR</b> resets (automatic start and stop when configured).</li>
-        <li>Count up: <b>CLR</b> resets, <b>START/STOP</b> starts and pauses.</li>
-        <li>Count down: <b>CRSR</b>, then all six digits with <b>0–9</b> (leading zeros too); <b>START/STOP</b> runs and pauses; at zero EXPIRED flashes and the time counts up; <b>CLR</b> resets to the initial time.</li>
-        <li>Altitude monitor: at the assigned altitude press <b>START/STOP</b>; again to cancel. Over the limit: voice "Leaving Altitude" and the annunciator.</li></ul></details>
-      <details><summary>Flight ID at power-up</summary>
-        <ol><li>The FLT ID field is highlighted. If it is correct: <b>CRSR</b> to OK?, <b>CRSR</b> again to accept.</li>
-        <li>To change it: number keys, pressed repeatedly for the letters (R = <b>5</b> four times); <b>CRSR</b> to the next character, <b>CLR</b> back.</li>
-        <li>After the last character <b>CRSR</b> to OK?, <b>CRSR</b> accepts. Wrong FLT ID found later: turn off and on and enter it again.</li></ol></details>
-      <details><summary>Configuration pages (installer)</summary>
-        <ul><li>Power off; right-click <b>FUNC</b> to keep it pressed, then press <b>ON</b>. Release FUNC.</li>
-        <li><b>FUNC</b> next page, <b>START/STOP</b> back to the menu page, <b>CRSR</b> selects a field and accepts it, <b>8</b>/<b>9</b> change a list, <b>0–9</b> enter numbers.</li>
-        <li>Turn the power off to leave.</li></ul></details>
+        <li data-i18n-html="gtx328.flight-time-start-stop-pauses-or">Flight time: <b>START/STOP</b> pauses or restarts, <b>CLR</b> resets (automatic start and stop when configured).</li>
+        <li data-i18n-html="gtx328.count-up-clr-resets-start-stop">Count up: <b>CLR</b> resets, <b>START/STOP</b> starts and pauses.</li>
+        <li data-i18n-html="gtx328.count-down-crsr-then-all-six">Count down: <b>CRSR</b>, then all six digits with <b>0–9</b> (leading zeros too); <b>START/STOP</b> runs and pauses; at zero EXPIRED flashes and the time counts up; <b>CLR</b> resets to the initial time.</li>
+        <li data-i18n-html="gtx328.altitude-monitor-at-the-assigned-altitude">Altitude monitor: at the assigned altitude press <b>START/STOP</b>; again to cancel. Over the limit: voice "Leaving Altitude" and the annunciator.</li></ul></details>
+      <details><summary data-i18n="gtx328.flight-id-at-power-up">Flight ID at power-up</summary>
+        <ol><li data-i18n-html="gtx328.the-flt-id-field-is-highlighted">The FLT ID field is highlighted. If it is correct: <b>CRSR</b> to OK?, <b>CRSR</b> again to accept.</li>
+        <li data-i18n-html="gtx328.to-change-it-number-keys-pressed">To change it: number keys, pressed repeatedly for the letters (R = <b>5</b> four times); <b>CRSR</b> to the next character, <b>CLR</b> back.</li>
+        <li data-i18n-html="gtx328.after-the-last-character-crsr-to">After the last character <b>CRSR</b> to OK?, <b>CRSR</b> accepts. Wrong FLT ID found later: turn off and on and enter it again.</li></ol></details>
+      <details><summary data-i18n="gtx328.configuration-pages-installer">Configuration pages (installer)</summary>
+        <ul><li data-i18n-html="gtx328.power-off-right-click-func-to">Power off; right-click <b>FUNC</b> to keep it pressed, then press <b>ON</b>. Release FUNC.</li>
+        <li data-i18n-html="gtx328.func-next-page-start-stop-back"><b>FUNC</b> next page, <b>START/STOP</b> back to the menu page, <b>CRSR</b> selects a field and accepts it, <b>8</b>/<b>9</b> change a list, <b>0–9</b> enter numbers.</li>
+        <li data-i18n="gtx328.turn-the-power-off-to-leave">Turn the power off to leave.</li></ul></details>
     </div>
   </aside>
 </main>

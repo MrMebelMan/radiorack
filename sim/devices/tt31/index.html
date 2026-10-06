@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TT31 Simulator</title>
+<title data-i18n="tt31.tt31-simulator">TT31 Simulator</title>
 <meta name="description" content="Simulator of the Trig TT31 Mode S transponder: squawk and Flight ID entry, IDENT, VFR code and timers.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RadioRack">
@@ -16,45 +16,58 @@
 <meta property="og:image:alt" content="Trig TT31 bezel">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/topbar.css">
+<script src="../../ui/i18n-boot.js"></script>
 <link rel="stylesheet" href="tt31.css">
 </head>
-<body>
+<body data-page="tt31">
+<nav class="topbar">
+  <a class="back-btn" href="../../" title="Back to the list of simulators" data-i18n-title="common.tip.back-to-the-list-of-simulators"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="common.all-simulators">All simulators</span></a>
+  <div class="lang">
+    <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Language" title="Language" data-i18n-aria="common.tip.language" data-i18n-title="common.tip.language"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><svg class="caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="lang-list" id="langList" role="listbox" aria-label="Language" hidden data-i18n-aria="common.tip.language">
+      <div role="option" data-lang="en" tabindex="-1"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><span class="name" lang="en">English</span></div>
+      <div role="option" data-lang="uk" tabindex="-1"><img src="../../flags/ua.svg" alt=""><span class="code">UA</span><span class="name" lang="uk">Українська</span></div>
+      <div role="option" data-lang="cs" tabindex="-1"><img src="../../flags/cz.svg" alt=""><span class="code">CS</span><span class="name" lang="cs">Čeština</span></div>
+      <div role="option" data-lang="sk" tabindex="-1"><img src="../../flags/sk.svg" alt=""><span class="code">SK</span><span class="name" lang="sk">Slovenčina</span></div>
+    </div>
+  </div>
+</nav>
 
 <main>
   <section class="unit-col">
     <header>
-      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
-      <h1>Trig TT31 Mode S transponder simulator</h1>
-      <span class="sub">Practice trainer based on the TT31 Operating Manual (00454-00-AF) and Installation Manual (00455-00-AR), software 3.18.</span>
-      <span class="sub">Mouse: drag a knob up/down or scroll over it to turn it. The left knob is the mode switch (OFF, SBY, GND, ON, ALT); the right knob sets the code.</span>
+      <h1 data-i18n="tt31.trig-tt31-mode-s-transponder-simulator">Trig TT31 Mode S transponder simulator</h1>
+      <span class="sub" data-i18n="tt31.practice-trainer-based-on-the-tt31">Practice trainer based on the TT31 Operating Manual (00454-00-AF) and Installation Manual (00455-00-AR), software 3.18.</span>
+      <span class="sub" data-i18n="tt31.mouse-drag-a-knob-up-down">Mouse: drag a knob up/down or scroll over it to turn it. The left knob is the mode switch (OFF, SBY, GND, ON, ALT); the right knob sets the code.</span>
       <nav class="manuals">
-        <a class="manual-btn" data-manual="tt31-operating-manual" href="../../manuals/tt31-operating-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Operating Manual (00454-00-AF) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="tt31-installation-manual" href="../../manuals/tt31-installation-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Installation Manual (00455-00-AR) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="tt31-operating-manual" href="../../manuals/tt31-operating-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Operating Manual (00454-00-AF)" data-i18n-title="tt31.tip.tt31-mode-s-transponder-operating-manual"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Operating Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="tt31-installation-manual" href="../../manuals/tt31-installation-manual.pdf" target="_blank" rel="noopener" title="TT31 Mode S Transponder Installation Manual (00455-00-AR)" data-i18n-title="tt31.tip.tt31-mode-s-transponder-installation-manual"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
       <div class="bezel tt31" id="bezel">
-        <button class="key pill" data-key="IDENT" style="left:66px;top:30px" title="IDENT: press when ATC instructs you to &quot;Ident&quot; or &quot;Squawk Ident&quot;. Activates the SPI pulse in the replies for 18 seconds; IDENT appears in the display.">IDENT</button>
+        <button class="key pill" data-key="IDENT" style="left:66px;top:30px" title="IDENT: press when ATC instructs you to &quot;Ident&quot; or &quot;Squawk Ident&quot;. Activates the SPI pulse in the replies for 18 seconds; IDENT appears in the display." data-i18n-title="tt31.tip.ident-press-when-atc-instructs-you">IDENT</button>
 
-        <div class="lbl mk l" style="left:51px;top:110px" title="SBY: on, no replies to interrogations">SBY</div>
-        <div class="lbl mk t" style="left:94px;top:99px" title="GND: replies to Mode S ground interrogations from surface movement radar">GND</div>
-        <div class="lbl mk r" style="left:133px;top:114px" title="ON: replies to all interrogations, altitude reporting suppressed">ON</div>
-        <div class="lbl mk l" style="left:40px;top:153px" title="OFF: power removed">OFF</div>
-        <div class="lbl mk r" style="left:142px;top:153px" title="ALT: replies to all interrogations">ALT</div>
-        <div class="knob modesel" id="modeKnob" title="Mode selector knob: controls the power and the operating mode (OFF, SBY, GND, ON, ALT). Drag up/down or scroll. When airborne use ALT unless ATC directs otherwise; GND when taxiing (automatic with a squat switch)."><div class="grip"><i class="ptr"></i></div></div>
+        <div class="lbl mk l" style="left:51px;top:110px" title="SBY: on, no replies to interrogations" data-i18n-title="tt31.tip.sby-on-no-replies-to-interrogations">SBY</div>
+        <div class="lbl mk t" style="left:94px;top:99px" title="GND: replies to Mode S ground interrogations from surface movement radar" data-i18n-title="tt31.tip.gnd-replies-to-mode-s-ground">GND</div>
+        <div class="lbl mk r" style="left:133px;top:114px" title="ON: replies to all interrogations, altitude reporting suppressed" data-i18n-title="tt31.tip.on-replies-to-all-interrogations-altitude">ON</div>
+        <div class="lbl mk l" style="left:40px;top:153px" title="OFF: power removed" data-i18n-title="tt31.tip.off-power-removed">OFF</div>
+        <div class="lbl mk r" style="left:142px;top:153px" title="ALT: replies to all interrogations" data-i18n-title="tt31.tip.alt-replies-to-all-interrogations">ALT</div>
+        <div class="knob modesel" id="modeKnob" title="Mode selector knob: controls the power and the operating mode (OFF, SBY, GND, ON, ALT). Drag up/down or scroll. When airborne use ALT unless ATC directs otherwise; GND when taxiing (automatic with a squat switch)." data-i18n-title="tt31.tip.mode-selector-knob-controls-the-power"><div class="grip"><i class="ptr"></i></div></div>
 
-        <div class="lcd-frame" title="Display: operating mode, reported pressure altitude (flight level), squawk code and Flight ID. The reply indicator is active when the transponder replies to interrogations."><div class="lcd-recess"><div class="lcd amber off" id="lcd"></div></div></div>
-        <div class="tstrip" title="Trig Avionics"><div class="trig" id="trigMark"></div></div>
+        <div class="lcd-frame" title="Display: operating mode, reported pressure altitude (flight level), squawk code and Flight ID. The reply indicator is active when the transponder replies to interrogations." data-i18n-title="tt31.tip.display-operating-mode-reported-pressure-altitude"><div class="lcd-recess"><div class="lcd amber off" id="lcd"></div></div></div>
+        <div class="tstrip" title="Trig Avionics" data-i18n-title="tt31.tip.trig-avionics"><div class="trig" id="trigMark"></div></div>
 
-        <button class="key pill" data-key="FUNC" style="left:206px;top:166px" title="FUNC: access to the flight timer, stopwatch, ADS-B monitor (depending on installation) and altitude monitor.">FUNC</button>
-        <div class="sensor tt" title="Light sensor: the display dims automatically with the cockpit light"></div>
-        <div class="hole" title="Light sensor aperture"></div>
-        <button class="key pill" data-key="VFR" style="left:454px;top:166px" title="VFR: sets the pre-programmed conspicuity code; press again to restore the previous squawk code.">VFR</button>
-        <button class="key pill wide" data-key="FLTSQ" style="left:578px;top:166px" title="FLT/SQ: alternates the primary display between squawk code and Flight ID (and selects which one the code knob changes).">FLT/SQ</button>
+        <button class="key pill" data-key="FUNC" style="left:206px;top:166px" title="FUNC: access to the flight timer, stopwatch, ADS-B monitor (depending on installation) and altitude monitor." data-i18n-title="tt31.tip.func-access-to-the-flight-timer">FUNC</button>
+        <div class="sensor tt" title="Light sensor: the display dims automatically with the cockpit light" data-i18n-title="tt31.tip.light-sensor-the-display-dims-automatically"></div>
+        <div class="hole" title="Light sensor aperture" data-i18n-title="tt31.tip.light-sensor-aperture"></div>
+        <button class="key pill" data-key="VFR" style="left:454px;top:166px" title="VFR: sets the pre-programmed conspicuity code; press again to restore the previous squawk code." data-i18n-title="tt31.tip.vfr-sets-the-pre-programmed-conspicuity">VFR</button>
+        <button class="key pill wide" data-key="FLTSQ" style="left:578px;top:166px" title="FLT/SQ: alternates the primary display between squawk code and Flight ID (and selects which one the code knob changes)." data-i18n-title="tt31.tip.flt-sq-alternates-the-primary-display">FLT/SQ</button>
 
-        <button class="key pill sm" data-key="ENT" style="left:700px;top:36px" title="ENT: enters a digit in the code selector (advances to the next digit; on the last digit the new code replaces the old one). Also clears warnings and operates the FUNC pages.">ENT</button>
-        <button class="key pill sm" data-key="BACK" style="left:790px;top:36px" title="BACK: goes back to the previous digit in the code selector.">BACK</button>
-        <div class="knob code" id="codeKnob" title="Code selector knob: sets the squawk code or Flight ID (FLT/SQ chooses which). Turning highlights the first digit and changes it; ENT advances. Not completed within 7 seconds: changes ignored."><div class="grip"></div></div>
+        <button class="key pill sm" data-key="ENT" style="left:700px;top:36px" title="ENT: enters a digit in the code selector (advances to the next digit; on the last digit the new code replaces the old one). Also clears warnings and operates the FUNC pages." data-i18n-title="tt31.tip.ent-enters-a-digit-in-the">ENT</button>
+        <button class="key pill sm" data-key="BACK" style="left:790px;top:36px" title="BACK: goes back to the previous digit in the code selector." data-i18n-title="tt31.tip.back-goes-back-to-the-previous">BACK</button>
+        <div class="knob code" id="codeKnob" title="Code selector knob: sets the squawk code or Flight ID (FLT/SQ chooses which). Turning highlights the first digit and changes it; ENT advances. Not completed within 7 seconds: changes ignored." data-i18n-title="tt31.tip.code-selector-knob-sets-the-squawk"><div class="grip"></div></div>
         <div class="tt31mark">TT31</div>
       </div>
     </div>
@@ -70,48 +83,48 @@
     <div class="panel-grid">
       <div class="panel-col">
         <section class="card">
-          <h2>Flight</h2>
+          <h2 data-i18n="common.flight">Flight</h2>
           <div class="field">
-            <label class="lbl-t" for="altSl" title="Simulated pressure altitude (shown and reported as the flight level)">Pressure altitude</label>
-            <div class="ctl-row"><input type="range" id="altSl" min="-500" max="15000" step="50" title="Simulated pressure altitude (shown and reported as the flight level)"><span id="altVal" class="val"></span></div>
-            <label class="lbl-t" for="gndSw" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)">On ground</label>
-            <div><input type="checkbox" id="gndSw" class="switch" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)"></div>
-            <label class="lbl-t" for="radarSw" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)">Radar coverage</label>
-            <div><input type="checkbox" id="radarSw" class="switch" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)"></div>
+            <label class="lbl-t" for="altSl" title="Simulated pressure altitude (shown and reported as the flight level)" data-i18n="common.pressure-altitude" data-i18n-title="tt31.tip.simulated-pressure-altitude-shown-and-reported">Pressure altitude</label>
+            <div class="ctl-row"><input type="range" id="altSl" min="-500" max="15000" step="50" title="Simulated pressure altitude (shown and reported as the flight level)" data-i18n-title="tt31.tip.simulated-pressure-altitude-shown-and-reported"><span id="altVal" class="val"></span></div>
+            <label class="lbl-t" for="gndSw" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)" data-i18n="tt31.on-ground" data-i18n-title="tt31.tip.aircraft-on-the-ground-with-a">On ground</label>
+            <div><input type="checkbox" id="gndSw" class="switch" title="Aircraft on the ground (with a squat switch, ON and ALT stay in GND)" data-i18n-title="tt31.tip.aircraft-on-the-ground-with-a"></div>
+            <label class="lbl-t" for="radarSw" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)" data-i18n="common.radar-coverage" data-i18n-title="tt31.tip.radar-coverage-interrogations-are-received-and">Radar coverage</label>
+            <div><input type="checkbox" id="radarSw" class="switch" title="Radar coverage: interrogations are received and the transponder replies (reply indicator)" data-i18n-title="tt31.tip.radar-coverage-interrogations-are-received-and"></div>
           </div>
         </section>
       </div>
 
       <section class="card">
-        <h2>Installation</h2>
+        <h2 data-i18n="tt31.installation">Installation</h2>
         <div class="field">
-          <label class="lbl-t" for="squatSw" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)">Squat switch</label>
-          <div><input type="checkbox" id="squatSw" class="switch" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)"></div>
-          <label class="lbl-t" for="adsbSw" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)">ADS-B GPS source</label>
-          <div><input type="checkbox" id="adsbSw" class="switch" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)"></div>
-          <label class="lbl-t" for="gpsSw" title="The GPS position is valid">GPS position valid</label>
-          <div><input type="checkbox" id="gpsSw" class="switch" title="The GPS position is valid"></div>
-          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)">Sound</label>
-          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)"></div>
+          <label class="lbl-t" for="squatSw" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)" data-i18n="tt31.squat-switch" data-i18n-title="tt31.tip.installation-a-squat-switch-is-connected">Squat switch</label>
+          <div><input type="checkbox" id="squatSw" class="switch" title="Installation: a squat switch is connected (automatic ground / airborne mode, flight timer start and stop)" data-i18n-title="tt31.tip.installation-a-squat-switch-is-connected"></div>
+          <label class="lbl-t" for="adsbSw" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)" data-i18n="tt31.ads-b-gps-source" data-i18n-title="tt31.tip.installation-a-gps-source-for-ads">ADS-B GPS source</label>
+          <div><input type="checkbox" id="adsbSw" class="switch" title="Installation: a GPS source for ADS-B Out is connected (ADS-B monitor page, NO ADSB POSN warning)" data-i18n-title="tt31.tip.installation-a-gps-source-for-ads"></div>
+          <label class="lbl-t" for="gpsSw" title="The GPS position is valid" data-i18n="tt31.gps-position-valid" data-i18n-title="tt31.tip.the-gps-position-is-valid">GPS position valid</label>
+          <div><input type="checkbox" id="gpsSw" class="switch" title="The GPS position is valid" data-i18n-title="tt31.tip.the-gps-position-is-valid"></div>
+          <label class="lbl-t" for="audioOn" title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n="common.sound" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise">Sound</label>
+          <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off (receiver noise, incoming calls, tones)" data-i18n-title="common.tip.simulator-sound-on-off-receiver-noise"></div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Aircraft &amp; faults</h2>
+        <h2 data-i18n="common.aircraft-faults">Aircraft &amp; faults</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
-          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically.">Cockpit light</label>
-          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically."><span id="ambVal" class="val"></span></div>
-          <span class="lbl-t" title="Simulated antenna problem">Antenna</span>
-          <div class="btn-row"><button id="antWarn" title="Raise the antenna warning (the transponder detected a problem with the antenna)">Raise warning</button></div>
-          <span class="lbl-t" title="Simulated transponder faults">Fault</span>
-          <div class="btn-row"><button id="faultRec" title="Clears when the transponder is switched off and on">Recoverable</button><button id="faultHard" title="Raise a permanent fault (stays after switching off and on)">Permanent</button></div>
-          <span class="lbl-t" title="Altitude alert annunciator light (altitude monitor)">Alt monitor</span>
-          <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light"></span></div>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n="common.avionics-master" data-i18n-title="common.tip.avionics-master-switch-power-to-the">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n-title="common.tip.avionics-master-switch-power-to-the"></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n="common.cockpit-light" data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell"><span id="ambVal" class="val"></span></div>
+          <span class="lbl-t" title="Simulated antenna problem" data-i18n="tt31.antenna" data-i18n-title="tt31.tip.simulated-antenna-problem">Antenna</span>
+          <div class="btn-row"><button id="antWarn" title="Raise the antenna warning (the transponder detected a problem with the antenna)" data-i18n="tt31.raise-warning" data-i18n-title="tt31.tip.raise-the-antenna-warning-the-transponder">Raise warning</button></div>
+          <span class="lbl-t" title="Simulated transponder faults" data-i18n="tt31.fault" data-i18n-title="tt31.tip.simulated-transponder-faults">Fault</span>
+          <div class="btn-row"><button id="faultRec" title="Clears when the transponder is switched off and on" data-i18n="tt31.recoverable" data-i18n-title="tt31.tip.clears-when-the-transponder-is-switched">Recoverable</button><button id="faultHard" title="Raise a permanent fault (stays after switching off and on)" data-i18n="tt31.permanent" data-i18n-title="tt31.tip.raise-a-permanent-fault-stays-after">Permanent</button></div>
+          <span class="lbl-t" title="Altitude alert annunciator light (altitude monitor)" data-i18n="tt31.alt-monitor" data-i18n-title="tt31.tip.altitude-alert-annunciator-light-altitude-monitor">Alt monitor</span>
+          <div><span id="altLamp" class="lamp" title="Altitude alert annunciator light" data-i18n-title="common.tip.altitude-alert-annunciator-light"></span></div>
         </div>
         <div class="card-foot">
-          <button id="factory" class="btn-danger-quiet" title="Reset all settings to factory defaults">Reset to factory settings</button>
+          <button id="factory" class="btn-danger-quiet" title="Reset all settings to factory defaults" data-i18n="common.reset-to-factory-settings" data-i18n-title="tt31.tip.reset-all-settings-to-factory-defaults">Reset to factory settings</button>
         </div>
       </section>
     </div>
@@ -119,28 +132,28 @@
 
   <aside class="help-col">
     <div class="card procs">
-      <h2>Procedures</h2>
-      <details open><summary>Mode selector knob</summary>
-        <ul><li><b>OFF</b> power removed · <b>SBY</b> on, no replies · <b>GND</b> replies to Mode S ground interrogations · <b>ON</b> replies, altitude suppressed · <b>ALT</b> replies to all.</li>
-        <li>Airborne: ALT unless ATC directs otherwise. Taxiing: GND. With a squat switch it switches automatically.</li></ul></details>
-      <details><summary>Squawk code / Flight ID</summary>
-        <ol><li><b>FLT/SQ</b> selects which one is shown big and changed.</li>
-        <li>Turn the code knob: the first digit is highlighted and changes.</li>
-        <li><b>ENT</b> advances to the next digit, <b>BACK</b> goes back.</li>
-        <li><b>ENT</b> on the last digit replaces the value. Not completed within 7 s: changes ignored.</li>
-        <li>Flight ID: letters and digits only; enter a blank to end it if shorter than 8.</li>
-        <li>1200 VFR (USA) · 7000 VFR (Europe) · 7500 hijack · 7600 loss of communications · 7700 emergency.</li></ol></details>
+      <h2 data-i18n="common.procedures">Procedures</h2>
+      <details open><summary data-i18n="tt31.mode-selector-knob">Mode selector knob</summary>
+        <ul><li data-i18n-html="tt31.off-power-removed-sby-on-no"><b>OFF</b> power removed · <b>SBY</b> on, no replies · <b>GND</b> replies to Mode S ground interrogations · <b>ON</b> replies, altitude suppressed · <b>ALT</b> replies to all.</li>
+        <li data-i18n="tt31.airborne-alt-unless-atc-directs-otherwise">Airborne: ALT unless ATC directs otherwise. Taxiing: GND. With a squat switch it switches automatically.</li></ul></details>
+      <details><summary data-i18n="tt31.squawk-code-flight-id">Squawk code / Flight ID</summary>
+        <ol><li data-i18n-html="tt31.flt-sq-selects-which-one-is"><b>FLT/SQ</b> selects which one is shown big and changed.</li>
+        <li data-i18n="tt31.turn-the-code-knob-the-first">Turn the code knob: the first digit is highlighted and changes.</li>
+        <li data-i18n-html="tt31.ent-advances-to-the-next-digit"><b>ENT</b> advances to the next digit, <b>BACK</b> goes back.</li>
+        <li data-i18n-html="tt31.ent-on-the-last-digit-replaces"><b>ENT</b> on the last digit replaces the value. Not completed within 7 s: changes ignored.</li>
+        <li data-i18n="tt31.flight-id-letters-and-digits-only">Flight ID: letters and digits only; enter a blank to end it if shorter than 8.</li>
+        <li data-i18n="common.1200-vfr-usa-7000-vfr-europe">1200 VFR (USA) · 7000 VFR (Europe) · 7500 hijack · 7600 loss of communications · 7700 emergency.</li></ol></details>
       <details><summary>IDENT / VFR</summary>
-        <ul><li><b>IDENT</b> when ATC asks to "Ident" / "Squawk Ident": SPI for 18 s, IDENT on the display.</li>
-        <li><b>VFR</b> sets the pre-programmed code; press again to restore the previous code.</li></ul></details>
-      <details><summary>FUNC: flight timer, timer, altitude monitor</summary>
-        <ul><li><b>FUNC</b> steps through the pages: FLIGHT TIME, TIMER, ADS-B monitor (if installed), ALTITUDE MONITOR.</li>
-        <li>Flight time: time powered on in ON or ALT.</li>
-        <li>Timer: <b>ENT</b> resets and starts, <b>ENT</b> again stops.</li>
-        <li>Altitude monitor: <b>ENT</b> toggles it at the current altitude; alert when more than 250 ft off. A small pointer appears next to the altitude.</li></ul></details>
-      <details><summary>Warnings / faults</summary>
-        <ul><li>WARNING + statement: note it, <b>ENT</b> clears; it reappears if the problem is still present.</li>
-        <li>FAULT + statement: no replies. Some faults clear by switching off and on.</li></ul></details>
+        <ul><li data-i18n-html="tt31.ident-when-atc-asks-to-ident"><b>IDENT</b> when ATC asks to "Ident" / "Squawk Ident": SPI for 18 s, IDENT on the display.</li>
+        <li data-i18n-html="tt31.vfr-sets-the-pre-programmed-code"><b>VFR</b> sets the pre-programmed code; press again to restore the previous code.</li></ul></details>
+      <details><summary data-i18n="tt31.func-flight-timer-timer-altitude-monitor">FUNC: flight timer, timer, altitude monitor</summary>
+        <ul><li data-i18n-html="tt31.func-steps-through-the-pages-flight"><b>FUNC</b> steps through the pages: FLIGHT TIME, TIMER, ADS-B monitor (if installed), ALTITUDE MONITOR.</li>
+        <li data-i18n="tt31.flight-time-time-powered-on-in">Flight time: time powered on in ON or ALT.</li>
+        <li data-i18n-html="tt31.timer-ent-resets-and-starts-ent">Timer: <b>ENT</b> resets and starts, <b>ENT</b> again stops.</li>
+        <li data-i18n-html="tt31.altitude-monitor-ent-toggles-it-at">Altitude monitor: <b>ENT</b> toggles it at the current altitude; alert when more than 250 ft off. A small pointer appears next to the altitude.</li></ul></details>
+      <details><summary data-i18n="tt31.warnings-faults">Warnings / faults</summary>
+        <ul><li data-i18n-html="tt31.warning-statement-note-it-ent-clears">WARNING + statement: note it, <b>ENT</b> clears; it reappears if the problem is still present.</li>
+        <li data-i18n="tt31.fault-statement-no-replies-some-faults">FAULT + statement: no replies. Some faults clear by switching off and on.</li></ul></details>
     </div>
   </aside>
 </main>

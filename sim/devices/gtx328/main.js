@@ -1,5 +1,6 @@
 // GTX 328 page entry: builds the transponder and wires the shared UI modules to index.html.
 import '../../ui/manuals.js';
+import { t, onLang } from '../../ui/i18n.js';
 import { GTX328 } from './device.js';
 import { createGtxLcd } from '../../ui/lcd-gtx.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
@@ -15,9 +16,9 @@ const $ = id => document.getElementById(id);
 // ---------- mode cluster: ON / OFF / STBY around the round ALT key (positions measured from the photo) ----------
 const CX = 149, CY = 87, R1 = 32, R2 = 59, RC = [10, 4];   // corner radii: outer, inner
 const MODE_KEYS = [
-  { key: 'ON', deg: -90, half: 29, title: 'ON: selects Mode A (and Mode S). The transponder replies to interrogations, as shown by the reply symbol, but the replies do not include altitude. Powers the unit on.' },
-  { key: 'OFF', deg: 27, half: 27, title: 'OFF: powers off the GTX 328.' },
-  { key: 'STBY', deg: 150, half: 27, title: 'STBY: standby, the transponder does not reply to interrogations. Press and hold for ground (GND) mode when it is not selected automatically. Powers the unit on.' },
+  { key: 'ON', deg: -90, half: 29 },
+  { key: 'OFF', deg: 27, half: 27 },
+  { key: 'STBY', deg: 150, half: 27 },
 ];
 const pt = (r, deg) => [CX + r * Math.cos(deg * Math.PI / 180), CY + r * Math.sin(deg * Math.PI / 180)];
 // annular sector outline (outer arc, inner arc) with its four corners rounded
@@ -58,17 +59,19 @@ function buildCluster(svg) {
     const [tx, ty] = pt((R1 + R2) / 2, k.deg);
     const rot = k.deg === -90 ? 0 : k.deg - 90;
     h += `<path class="well" d="${sectorPath(R1 - 2, R2 + 2, a0 - 2.5, a1 + 2.5, [RC[0] + 2, RC[1] + 2])}"/>`;
-    h += `<g class="mkey" data-key="${k.key}"><title>${k.title}</title><g class="lift">
+    h += `<g class="mkey" data-key="${k.key}"><title></title><g class="lift">
       <path class="cap" d="${sectorPath(R1, R2, a0, a1, RC)}"/>
       <g transform="rotate(${rot} ${tx.toFixed(1)} ${ty.toFixed(1)})"><text class="${k.key.toLowerCase()}" x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="central">${k.key}</text></g></g></g>`;   // rotation on its own group, the press offset on .lift: they never replace each other
   }
   h += `<circle class="well" cx="${CX}" cy="${CY}" r="28"/>`;
-  h += `<g class="mkey" data-key="ALT"><title>ALT: selects Mode A and Mode C (and Mode S). Replies include the pressure altitude from the altitude source. Powers the unit on.</title>
+  h += `<g class="mkey" data-key="ALT"><title></title>
     <g class="lift"><circle class="cap" cx="${CX}" cy="${CY}" r="26"/><text x="${CX}" y="${CY}" text-anchor="middle" dominant-baseline="central">ALT</text></g></g>`;
   svg.innerHTML = h;
   return [...svg.querySelectorAll('.mkey')];
 }
 const clusterKeys = buildCluster($('cluster'));
+// key tooltips (SVG <title>), in the page language
+onLang(() => { for (const k of clusterKeys) k.querySelector('title').textContent = t(`gtx328.key.${k.dataset.key}`); });
 
 fitBezel($('bezel'), $('bezelWrap'), { width: 880, height: 219, maxScale: 2.2 });
 const renderLcd = createGtxLcd($('lcd'));
@@ -102,7 +105,7 @@ const sync = () => {
   $('gndSw').checked = s.onGround; $('radarSw').checked = s.radar; $('encSw').checked = s.encoder;
   $('extStby').checked = s.extStby; $('masterSw').checked = s.avMaster;
 };
-sync();
+onLang(sync);   // also relabels the cockpit light value after a language change
 const live = (id, fn) => { $(id).oninput = e => { fn(+e.target.value); xpdr.save(); sync(); }; };
 live('altSl', v => { sim().alt = v; });
 live('vsSl', v => { sim().vs = v; });
@@ -121,14 +124,14 @@ $('busSw').onchange = e => { xpdr.setAircraftPower(e.target.checked); render(); 
 const extIdent = on => () => { sim().extIdent = on; $('extIdent').classList.toggle('down', on); render(); };
 $('extIdent').onpointerdown = extIdent(true);
 $('extIdent').onpointerup = $('extIdent').onpointerleave = extIdent(false);
-$('factory').onclick = () => { if (confirm('Reset the code and all configuration settings to the simulator defaults?')) { xpdr.factoryReset(); sync(); render(); } };
+$('factory').onclick = () => { if (confirm(t('gtx328.confirm.factory'))) { xpdr.factoryReset(); sync(); render(); } };
 
 function renderPanel() {
   const m = xpdr.opMode;
-  $('hint').textContent = !xpdr.bus ? 'Avionics master off.' : !xpdr.power ? 'Transponder OFF. Press STBY, ON or ALT.' : xpdr.config ? 'Configuration mode: FUNC next page, START/STOP back, CRSR select / accept. Turn the power off to leave.' : '';
+  $('hint').textContent = !xpdr.bus ? t('sim.busOff') : !xpdr.power ? t('gtx328.hint.off') : xpdr.config ? t('gtx328.hint.config') : '';
   $('hearingRow').hidden = !xpdr.power;
-  const reply = xpdr.replying ? 'replying to interrogations' : 'not replying';
-  $('hearing').textContent = xpdr.booting ? 'self test' : `${m} · squawk ${xpdr.s.code} · ${reply}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;
+  const reply = t(xpdr.replying ? 'xpdr.replying' : 'xpdr.notReplying');
+  $('hearing').textContent = xpdr.booting ? t('gtx328.hear.selfTest') : `${t('gtx328.hear.status', { mode: m, code: xpdr.s.code, reply })}${xpdr.identActive ? ' · IDENT (SPI)' : ''}${xpdr.altAlert ? ' · ALTITUDE ALERT' : ''}`;
   $('statusBar').dataset.state = !xpdr.power ? 'off' : xpdr.altAlert ? 'nopower' : xpdr.replying ? 'rx' : 'on';
   $('altLamp').classList.toggle('on', xpdr.altAlert);
   $('busSw').checked = xpdr.bus;

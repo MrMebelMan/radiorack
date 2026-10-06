@@ -1,7 +1,8 @@
 // Side panels: status line, external (yoke) controls and the simulation panel.
 import { fmtFreq } from '../core/freq.js';
+import { t, onLang } from './i18n.js';
 
-export const ambWord = v => (v < 15 ? 'night' : v > 85 ? 'sunlight' : v < 50 ? 'dusk' : 'day');
+export const ambWord = v => t(`amb.${v < 15 ? 'night' : v > 85 ? 'sunlight' : v < 50 ? 'dusk' : 'day'}`);
 const KEY_CUTOFF = 80;   // KEY CO default (Installation Manual 190-01182-02 Table 6-4)
 
 export function bindPanel(radio, { $, send, render, audio, positions, messages }) {
@@ -29,7 +30,9 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
     sync();
     gs.oninput = () => { radio.s.flight.gs = +gs.value; radio.save(); sync(); };
     trk.oninput = () => { radio.s.flight.trk = +trk.value; radio.save(); sync(); };
-    run.onclick = () => { radio.setFlying(!radio.flying); run.textContent = radio.flying ? 'Pause' : 'Fly'; run.classList.toggle('down', radio.flying); };
+    const runSync = () => { run.textContent = t(radio.flying ? 'sim.pause' : 'sim.fly'); run.classList.toggle('down', radio.flying); };
+    run.onclick = () => { radio.setFlying(!radio.flying); runSync(); };
+    onLang(runSync);
     $('flightReset').onclick = () => { radio.setStartPos(posSel.value); render(); };
   }
   $('gpsOn').onchange = e => { radio.s.gps = e.target.checked; radio.save(); };
@@ -40,9 +43,9 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
   const amb = $('ambSl');
   const ambSync = () => { amb.value = radio.ambient; $('ambVal').textContent = ambWord(radio.ambient); };
   amb.oninput = () => { radio.ambient = +amb.value; ambSync(); render(); };
-  ambSync();
+  onLang(ambSync);
   const msgSel = $('msgSel');
-  Object.entries(messages).forEach(([id, t]) => msgSel.add(new Option(t.length > 60 ? t.slice(0, 58) + '…' : t, id)));
+  Object.entries(messages).forEach(([id, m]) => msgSel.add(new Option(m.length > 60 ? m.slice(0, 58) + '…' : m, id)));
 
   document.querySelectorAll('[data-sim]').forEach(b => b.addEventListener('click', () => {
     switch (b.dataset.sim) {
@@ -54,7 +57,7 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
       case 'rxStb': audio.incomingCall('stb'); break;
       case 'msg': radio.triggerMessage(msgSel.value); break;
       case 'factory':
-        if (confirm('Reset all settings, user frequencies and recent list?')) { radio.factoryReset(); syncInputs(); }
+        if (confirm(t('panel.confirm.factory'))) { radio.factoryReset(); syncInputs(); }
         break;
     }
     render();
@@ -63,25 +66,20 @@ export function bindPanel(radio, { $, send, render, audio, positions, messages }
   // status line under the radio
   return function renderStatus() {
     const s = radio.s;
-    $('hint').textContent = !radio.switchOn
-      ? 'Radio is OFF. Turn the PWR/VOL knob clockwise (drag up or scroll up) to power on.'
-      : !radio.bus ? (radio.power ? 'Avionics master off: the unit shuts down in a few seconds unless it is switched back on.' : 'Avionics master off. Switch it on to bring the radio back.')
-      : radio.locked ? 'COM is locked to 121.5. Hold COM RMT XFR for 2 s to unlock.' : '';
+    $('hint').textContent = !radio.switchOn ? t('panel.hint.off')
+      : !radio.bus ? t(radio.power ? 'panel.hint.busOffPowered' : 'panel.hint.busOff')
+      : radio.locked ? t('panel.hint.locked') : '';
     const a = radio.audio();
     // nothing to hear without power: the hint line says enough
     $('hearingRow').hidden = a.src === 'off';
     const name = f => { const r = radio.reverse(f); return r ? ` (${r})` : ''; };
-    const txt = {
-      off: 'radio off',
-      tx: `transmitting on ${fmtFreq(a.freq || 0)} (sidetone ${s.sidetone.mode === 'FIXED' ? 'fixed' : 'offset ' + s.sidetone.offset})`,
-      act: `receiving on ACTIVE ${fmtFreq(a.freq || 0)}${name(a.freq)}`,
-      stb: `receiving on STANDBY ${fmtFreq(a.freq || 0)}${name(a.freq)} (monitor)`,
-      static: 'squelch open: background static',
-      quiet: 'quiet (squelched)',
-    }[a.src];
-    const extra = radio.power ? ` · vol ${s.vol}% · speaker ${s.speaker ? 'on' : 'off'} · ICS ${s.ics.on ? 'on' : 'off'}${s.ics.mute && (a.src === 'act' || a.src === 'stb') ? ' (muted on RX)' : ''}${radio.stuck ? ' · STUCK MIC' : ''}` : '';
+    const freq = fmtFreq(a.freq || 0);
+    const sidetone = s.sidetone.mode === 'FIXED' ? t('panel.hear.sidetoneFixed') : t('panel.hear.sidetoneOffset', { offset: s.sidetone.offset });
+    const txt = t(`panel.hear.${a.src}`, { freq, sidetone, name: name(a.freq) });
+    const onOff = v => t(v ? 'sim.on' : 'sim.off');
+    const extra = radio.power ? `${t('panel.hear.extra', { vol: s.vol, speaker: onOff(s.speaker), ics: onOff(s.ics.on) })}${s.ics.mute && (a.src === 'act' || a.src === 'stb') ? t('panel.hear.mutedRx') : ''}${radio.stuck ? ' · STUCK MIC' : ''}` : '';
     const nav = radio.navAudio?.();
-    $('hearing').textContent = txt + extra + (nav ? ` · NAV ident ${nav.ident} (vol ${nav.vol}%)` : '');
+    $('hearing').textContent = txt + extra + (nav ? t('panel.hear.nav', nav) : '');
     $('usbSlot').classList.toggle('inserted', s.usb !== 'none');
     $('busSw').checked = radio.bus;
     // bezel key lighting tracks the photocell and switches off above KEY CO (default 80 %)

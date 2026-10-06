@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KN 64 Simulator</title>
+<title data-i18n="kn64.kn-64-simulator">KN 64 Simulator</title>
 <meta name="description" content="Simulator of the Bendix/King KN 64 DME: distance, ground speed and time to station from real Czech DMEs.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RadioRack">
@@ -16,91 +16,104 @@
 <meta property="og:image:alt" content="Bendix/King KN 64 bezel">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../../shared/style.css">
+<link rel="stylesheet" href="../../shared/topbar.css">
+<script src="../../ui/i18n-boot.js"></script>
 <link rel="stylesheet" href="kn64.css">
 </head>
-<body>
+<body data-page="kn64">
+<nav class="topbar">
+  <a class="back-btn" href="../../" title="Back to the list of simulators" data-i18n-title="common.tip.back-to-the-list-of-simulators"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="common.all-simulators">All simulators</span></a>
+  <div class="lang">
+    <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="langList" aria-label="Language" title="Language" data-i18n-aria="common.tip.language" data-i18n-title="common.tip.language"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><svg class="caret" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="lang-list" id="langList" role="listbox" aria-label="Language" hidden data-i18n-aria="common.tip.language">
+      <div role="option" data-lang="en" tabindex="-1"><img src="../../flags/us.svg" alt=""><span class="code">EN</span><span class="name" lang="en">English</span></div>
+      <div role="option" data-lang="uk" tabindex="-1"><img src="../../flags/ua.svg" alt=""><span class="code">UA</span><span class="name" lang="uk">Українська</span></div>
+      <div role="option" data-lang="cs" tabindex="-1"><img src="../../flags/cz.svg" alt=""><span class="code">CS</span><span class="name" lang="cs">Čeština</span></div>
+      <div role="option" data-lang="sk" tabindex="-1"><img src="../../flags/sk.svg" alt=""><span class="code">SK</span><span class="name" lang="sk">Slovenčina</span></div>
+    </div>
+  </div>
+</nav>
 
 <main>
   <section class="unit-col">
     <header>
-      <a class="back" href="../../" title="Back to the list of simulators">&larr; All simulators</a>
-      <h1>Bendix/King KN 64 DME simulator</h1>
-      <span class="sub">Practice trainer based on the Bendix/King Silver Crown Plus Pilot's Guide (KN 62A and KN 64 DMEs) and the KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7). Standard version 066-1088-00.</span>
-      <span class="sub">Mouse: drag a knob up/down or scroll over it; the outer ring and the center knob are separate. Click the center knob to pull it out or push it in. Drag a slide switch sideways, click where you want it, or scroll on it.</span>
+      <h1 data-i18n="kn64.bendix-king-kn-64-dme-simulator">Bendix/King KN 64 DME simulator</h1>
+      <span class="sub" data-i18n="kn64.practice-trainer-based-on-the-bendix">Practice trainer based on the Bendix/King Silver Crown Plus Pilot's Guide (KN 62A and KN 64 DMEs) and the KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7). Standard version 066-1088-00.</span>
+      <span class="sub" data-i18n="kn64.mouse-drag-a-knob-up-down">Mouse: drag a knob up/down or scroll over it; the outer ring and the center knob are separate. Click the center knob to pull it out or push it in. Drag a slide switch sideways, click where you want it, or scroll on it.</span>
       <nav class="manuals">
-        <a class="manual-btn" data-manual="kn64-pilots-guide" href="../../manuals/kn64-pilots-guide.pdf" target="_blank" rel="noopener" title="Bendix/King Silver Crown Plus Pilot's Guide, KN 62A and KN 64 DMEs (pages 25-26) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="manual-btn" data-manual="kn64-installation-manual" href="../../manuals/kn64-installation-manual.pdf" target="_blank" rel="noopener" title="KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7) — opens in a new window"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="kn64-pilots-guide" href="../../manuals/kn64-pilots-guide.pdf" target="_blank" rel="noopener" title="Bendix/King Silver Crown Plus Pilot's Guide, KN 62A and KN 64 DMEs (pages 25-26)" data-i18n-title="kn64.tip.bendix-king-silver-crown-plus-pilot"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Pilot's Guide</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="manual-btn" data-manual="kn64-installation-manual" href="../../manuals/kn64-installation-manual.pdf" target="_blank" rel="noopener" title="KN 62/62A/64 Installation Manual (006-00144-0007 Rev 7)" data-i18n-title="kn64.tip.kn-62-62a-64-installation-manual"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 0 6.5 24H20v-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Installation Manual</span><svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M19 14v6H4V5h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </header>
     <div class="bezel-wrap" id="bezelWrap">
       <div class="bezel kn" id="bezel">
-        <div class="rim" title="Front panel of the KN 64 DME"></div>
+        <div class="rim" title="Front panel of the KN 64 DME" data-i18n-title="kn64.tip.front-panel-of-the-kn-64"></div>
 
-        <i class="photocell" style="left:26px;top:59px" title="Photocell for automatic dimming: the display brightness follows the cockpit light"></i>
-        <div class="window" id="disp" title="7-segment gas discharge display. FREQ: distance (NM) and the selected frequency (MHZ). GS/T and RMT: distance (NM), ground speed (KT) and time-to-station (MIN). Dashes: the DME is searching (not locked on a ground station)."></div>
-        <i class="hole" style="left:518px;top:62px" title="Hold-down adjustment screw (behind the hole): locks the unit in its mounting rack"></i>
+        <i class="photocell" style="left:26px;top:59px" title="Photocell for automatic dimming: the display brightness follows the cockpit light" data-i18n-title="kn64.tip.photocell-for-automatic-dimming-the-display"></i>
+        <div class="window" id="disp" title="7-segment gas discharge display. FREQ: distance (NM) and the selected frequency (MHZ). GS/T and RMT: distance (NM), ground speed (KT) and time-to-station (MIN). Dashes: the DME is searching (not locked on a ground station)." data-i18n-title="kn64.tip.7-segment-gas-discharge-display-freq"></div>
+        <i class="hole" style="left:518px;top:62px" title="Hold-down adjustment screw (behind the hole): locks the unit in its mounting rack" data-i18n-title="kn64.tip.hold-down-adjustment-screw-behind-the"></i>
 
-        <div class="print c" style="left:545px;top:43px" title="RMT (remote): the DME is channeled from the NAV receiver and shows distance, ground speed and time-to-station">RMT</div>
-        <div class="print c" style="left:604px;top:43px" title="FREQ (frequency): the DME is channeled with its own knobs and shows distance and the selected frequency">FREQ</div>
-        <div class="print c" style="left:665px;top:43px" title="GS/T (ground speed / time-to-station): the DME holds the frequency selected with its own knobs and shows distance, ground speed and time-to-station">GS/T</div>
-        <div class="slide func" id="funcSw" style="left:563px;top:68px" title="Function switch: RMT, FREQ or GS/T. Determines both the information displayed and the channeling source. Drag the slider, click a position or scroll."><i class="slider"></i></div>
+        <div class="print c" style="left:545px;top:43px" title="RMT (remote): the DME is channeled from the NAV receiver and shows distance, ground speed and time-to-station" data-i18n-title="kn64.tip.rmt-remote-the-dme-is-channeled">RMT</div>
+        <div class="print c" style="left:604px;top:43px" title="FREQ (frequency): the DME is channeled with its own knobs and shows distance and the selected frequency" data-i18n-title="kn64.tip.freq-frequency-the-dme-is-channeled">FREQ</div>
+        <div class="print c" style="left:665px;top:43px" title="GS/T (ground speed / time-to-station): the DME holds the frequency selected with its own knobs and shows distance, ground speed and time-to-station" data-i18n-title="kn64.tip.gs-t-ground-speed-time-to">GS/T</div>
+        <div class="slide func" id="funcSw" style="left:563px;top:68px" title="Function switch: RMT, FREQ or GS/T. Determines both the information displayed and the channeling source. Drag the slider, click a position or scroll." data-i18n-title="kn64.tip.function-switch-rmt-freq-or-gs"><i class="slider"></i></div>
 
-        <div class="print c" style="left:838px;top:45px" title="DME: the frequency selector knobs">DME</div>
+        <div class="print c" style="left:838px;top:45px" title="DME: the frequency selector knobs" data-i18n-title="kn64.tip.dme-the-frequency-selector-knobs">DME</div>
         <div class="dual" id="tune">
-          <div class="outer" id="tuneOuter" title="Outer (larger) frequency selector knob: changes the MHz (108 to 117). No effect in GS/T. Drag up/down or scroll."><div class="grip"></div>
-            <div class="inner" id="tuneInner" title="Inner (smaller) frequency selector knob: changes the 0.1 MHz digit. Click to pull it out (adds 0.05 MHz, then tunes 0.05, 0.15, 0.25 ...) or push it in (subtracts 0.05 MHz). No effect in GS/T. Drag up/down or scroll."><div class="grip"></div></div>
+          <div class="outer" id="tuneOuter" title="Outer (larger) frequency selector knob: changes the MHz (108 to 117). No effect in GS/T. Drag up/down or scroll." data-i18n-title="kn64.tip.outer-larger-frequency-selector-knob-changes"><div class="grip"></div>
+            <div class="inner" id="tuneInner" title="Inner (smaller) frequency selector knob: changes the 0.1 MHz digit. Click to pull it out (adds 0.05 MHz, then tunes 0.05, 0.15, 0.25 ...) or push it in (subtracts 0.05 MHz). No effect in GS/T. Drag up/down or scroll." data-i18n-title="kn64.tip.inner-smaller-frequency-selector-knob-changes"><div class="grip"></div></div>
           </div>
         </div>
 
-        <div class="model" style="left:32px;top:124px" title="Bendix/King KN 64 DME">KN 64</div>
-        <div class="logo" style="left:18px;top:150px" title="Bendix/King">BENDIX/KING</div>
-        <div class="print" style="left:528px;top:126px" title="ON/OFF switch: slide left for OFF, right for on">OFF</div>
-        <div class="slide pwr" id="pwrSw" style="left:563px;top:123px" title="ON/OFF switch: left OFF, right on. Drag the slider, click or scroll."><i class="slider"></i></div>
+        <div class="model" style="left:32px;top:124px" title="Bendix/King KN 64 DME" data-i18n-title="kn64.tip.bendix-king-kn-64-dme">KN 64</div>
+        <div class="logo" style="left:18px;top:150px" title="Bendix/King" data-i18n-title="kn64.tip.bendix-king">BENDIX/KING</div>
+        <div class="print" style="left:528px;top:126px" title="ON/OFF switch: slide left for OFF, right for on" data-i18n-title="kn64.tip.on-off-switch-slide-left-for">OFF</div>
+        <div class="slide pwr" id="pwrSw" style="left:563px;top:123px" title="ON/OFF switch: left OFF, right on. Drag the slider, click or scroll." data-i18n-title="kn64.tip.on-off-switch-left-off-right"><i class="slider"></i></div>
       </div>
     </div>
 
     <div class="panel-grid">
       <div class="panel-col">
         <section class="card">
-          <h2>Receivers</h2>
+          <h2 data-i18n="common.receivers">Receivers</h2>
           <div class="field">
-            <label class="lbl-t" for="navSel" title="Frequency of the NAV receiver that channels the DME in RMT (remote channeling is wired to the NAV receiver)">NAV receiver</label>
-            <select id="navSel" title="Frequency of the NAV receiver that channels the DME in RMT (remote channeling is wired to the NAV receiver)"></select>
-            <label class="lbl-t" for="audioOn" title="Simulator sound on/off: the DME station's Morse identifier while locked on">Sound</label>
-            <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off: the DME station's Morse identifier while locked on"></div>
+            <label class="lbl-t" for="navSel" title="Frequency of the NAV receiver that channels the DME in RMT (remote channeling is wired to the NAV receiver)" data-i18n="kn64.nav-receiver" data-i18n-title="kn64.tip.frequency-of-the-nav-receiver-that">NAV receiver</label>
+            <select id="navSel" title="Frequency of the NAV receiver that channels the DME in RMT (remote channeling is wired to the NAV receiver)" data-i18n-title="kn64.tip.frequency-of-the-nav-receiver-that"></select>
+            <label class="lbl-t" for="audioOn" title="Simulator sound on/off: the DME station's Morse identifier while locked on" data-i18n="common.sound" data-i18n-title="kn64.tip.simulator-sound-on-off-the-dme">Sound</label>
+            <div><input type="checkbox" id="audioOn" class="switch" checked title="Simulator sound on/off: the DME station's Morse identifier while locked on" data-i18n-title="kn64.tip.simulator-sound-on-off-the-dme"></div>
           </div>
         </section>
       </div>
 
       <section class="card">
-        <h2>Flight</h2>
+        <h2 data-i18n="common.flight">Flight</h2>
         <div class="field">
-          <label class="lbl-t" for="posSel" title="Where the simulated flight starts">Start position</label>
-          <select id="posSel" title="Where the simulated flight starts"></select>
-          <label class="lbl-t" for="altSl" title="Simulated altitude above mean sea level. The DME needs line of sight to the ground station: on the ground it usually receives nothing.">Altitude</label>
-          <div class="ctl-row"><input type="range" id="altSl" min="0" max="12000" step="100" title="Simulated altitude above mean sea level. The DME needs line of sight to the ground station: on the ground it usually receives nothing."><span id="altVal" class="val"></span></div>
-          <label class="lbl-t" for="gsSl" title="Simulated ground speed">Ground speed</label>
-          <div class="ctl-row"><input type="range" id="gsSl" min="0" max="200" step="5" title="Simulated ground speed"><span id="gsVal" class="val"></span></div>
-          <label class="lbl-t" for="trkSl" title="Simulated ground track">Track (MAG)</label>
-          <div class="ctl-row"><input type="range" id="trkSl" min="0" max="359" step="1" title="Simulated ground track"><span id="trkVal" class="val"></span></div>
-          <span class="lbl-t">Aircraft</span>
+          <label class="lbl-t" for="posSel" title="Where the simulated flight starts" data-i18n="kn64.start-position" data-i18n-title="kn64.tip.where-the-simulated-flight-starts">Start position</label>
+          <select id="posSel" title="Where the simulated flight starts" data-i18n-title="kn64.tip.where-the-simulated-flight-starts"></select>
+          <label class="lbl-t" for="altSl" title="Simulated altitude above mean sea level. The DME needs line of sight to the ground station: on the ground it usually receives nothing." data-i18n="kn64.altitude" data-i18n-title="kn64.tip.simulated-altitude-above-mean-sea-level">Altitude</label>
+          <div class="ctl-row"><input type="range" id="altSl" min="0" max="12000" step="100" title="Simulated altitude above mean sea level. The DME needs line of sight to the ground station: on the ground it usually receives nothing." data-i18n-title="kn64.tip.simulated-altitude-above-mean-sea-level"><span id="altVal" class="val"></span></div>
+          <label class="lbl-t" for="gsSl" title="Simulated ground speed" data-i18n="common.ground-speed" data-i18n-title="common.tip.simulated-ground-speed">Ground speed</label>
+          <div class="ctl-row"><input type="range" id="gsSl" min="0" max="200" step="5" title="Simulated ground speed" data-i18n-title="common.tip.simulated-ground-speed"><span id="gsVal" class="val"></span></div>
+          <label class="lbl-t" for="trkSl" title="Simulated ground track" data-i18n="common.track-mag" data-i18n-title="common.tip.simulated-ground-track">Track (MAG)</label>
+          <div class="ctl-row"><input type="range" id="trkSl" min="0" max="359" step="1" title="Simulated ground track" data-i18n-title="common.tip.simulated-ground-track"><span id="trkVal" class="val"></span></div>
+          <span class="lbl-t" data-i18n="common.aircraft">Aircraft</span>
           <div class="btn-row">
-            <button id="flyBtn" title="Start / pause the simulated flight (the position moves with ground speed and track)">Fly</button>
-            <button id="resetPos" title="Back to the start position">Back to start</button>
+            <button id="flyBtn" title="Start / pause the simulated flight (the position moves with ground speed and track)" data-i18n="common.fly" data-i18n-title="common.tip.start-pause-the-simulated-flight-the">Fly</button>
+            <button id="resetPos" title="Back to the start position" data-i18n="common.back-to-start" data-i18n-title="kn64.tip.back-to-the-start-position">Back to start</button>
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h2>Aircraft</h2>
+        <h2 data-i18n="common.aircraft">Aircraft</h2>
         <div class="field">
-          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on.">Avionics master</label>
-          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on."></div>
-          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically.">Cockpit light</label>
-          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically."><span id="ambVal" class="val"></span></div>
+          <label class="lbl-t" for="busSw" title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n="common.avionics-master" data-i18n-title="common.tip.avionics-master-switch-power-to-the">Avionics master</label>
+          <div><input type="checkbox" id="busSw" class="switch" checked title="Avionics master switch: power to the avionics bus. The unit works only with it on." data-i18n-title="common.tip.avionics-master-switch-power-to-the"></div>
+          <label class="lbl-t" for="ambSl" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n="common.cockpit-light" data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell">Cockpit light</label>
+          <div class="ctl-row"><input type="range" id="ambSl" min="0" max="100" step="1" title="Cockpit light falling on the photocell: from a dark night to direct sunlight. The display brightness follows it automatically." data-i18n-title="common.tip.cockpit-light-falling-on-the-photocell"><span id="ambVal" class="val"></span></div>
         </div>
         <div class="card-foot">
-          <button id="factory" class="btn-danger-quiet" title="Reset the switches, frequencies and flight to the simulator defaults">Reset to defaults</button>
+          <button id="factory" class="btn-danger-quiet" title="Reset the switches, frequencies and flight to the simulator defaults" data-i18n="common.reset-to-defaults" data-i18n-title="kn64.tip.reset-the-switches-frequencies-and-flight">Reset to defaults</button>
         </div>
       </section>
     </div>
@@ -108,29 +121,29 @@
 
   <aside class="help-col">
     <div class="card procs">
-      <h2>Procedures</h2>
-      <details open><summary>Operation</summary>
-        <ul><li>Turn on the unit only after engine start-up, and turn the avionics off before engine shut-down.</li>
-        <li>The 3-position function switch determines both the information displayed and the channeling source.</li></ul></details>
-      <details open><summary>Frequency (FREQ)</summary>
-        <ol><li>Place the function switch on <b>FREQ</b>. The unit is channeled with its own two concentric frequency selection knobs.</li>
-        <li>Smaller knob <b>in</b>: changes the 0.1 MHz digit (0.0, 0.1, 0.2 ...). Pulled <b>out</b>: adds 0.05 MHz and tunes in 0.1 MHz steps (0.05, 0.15, 0.25 ...). Pushing it in subtracts 0.05 MHz.</li>
-        <li>The outer, larger knob changes the larger digits (1 MHz, 10 MHz).</li>
-        <li>The unit displays distance and the selected frequency.</li></ol></details>
-      <details open><summary>Groundspeed / Time-to-Station (GS/T)</summary>
-        <ol><li>Move the function switch to <b>GS/T</b>. The unit holds the internally selected frequency and displays distance, groundspeed and time-to-station.</li>
-        <li>Rotating the frequency selector has no effect (Frequency Hold): this prevents accidental rechanneling when the frequency is not displayed.</li>
-        <li>After power-on (or a momentary power interruption) in GS/T, the unit shows dashes and stays in search: switch to FREQ or RMT to re-establish normal operation.</li></ol></details>
-      <details open><summary>Remote (RMT)</summary>
-        <ol><li>Place the function switch in <b>RMT</b>. The DME is channeled when you select your NAV frequency on the NAV receiver.</li>
-        <li>Search time is usually about one second. When locked on a ground station, it displays distance, groundspeed and time-to-station.</li>
-        <li>Prior to lock-on, dashes are displayed.</li>
-        <li>You have two frequencies available at all times: one selected on the NAV receiver, one with the unit's own knobs.</li></ol></details>
-      <details><summary>Operational notes</summary>
-        <ul><li>The audio output identifies the DME ground station being received.</li>
-        <li>The distance is slant range, not ground distance; the difference is negligible when the range is three times the altitude or more.</li>
-        <li>Groundspeed (0 to 999 kt) is the rate of change of the slant range: accurate only tracking directly to or from the station. Time-to-station is accurate only tracking directly to the station.</li>
-        <li>On the ground the DME usually receives nothing (line of sight). After losing the signal it keeps the last reading for 11 to 15 seconds.</li></ul></details>
+      <h2 data-i18n="common.procedures">Procedures</h2>
+      <details open><summary data-i18n="kn64.operation">Operation</summary>
+        <ul><li data-i18n="kn64.turn-on-the-unit-only-after">Turn on the unit only after engine start-up, and turn the avionics off before engine shut-down.</li>
+        <li data-i18n="kn64.the-3-position-function-switch-determines">The 3-position function switch determines both the information displayed and the channeling source.</li></ul></details>
+      <details open><summary data-i18n="kn64.frequency-freq">Frequency (FREQ)</summary>
+        <ol><li data-i18n-html="kn64.place-the-function-switch-on-freq">Place the function switch on <b>FREQ</b>. The unit is channeled with its own two concentric frequency selection knobs.</li>
+        <li data-i18n-html="kn64.smaller-knob-in-changes-the-0">Smaller knob <b>in</b>: changes the 0.1 MHz digit (0.0, 0.1, 0.2 ...). Pulled <b>out</b>: adds 0.05 MHz and tunes in 0.1 MHz steps (0.05, 0.15, 0.25 ...). Pushing it in subtracts 0.05 MHz.</li>
+        <li data-i18n="kn64.the-outer-larger-knob-changes-the">The outer, larger knob changes the larger digits (1 MHz, 10 MHz).</li>
+        <li data-i18n="kn64.the-unit-displays-distance-and-the">The unit displays distance and the selected frequency.</li></ol></details>
+      <details open><summary data-i18n="kn64.groundspeed-time-to-station-gs-t">Groundspeed / Time-to-Station (GS/T)</summary>
+        <ol><li data-i18n-html="kn64.move-the-function-switch-to-gs">Move the function switch to <b>GS/T</b>. The unit holds the internally selected frequency and displays distance, groundspeed and time-to-station.</li>
+        <li data-i18n="kn64.rotating-the-frequency-selector-has-no">Rotating the frequency selector has no effect (Frequency Hold): this prevents accidental rechanneling when the frequency is not displayed.</li>
+        <li data-i18n="kn64.after-power-on-or-a-momentary">After power-on (or a momentary power interruption) in GS/T, the unit shows dashes and stays in search: switch to FREQ or RMT to re-establish normal operation.</li></ol></details>
+      <details open><summary data-i18n="kn64.remote-rmt">Remote (RMT)</summary>
+        <ol><li data-i18n-html="kn64.place-the-function-switch-in-rmt">Place the function switch in <b>RMT</b>. The DME is channeled when you select your NAV frequency on the NAV receiver.</li>
+        <li data-i18n="kn64.search-time-is-usually-about-one">Search time is usually about one second. When locked on a ground station, it displays distance, groundspeed and time-to-station.</li>
+        <li data-i18n="kn64.prior-to-lock-on-dashes-are">Prior to lock-on, dashes are displayed.</li>
+        <li data-i18n="kn64.you-have-two-frequencies-available-at">You have two frequencies available at all times: one selected on the NAV receiver, one with the unit's own knobs.</li></ol></details>
+      <details><summary data-i18n="kn64.operational-notes">Operational notes</summary>
+        <ul><li data-i18n="kn64.the-audio-output-identifies-the-dme">The audio output identifies the DME ground station being received.</li>
+        <li data-i18n="kn64.the-distance-is-slant-range-not">The distance is slant range, not ground distance; the difference is negligible when the range is three times the altitude or more.</li>
+        <li data-i18n="kn64.groundspeed-0-to-999-kt-is">Groundspeed (0 to 999 kt) is the rate of change of the slant range: accurate only tracking directly to or from the station. Time-to-station is accurate only tracking directly to the station.</li>
+        <li data-i18n="kn64.on-the-ground-the-dme-usually">On the ground the DME usually receives nothing (line of sight). After losing the signal it keeps the last reading for 11 to 15 seconds.</li></ul></details>
     </div>
   </aside>
 </main>

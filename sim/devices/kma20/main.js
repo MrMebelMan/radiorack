@@ -1,5 +1,6 @@
 // KMA 20 page entry: builds the audio panel, its toggles and the simulation panels.
 import '../../ui/manuals.js';
+import { t, onLang } from '../../ui/i18n.js';
 import { KMA20, NAV_LIST, ADF_LIST, DME_LIST, stationKey } from './device.js';
 import { createSound } from './sound.js';
 import { bindControls, fitBezel } from '../../ui/controls.js';
@@ -101,7 +102,7 @@ function sync() {
   $('ambSl').value = sim().ambient; $('ambVal').textContent = ambWord(sim().ambient);
   $('gsSl').value = sim().gs; $('gsVal').textContent = `${sim().gs} kt`;
 }
-sync();
+onLang(sync);   // also relabels the cockpit light value after a language change
 for (const [id, k] of Object.entries(SEL)) $(id).onchange = e => { kma.s.tune[k] = k.startsWith('COM') ? +e.target.value : e.target.value; kma.save(); render(); };
 $('apprSel').onchange = e => { kma.s.appr = e.target.value; kma.save(); render(); };
 $('headSw').onchange = e => { sim().headset = e.target.checked; kma.save(); render(); };
@@ -113,17 +114,17 @@ $('busSw').onchange = e => { kma.setAircraftPower(e.target.checked); render(); }
 document.querySelectorAll('[data-call]').forEach(b => {
   b.onclick = () => { const i = b.dataset.call === 'COM1' ? 0 : 1; kma.simulateCall(b.dataset.call, sound.clipMs(i), i); render(); };
 });
-$('factory').onclick = () => { if (confirm('Reset the switches, tuned stations and approach to the simulator defaults?')) { kma.factoryReset(); sync(); render(); } };
+$('factory').onclick = () => { if (confirm(t('kma20.confirm.factory'))) { kma.factoryReset(); sync(); render(); } };
 
-const list = a => (a.length ? a.map(k => NAME[k]).join(', ') : 'nothing');
+const list = a => (a.length ? a.map(k => NAME[k]).join(', ') : t('kma20.hear.nothing'));
 function renderPanel() {
-  $('hint').textContent = !kma.bus ? 'Avionics master off.' : '';
+  $('hint').textContent = !kma.bus ? t('sim.busOff') : '';
   $('hearingRow').hidden = !kma.power;
   const m = kma.mix();
   if (m.power) {
-    const spk = m.ext ? `EXT speaker: ${list(m.speaker)}` : `Speaker: ${list(m.speaker)}`;
-    const tx = m.tx ? (m.tx === 'EXT' ? ' · microphone on the EXT speaker' : ` · transmitting on ${NAME[m.tx]}`) : '';
-    $('hearing').textContent = `${spk}${m.muted && m.speaker.length ? ' (muted)' : ''} · Phones: ${list(m.phone)}${tx}`;
+    const spk = t(m.ext ? 'kma20.hear.ext' : 'kma20.hear.speaker', { list: list(m.speaker) });
+    const tx = m.tx ? (m.tx === 'EXT' ? t('kma20.hear.micExt') : t('kma20.hear.tx', { name: NAME[m.tx] })) : '';
+    $('hearing').textContent = `${spk}${m.muted && m.speaker.length ? t('kma20.hear.muted') : ''}${t('kma20.hear.phones', { list: list(m.phone) })}${tx}`;
     const routed = new Set([...(m.muted || m.ext ? [] : m.speaker), ...m.phone]);
     const hearing = ['COM1', 'COM2', 'MKR'].some(k => routed.has(k) && m.inputs[k]);
     $('statusBar').dataset.state = m.tx ? 'tx' : hearing ? 'rx' : 'on';
@@ -132,7 +133,7 @@ function renderPanel() {
   $('busSw').checked = kma.bus;
   if (document.activeElement !== $('distSl')) $('distSl').value = kma.dist;
   $('distVal').textContent = `${kma.dist.toFixed(2)} NM`;
-  $('flyBtn').textContent = kma.flying ? 'Pause' : 'Fly';
+  $('flyBtn').textContent = t(kma.flying ? 'sim.pause' : 'sim.fly');
   $('flyBtn').classList.toggle('down', kma.flying);
 }
 

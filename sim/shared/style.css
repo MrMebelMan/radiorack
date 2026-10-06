@@ -29,8 +29,6 @@ body {
 }
 header { padding: 0 0 12px; }
 header h1 { margin: 0; font-size: 20px; font-weight: 600; }
-header .back { display: inline-block; margin-bottom: 4px; color: var(--muted); font-size: 12px; text-decoration: none; }
-header .back:hover { color: var(--accent); }
 header .sub { display: block; color: var(--muted); font-size: 12px; }
 .manuals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .manual-btn {
