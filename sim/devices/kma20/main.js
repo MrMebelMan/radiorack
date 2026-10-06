@@ -27,18 +27,40 @@ const toggles = [...document.querySelectorAll('.tgl')];
 for (const t of toggles) t.innerHTML = '<i class="nut"></i><i class="lever"></i><i class="ball"></i>';
 const send = (evt, arg) => { kma.input(evt, arg); render(); };
 const half = (el, e) => (e.clientY < el.getBoundingClientRect().top + el.getBoundingClientRect().height / 2 ? 1 : -1);
+// Mouse: a press acts on the half pressed. Touch: swipe up / down moves the lever one position per SWIPE_PX,
+// and a tap without movement acts on the half tapped when the finger lifts.
+const SWIPE_PX = 14;
+function bindToggle(el, move, release = () => {}) {
+  let st = null;
+  el.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    e.preventDefault(); el.setPointerCapture(e.pointerId);
+    if (e.pointerType === 'mouse') { move(half(el, e)); return; }
+    st = { y: e.clientY, half: half(el, e), swiped: false };
+  });
+  el.addEventListener('pointermove', e => {
+    if (!st) return;
+    while (Math.abs(e.clientY - st.y) >= SWIPE_PX) {
+      const dir = e.clientY < st.y ? 1 : -1;
+      st.y -= dir * SWIPE_PX; st.swiped = true;
+      move(dir);
+    }
+  });
+  const end = e => {
+    if (st && !st.swiped && e.type === 'pointerup') move(st.half);
+    st = null;
+    release();
+  };
+  el.addEventListener('pointerup', end);
+  el.addEventListener('pointercancel', end);
+}
 for (const t of toggles.filter(t => t.dataset.sw)) {
-  t.addEventListener('pointerdown', e => { if (e.button === 0) { e.preventDefault(); send('sw', [t.dataset.sw, half(t, e)]); } });
+  bindToggle(t, dir => send('sw', [t.dataset.sw, dir]));
   t.addEventListener('wheel', e => { e.preventDefault(); send('sw', [t.dataset.sw, e.deltaY < 0 ? 1 : -1]); }, { passive: false });
 }
-// MKR: HI up, LO center, TEST down while held (momentary)
+// MKR: HI up, LO center, TEST down while held (momentary). A tap on the lower half at LO is a short TEST.
 const mkr = $('mkrSw');
-mkr.addEventListener('pointerdown', e => {
-  if (e.button !== 0) return;
-  e.preventDefault(); mkr.setPointerCapture(e.pointerId);
-  send('mkr', half(mkr, e));
-});
-for (const ev of ['pointerup', 'pointercancel']) mkr.addEventListener(ev, () => { if (kma.test) send('mkrUp'); });
+bindToggle(mkr, dir => send('mkr', dir), () => { if (kma.test) send('mkrUp'); });
 mkr.addEventListener('wheel', e => { e.preventDefault(); if (e.deltaY < 0) send('mkr', 1); else if (kma.s.hi) send('mkr', -1); }, { passive: false });
 
 const controls = bindControls(kma, render, {
