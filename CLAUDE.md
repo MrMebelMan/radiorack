@@ -14,7 +14,7 @@ A local web app with simulators of avionics units (Garmin, Trig, Becker, King, B
 - Serve: `python3 sim/serve.py` → http://localhost:8225. It sends no-cache headers, so a normal reload picks up edits. ES modules don't load over `file://`.
 - Test: `npm test` (or `cd sim && node --test`) runs `sim/test/*.test.mjs` headless, against the device classes.
 - Lint: `npm run lint` (Biome, config `biome.json`, formatter off). On NixOS the npm binary doesn't run: `BIOME_BINARY=$(nix shell nixpkgs#biome -c sh -c 'readlink -f $(which biome)') npm run lint`.
-- Deploy: GitHub Actions `.github/workflows/ci.yml` lints and tests, then `wrangler deploy` (`wrangler.jsonc`, Cloudflare Workers static assets serving `sim/`) to radiorack.dr1v3.cz on master. Not served: `sim/.assetsignore`. Headers: `sim/_headers`. Setup in README "Deploying".
+- Deploy: GitHub Actions `.github/workflows/ci.yml` lints and tests, then `wrangler deploy` (`wrangler.jsonc`, Cloudflare Workers static assets serving `sim/`) on master. The domain radiorack.dr1v3.cz is attached to the Worker in the Cloudflare dashboard, not in `wrangler.jsonc`, so the deploy token has no DNS access. Not served: `sim/.assetsignore`. Headers: `sim/_headers`. Setup in README "Deploying".
 - The PDF can be read with poppler via nix: `nix shell nixpkgs#poppler-utils -c pdftotext -layout GTR225.pdf out.txt`. Write output to the scratchpad, not the repo.
 - The user does the visual testing in the browser. Don't take screenshots for that unless asked. Functional checks over CDP (e.g. reading the LCD text) are fine.
 - In this shell `rm` is aliased to prompt for confirmation. Use `rm -f`.

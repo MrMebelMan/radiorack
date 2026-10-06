@@ -96,8 +96,9 @@ The site is plain static files, served by Cloudflare (Workers static assets) at 
 
 One-time setup in the GitHub repo settings:
 
-- Secret `CLOUDFLARE_API_TOKEN`: a Cloudflare API token from the "Edit Cloudflare Workers" template, with the `dr1v3.cz` zone included (it creates the `radiorack` DNS record).
+- Secret `CLOUDFLARE_API_TOKEN`: a Cloudflare API token from the "Edit Cloudflare Workers" template. It needs no DNS permissions.
 - Secret `CLOUDFLARE_ACCOUNT_ID`: the account ID from the Cloudflare dashboard.
+- After the first deploy, attach the domain once in the Cloudflare dashboard: Workers & Pages → `radiorack` → Settings → Domains & Routes → Add → Custom domain → `radiorack.dr1v3.cz`. Cloudflare creates the DNS record and the certificate.
 - Optional variable `SELF_HOST_MANUALS`: unset, the deployed manual buttons open each manual's public source (`sim/data/manuals.js`) and the PDFs aren't uploaded. Set it to `true` to serve the PDFs from `sim/manuals/` instead. Locally they're always served from `sim/manuals/` (`sim/config.js`).
 
 ## Adding a unit

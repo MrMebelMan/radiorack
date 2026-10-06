@@ -1,9 +1,10 @@
 // Cloudflare Workers static assets: sim/ is served as-is, no Worker script.
+// The domain radiorack.dr1v3.cz is attached once in the dashboard (Worker > Settings > Domains & Routes),
+// so the deploy token needs no access to the dr1v3.cz zone.
 {
   "name": "radiorack",
   "compatibility_date": "2026-10-05",
   "assets": { "directory": "./sim" },
-  "routes": [{ "pattern": "radiorack.dr1v3.cz", "custom_domain": true }],
   "workers_dev": false,
   "preview_urls": false
 }

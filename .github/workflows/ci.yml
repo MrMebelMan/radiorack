@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -47,7 +47,7 @@ jobs:
   deploy:
     needs: check
     if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment:
       name: production
       url: https://radiorack.dr1v3.cz
@@ -64,9 +64,15 @@ jobs:
           sed -i 's/^export const SELF_HOST_MANUALS = true;$/export const SELF_HOST_MANUALS = false;/' sim/config.js
           grep -q '^export const SELF_HOST_MANUALS = false;$' sim/config.js
           echo 'manuals/' >> sim/.assetsignore
-      - uses: cloudflare/wrangler-action@v4
+      - uses: actions/setup-node@v7
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4.147.0'
-          command: deploy
+          node-version: 24
+      # wrangler decorates its output with emoji; strip non-ASCII from the log.
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: 'false'
+        run: |
+          set -o pipefail
+          npx --yes wrangler@4.147.0 deploy 2>&1 | perl -pe 's/[^\x00-\x7F]//g'

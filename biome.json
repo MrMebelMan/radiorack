@@ -7,7 +7,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "a11y": { "useButtonType": "off", "useSemanticElements": "off" },
       "complexity": { "useOptionalChain": "off", "noAdjacentSpacesInRegex": "off" },
       "correctness": { "noUnusedFunctionParameters": "off" },
