@@ -1,7 +1,6 @@
 // Czech: landing page (index.html).
 export default {
-  'landing.avionics-simulators-for-practice-outside-the': 'Simulátory avioniky pro nácvik mimo kokpit, postavené podle příruček výrobců. Vyberte jednotku.',
-  'landing.open-simulator': 'Otevřít simulátor',
+  'landing.avionics-simulators-for-practice-outside-the': 'Simulátory avioniky pro nácvik mimo kabinu, postavené podle příruček výrobců. Vyberte jednotku.',
   'landing.tip.gtr-225a-bezel': 'Čelní panel GTR 225A',
   'landing.vhf-com-transceiver-with-8-33': 'VKV radiostanice COM s rozestupem 8.33 kHz, interkomem, časovači a databází frekvencí.',
   'landing.tip.gnc-255a-bezel': 'Čelní panel GNC 255A',

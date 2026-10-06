@@ -1,7 +1,6 @@
 // Ukrainian: landing page (index.html).
 export default {
   'landing.avionics-simulators-for-practice-outside-the': 'Симулятори авіоніки для тренування поза кабіною, створені за посібниками виробників. Оберіть блок.',
-  'landing.open-simulator': 'Відкрити симулятор',
   'landing.tip.gtr-225a-bezel': 'Передня панель GTR 225A',
   'landing.vhf-com-transceiver-with-8-33': 'УКХ радіостанція COM з кроком 8.33 кГц, інтеркомом, таймерами і базою частот.',
   'landing.tip.gnc-255a-bezel': 'Передня панель GNC 255A',

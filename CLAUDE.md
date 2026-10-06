@@ -1,7 +1,7 @@
 # RadioRack
 
 A local web app with simulators of avionics units (Garmin, Trig, Becker, King, Bendix/King), so the owner can practice operating them outside the cockpit.
-- Landing page: `sim/index.html`, one card per simulator.
+- Landing page: `sim/index.html`, one card per simulator; the whole card is the link to it.
 - **GTR 225A** (VHF COM): source of truth `sim/manuals/gtr225-pilots-guide.pdf` (190-01182-00 Rev D, SW v2.10; same file as `GTR225.pdf`).
 - **GNC 255A** (NAV/COM): source of truth `sim/manuals/gnc255-pilots-guide.pdf` (190-01182-01 Rev E).
 - **Trig TT31** (Mode S transponder): source of truth `sim/manuals/tt31-operating-manual.pdf` (00454-00-AF, same file as `XPDR TT31 Operating Handbook.pdf`) and `tt31-installation-manual.pdf` (00455-00-AR). Its screens are copied from user photos of the real unit (boot, main, FLIGHT TIME, TIMER, ALTITUDE MONITOR, squawk entry).
