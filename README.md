@@ -65,7 +65,7 @@ Open <http://localhost:8225> and pick a unit.
 - **Move a slide switch:** drag it sideways, click where you want it, or scroll over it (KN 64).
 - **Press a key:** click it. Hold it for a long press where the unit has one.
 - **Keep a key pressed:** right-click it (GTX 328), click again to release.
-- **Flip a toggle switch:** click its upper or lower half, or scroll over it (KMA 20).
+- **Flip a toggle switch:** click its upper or lower half, or scroll over it (KMA 20). On a touch screen, swipe it up or down, or tap a half.
 - **Hover anything** for a tooltip that says what it does.
 
 Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, switch off the avionics master, set the GPS position, fly a track or an ILS approach, set the altitude, tune the NAV receiver that channels the DME, tune the receivers behind the audio panel, put the headset on, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
