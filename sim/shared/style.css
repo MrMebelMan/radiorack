@@ -187,6 +187,8 @@ select { background: var(--panel-2); color: var(--text); border: 1px solid #3a43
 .bezel .dual .outer::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.07); opacity: 0; pointer-events: none; }
 .bezel .dual .outer:hover:not(:has(.inner:hover))::after { opacity: 1; }
 .bezel .dual .inner { z-index: 1; }
+/* touch screens: the outer ring is a few px wide at phone scale, so it also takes touches just outside its edge */
+@media (pointer: coarse) { .bezel .dual .outer::before { content: ""; position: absolute; inset: -18px; border-radius: 50%; } }
 .bezel .key:active, .bezel .key.down { filter: none; }
 .key:active, .key.down { transform: translateY(1px); box-shadow: 0 1px 2px rgba(0,0,0,.7); background: #1e1d1b; }
 .key.flip { display: flex; align-items: center; justify-content: center; }
