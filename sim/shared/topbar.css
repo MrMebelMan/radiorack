@@ -14,6 +14,8 @@ html.i18n-pending body { visibility: hidden; }   /* until ui/i18n.js has transla
 }
 .topbar .back-btn:hover, .lang-btn:hover, .lang-btn[aria-expanded="true"] { border-color: var(--accent); background: #2b3542; }
 .topbar .back-btn:focus-visible, .lang-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.topbar .nav-title { display: none; flex: 1; min-width: 0; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 1001px) { .topbar .nav-title { display: block; } }   /* = the two-column layout of shared/style.css; its header hides the h1 there */
 .topbar .brand { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: .2px; }
 .topbar .back-btn svg { color: var(--accent); flex: none; }
 

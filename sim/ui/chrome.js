@@ -1,5 +1,6 @@
 // The navbar and footer shared by every page, filled into the page's placeholders:
-//   <nav class="topbar" data-back></nav>  device pages: back button to the landing page, then the language picker
+//   <nav class="topbar" data-back></nav>  device pages: back button to the landing page, the page's <h1> (shown on wide
+//                                         screens, where the header hides it), then the language picker
 //   <nav class="topbar">…</nav>           landing page: its own content (the title), then the language picker
 //   <footer class="site-foot"></footer>   contact line
 // Imported by ui/i18n.js before it translates the page and binds the picker. Runs on import.
@@ -16,6 +17,14 @@ const picker = `<div class="lang">
 const footer = `<span data-i18n="common.footer-contact">Bug reports, suggestions, or a unit you'd like added:</span> <a href="mailto:${CONTACT}">${CONTACT}</a>`;
 
 const nav = document.querySelector('nav.topbar');
-if (nav) nav.insertAdjacentHTML('beforeend', (nav.hasAttribute('data-back') ? back : '') + picker);
+if (nav) {
+  nav.insertAdjacentHTML('beforeend', (nav.hasAttribute('data-back') ? back : '') + picker);
+  const h1 = nav.hasAttribute('data-back') && document.querySelector('main header h1');
+  if (h1) {   // same text and translation key as the header title
+    const title = Object.assign(document.createElement('span'), { className: 'nav-title', textContent: h1.textContent });
+    if (h1.dataset.i18n) title.dataset.i18n = h1.dataset.i18n;
+    nav.querySelector('.lang').before(title);
+  }
+}
 const foot = document.querySelector('footer.site-foot');
 if (foot) foot.innerHTML = footer;

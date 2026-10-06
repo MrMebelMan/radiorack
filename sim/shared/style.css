@@ -29,6 +29,7 @@ body {
 }
 header { padding: 0 0 12px; }
 header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+@media (min-width: 1001px) { header h1 { display: none; } }   /* wide screens: the title is in the navbar (ui/chrome.js) */
 header .sub { display: block; color: var(--muted); font-size: 12px; }
 .manuals { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .manual-btn {
