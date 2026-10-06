@@ -18,14 +18,17 @@ export const PAGES = {
 };
 
 const W = 1200, H = 630;
+// a light slate background so the black bezels stand out; the previews carry a 2 px strip of the page background, cropped here
 const html = (img, cap, sub) => `<!doctype html><html><head><style>
-  html, body { margin: 0; width: ${W}px; height: ${H}px; background: #15181d; overflow: hidden; }
-  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #dfe4ea; }
-  img { max-width: 1080px; max-height: 410px; border-radius: 6px; box-shadow: 0 16px 40px rgba(0,0,0,.55); }
-  h1 { margin: 0; font-size: 50px; font-weight: 600; letter-spacing: .3px; }
-  p { margin: -16px 0 0; font-size: 26px; color: #9aa4b1; }
-</style></head><body><img src="${BASE}/previews/${img}.png"><h1>${cap}</h1><p>${sub}</p></body></html>`;
+  html, body { margin: 0; width: ${W}px; height: ${H}px; overflow: hidden; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 50% 35%, #7d8a99, #5b6676 70%, #4c5664);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #fff; }
+  .unit { overflow: hidden; border-radius: 6px; box-shadow: 0 18px 44px rgba(0,0,0,.5); line-height: 0; }
+  .unit img { margin: -2px; max-width: 1040px; max-height: 330px; }
+  h1 { margin: 52px 0 0; font-size: 72px; font-weight: 700; line-height: 1; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  p { margin: 16px 0 0; font-size: 34px; line-height: 1; color: #e3e8ee; }
+</style></head><body><div class="unit"><img src="${BASE}/previews/${img}.png"></div><h1>${cap}</h1><p>${sub}</p></body></html>`;
 
 const pages = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(PAGES);
 const b = await open({ width: W, height: H });
