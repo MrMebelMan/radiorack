@@ -52,6 +52,13 @@ main {
   align-items: start;
 }
 @media (max-width: 1000px) { main { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 1001px) {
+  /* the unit column is no wider than the bezel gets (--bezel-max, set by fitBezel), so the status line and panels
+     line up with it; spare width goes to the margins. Procedures run down to the bottom of the unit column. */
+  main { grid-template-columns: minmax(0, var(--bezel-max, 1fr)) clamp(360px, 27vw, 560px); justify-content: center; }
+  .help-col { align-self: stretch; display: flex; flex-direction: column; }
+  .help-col > .procs { flex: 1; }
+}
 .help-col > .card:first-child, .help-col > .manuals { margin-top: 0; }
 @media (max-width: 600px) { main { padding: 10px 16px 30px; } }
 

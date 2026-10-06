@@ -194,7 +194,10 @@ export function fitBezel(bezel, wrap, { width, height, maxScale = 1.25, maxViewp
     const vh = probe.offsetHeight || document.documentElement.clientHeight;
     const top = wrap.getBoundingClientRect().top + window.scrollY;
     const maxH = vh < SHORT_SCREEN ? Math.max(vh * maxViewport, vh - top - 12) : vh * maxViewport;
-    const s = Math.min(maxScale, wrap.clientWidth / (width + 6), maxH / (height + 6));
+    const sMax = Math.min(maxScale, maxH / (height + 6));
+    const s = Math.min(sMax, wrap.clientWidth / (width + 6));
+    // the widest the bezel gets: the page grid keeps the unit column (and the panels under the bezel) to it
+    document.documentElement.style.setProperty('--bezel-max', `${Math.ceil((width + 6) * sMax)}px`);
     bezel.style.transform = `scale(${s})`;
     wrap.style.height = `${(height + 6) * s}px`;
   };
