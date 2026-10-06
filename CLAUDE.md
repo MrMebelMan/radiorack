@@ -21,7 +21,7 @@ A local web app with simulators of avionics units (Garmin, Trig, Becker, King, B
 
 ## Layout (`sim/`)
 Plain ES modules with no build step. The layers depend downward only: `devices` → `com` / `nav` / `ui` → `core`.
-- `index.html` plus `shared/landing.css`: the landing page. `previews/*.png` are powered-on bezel screenshots, captured with headless Chrome.
+- `index.html` plus `shared/landing.css`: the landing page. `previews/*.png` are powered-on bezel screenshots, captured with headless Chrome, for the README; the landing page uses the `previews/*.webp` copies (quality 85, about 7x smaller), and only those are deployed.
 - `shared/style.css`: the page shell, panels, LCD and base bezel. The LCD uses the bundled pixel font `fonts/jersey15.woff2` (OFL).
 - `core/`: device-independent helpers.
   - `util.js` (range/wrap/clamp, the `S()` display segment)

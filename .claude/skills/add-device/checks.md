@@ -27,7 +27,7 @@ magick out.png -crop WxH+X+Y -scale 300% zoom.png   # details: corners, knobs, d
 Look at it. Fix differences before reporting.
 
 ## Landing preview — `scripts/preview.mjs`
-`S=$S node .claude/skills/add-device/scripts/preview.mjs <device> [power-on js]` writes `sim/previews/<device>.png` (powered-on bezel). The power-on JS turns the unit on the way a user would (e.g. scroll the volume knob); default sends wheel events to the first `.knob` and waits 4 s.
+`S=$S node .claude/skills/add-device/scripts/preview.mjs <device> [power-on js]` writes `sim/previews/<device>.png` (README) and `.webp` (landing page) (powered-on bezel). The power-on JS turns the unit on the way a user would (e.g. scroll the volume knob); default sends wheel events to the first `.knob` and waits 4 s.
 
 ## Display vs the native manual figures
 For a dot-matrix display with native-resolution figures: load each figure's values into the device, render with the pure bitmap function (`gtxBitmap`) and diff against the thresholded figure dot for dot; only live values may differ.
