@@ -130,7 +130,6 @@ input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); }
 .panel-grid .card .field + .card-foot { margin-top: 14px; }
 .btn-danger-quiet { background: transparent; border-color: #6e2e2e; color: #f0a3a3; }
 .btn-danger-quiet:hover { background: #5a1f1f; border-color: #f85149; color: #fff; }
-.unit-col > .manuals { margin-top: 12px; }   /* last in the unit column: bottom on desktop, right above Procedures on a phone */
 button {
   background: var(--panel-2); color: var(--text);
   border: 1px solid #3a4350; border-radius: 8px;
