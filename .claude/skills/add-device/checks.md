@@ -4,7 +4,7 @@ The server must be running: `python3 sim/serve.py` (http://localhost:8225, no-ca
 Scripts live in `.claude/skills/add-device/scripts/` and need `chromium` on PATH. Run them from the repo root with `S=<scratchpad dir>`; they write screenshots and Chromium profiles there.
 
 ## Tests
-`cd sim && node --test` — every suite must stay green. The manual replay suite drives the device directly: it must call `tick()` / advance a fake clock itself (the page ticks every 50 ms; tests don't).
+`npm test` (or `cd sim && node --test`) — every suite must stay green, and `npm run lint` must be clean (NixOS: see CLAUDE.md for `BIOME_BINARY`). The manual replay suite drives the device directly: it must call `tick()` / advance a fake clock itself (the page ticks every 50 ms; tests don't).
 
 ## LCD / functional walk — `scripts/lcd-check.mjs`
 `S=$S node .claude/skills/add-device/scripts/lcd-check.mjs <device> steps.json`
