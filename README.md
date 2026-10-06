@@ -1,6 +1,6 @@
 # RadioRack
 
-Avionics simulators for training on the ground before you fly.
+Avionics simulators for practice outside the cockpit.
 
 Every unit here behaves the way its manual says it does: the same keys, the same knob pushes, the same menus, the same screens. You turn knobs with the mouse, hear the radio, and work through the real procedures until your fingers know them.
 
@@ -70,7 +70,9 @@ Open <http://localhost:8225> and pick a unit.
 
 Under each unit there are panels for the things that happen *outside* the radio: the cockpit light on the photocell, hold PTT, make a station call you on the active or standby frequency, switch off the avionics master, set the GPS position, fly a track or an ILS approach, set the altitude, tune the NAV receiver that channels the DME, tune the receivers behind the audio panel, put the headset on, raise a fault. On the right there's a cheat sheet of the procedures from the manual, and the manuals themselves are one click away.
 
-Settings, frequencies and stored channels are kept in your browser.
+The web pages come in English, Ukrainian, Czech and Slovak: pick a language with the flag in the top bar (the first visit follows your browser's language). The units themselves stay in English, exactly as their displays and labels read in the cockpit.
+
+Settings, frequencies, stored channels and the language are kept in your browser.
 
 ## How faithful is it?
 
@@ -107,4 +109,4 @@ There's a Claude Code skill for it in [`.claude/skills/add-device/`](.claude/ski
 
 ## Credits
 
-The manuals in `sim/manuals/` belong to Garmin, Trig Avionics, Becker Avionics and Honeywell (Bendix/King) and are included for reference; `sim/data/manuals.js` lists where each one was downloaded from. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`).
+The manuals in `sim/manuals/` belong to Garmin, Trig Avionics, Becker Avionics and Honeywell (Bendix/King) and are included for reference; `sim/data/manuals.js` lists where each one was downloaded from. The bundled fonts — Jersey 15, Barlow Semi Condensed and Nunito — are under the SIL Open Font License (see `sim/fonts/`). The flags in `sim/flags/` are from [flag-icons](https://github.com/lipis/flag-icons) (MIT), with the official colors.
