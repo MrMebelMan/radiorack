@@ -41,7 +41,8 @@ export async function open({ width = 1500, height = 1000, port = 9300 + Math.flo
     async hold(sel, ms) { const c = await center(sel); await mouse('mousePressed', c); await sleep(ms); await mouse('mouseReleased', c); await sleep(120); },
     async shot(out, sel = '#bezel') {
       const r = JSON.parse(await ev(`JSON.stringify(document.querySelector(${JSON.stringify(sel)}).getBoundingClientRect())`));
-      const s = await send('Page.captureScreenshot', { format: 'png', clip: { x: r.x - 2, y: r.y - 2, width: r.width + 4, height: r.height + 4, scale: 1 } });
+      const format = out.endsWith('.webp') ? 'webp' : 'png';
+      const s = await send('Page.captureScreenshot', { format, ...(format === 'webp' && { quality: 85 }), clip: { x: r.x - 2, y: r.y - 2, width: r.width + 4, height: r.height + 4, scale: 1 } });
       writeFileSync(out, Buffer.from(s.result.data, 'base64'));
     },
     close() { chrome.kill(); },
