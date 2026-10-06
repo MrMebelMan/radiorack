@@ -68,12 +68,13 @@ test('JS t() keys exist in i18n/en.js', () => {
     for (const m of read(f).matchAll(/\bt\('([^']+)'/g)) assert.ok(m[1] in EN, `${f}: t('${m[1]}') not in i18n/en.js`);
 });
 
-test('every page has the navbar with the language picker', () => {
+test('every page has the navbar with the language picker and the contact footer', () => {
   for (const [page, file] of Object.entries(PAGES)) {
     const html = read(file), base = page === 'landing' ? '' : '../../';
     assert.ok(html.includes(`<script src="${base}ui/i18n-boot.js"></script>`), `${file}: boot script`);
     assert.ok(html.includes(`<link rel="stylesheet" href="${base}shared/topbar.css">`), `${file}: topbar.css`);
     assert.match(html, /<nav class="topbar">/, `${file}: navbar`);
+    assert.ok(html.includes('<a href="mailto:pulse_dr1v3@proton.me">'), `${file}: contact footer`);
     assert.equal(html.includes('class="back-btn" href="../../"'), page !== 'landing', `${file}: back button`);
     const opts = [...html.matchAll(/<div role="option" data-lang="(\w+)"[^>]*><img src="([^"]+)"/g)];
     assert.deepEqual(opts.map(o => o[1]), ['en', ...LANGS], `${file}: languages`);

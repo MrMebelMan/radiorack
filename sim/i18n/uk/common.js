@@ -4,6 +4,7 @@ export default {
   'common.tip.language': 'Мова',
   'common.tip.back-to-the-list-of-simulators': 'Назад до списку симуляторів',
   'common.all-simulators': 'Усі симулятори',
+  'common.footer-contact': 'Повідомлення про помилки, пропозиції або блок, який ви хотіли б додати:',
 
   // panels
   'common.audio': 'Звук:',

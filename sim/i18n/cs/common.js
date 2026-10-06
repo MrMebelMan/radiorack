@@ -4,6 +4,7 @@ export default {
   'common.tip.language': 'Jazyk',
   'common.tip.back-to-the-list-of-simulators': 'Zpět na seznam simulátorů',
   'common.all-simulators': 'Všechny simulátory',
+  'common.footer-contact': 'Hlášení chyb, návrhy nebo jednotka, kterou byste chtěli přidat:',
 
   // panels
   'common.audio': 'Zvuk:',

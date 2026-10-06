@@ -1,4 +1,4 @@
-/* Navbar of every page: back to the landing page on the left, language picker on the right. */
+/* Navbar of every page: back to the landing page on the left, language picker on the right. Footer: contact. */
 html.i18n-pending body { visibility: hidden; }   /* until ui/i18n.js has translated the page */
 
 .topbar {
@@ -35,3 +35,11 @@ html.i18n-pending body { visibility: hidden; }   /* until ui/i18n.js has transla
 .lang-list .code { font-weight: 600; width: 22px; }
 .lang-list .name { color: var(--muted); }
 .lang-list [role="option"][aria-selected="true"] .name { color: inherit; }
+
+.site-foot {
+  padding: 14px 20px 20px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 12px; text-align: center;
+}
+.site-foot a { color: var(--accent); text-decoration: none; overflow-wrap: anywhere; }
+.site-foot a:hover { text-decoration: underline; }
+@media (max-width: 600px) { .site-foot { padding: 12px 16px 18px; } }
