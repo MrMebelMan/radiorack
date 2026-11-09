@@ -16,5 +16,5 @@ export default {
   'landing.tip.becker-ar6201-bezel': 'Передня панель Becker AR6201',
   'landing.57-mm-vhf-com-standard-direct': 'УКХ радіостанція COM 57 мм: стандартний режим, пряме налаштування і канали, сканування, 99 каналів з назвами, останні канали, меню інтеркому і пілота та налаштування встановлення.',
   'landing.tip.garmin-gtx-330-bezel': 'Передня панель Garmin GTX 330',
-  'landing.mode-s-transponder-with-ads-b-out': 'Транспондер Mode S з ADS-B Out: робота GTX 328, а також діалог Flight ID, увімкнення / вимкнення ADS-B, NO ADSB і голосові попередження TIS про рух.',
+  'landing.mode-s-transponder-with-ads-b-out': 'Транспондер Mode S з ADS-B Out: кнопки режимів, введення коду, IDENT і VFR, Flight ID, ADS-B, барометрична висота, час польоту, монітор висоти, таймери прямого і зворотного відліку та сторінки конфігурації для інсталятора.',
 };

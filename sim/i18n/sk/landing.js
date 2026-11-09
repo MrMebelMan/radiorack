@@ -16,5 +16,5 @@ export default {
   'landing.tip.becker-ar6201-bezel': 'Čelný panel Becker AR6201',
   'landing.57-mm-vhf-com-standard-direct': 'VKV rádiostanica COM 57 mm: štandardný režim, priame ladenie a kanály, skenovanie, 99 pomenovaných kanálov, posledné kanály, menu interkomu a pilota a nastavenie inštalácie.',
   'landing.tip.garmin-gtx-330-bezel': 'Predný panel Garmin GTX 330',
-  'landing.mode-s-transponder-with-ads-b-out': 'Odpovedač Mode S s ADS-B Out: obsluha GTX 328 a navyše dialóg Flight ID, zapnutie / vypnutie ADS-B, NO ADSB a hlasové výstrahy TIS na prevádzku.',
+  'landing.mode-s-transponder-with-ads-b-out': 'Odpovedač Mode S s ADS-B Out: tlačidlá režimov, zadanie kódu, IDENT a VFR, Flight ID, ADS-B, tlaková výška, letový čas, stráženie výšky, stopky a odpočet a konfiguračné stránky pre inštalátora.',
 };
