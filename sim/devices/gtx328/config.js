@@ -32,20 +32,20 @@ export function defaultConfig() {
   };
 }
 
-const T = (f, x, y, s) => ({ t: 'txt', f, x, y, s });
+export const T = (f, x, y, s) => ({ t: 'txt', f, x, y, s });
 // the key letter rows below an entry field (Flight ID / address figures)
 const LETTERS = [['ABC', 3], ['DEF', 24], ['GHI', 45], ['JKL', 66], ['MNO', 87], ['PQR', 108], ['STU', 129], ['VWX', 150], ['YZ', 171]];
 const DIGIT_X = [9, 30, 51, 72, 93, 116, 137, 158, 176, 194];
-export const keyRows = (hexOnly = false) => [
-  ...LETTERS.slice(0, hexOnly ? 2 : 9).map(([s, x]) => T('s', x, 14, s)),
-  ...DIGIT_X.map((x, i) => T('s', x, 24, String(i))),
+export const keyRows = (hexOnly = false, dy = 0, dyDigits = dy) => [
+  ...LETTERS.slice(0, hexOnly ? 2 : 9).map(([s, x]) => T('s', x, 14 + dy, s)),
+  ...DIGIT_X.map((x, i) => T('s', x, 24 + dyDigits, String(i))),
 ];
 
 // ARINC 429 input data (§5.2.8) and RS-232 input (§5.2.9) selections
 const IN429 = ['OFF', 'GPS', 'ADC NO ALT', 'ADC W/ALT', 'AHRS', 'EF/AD NO ALT', 'EF/AD W/ALT'];
 const RS_IN = ['OFF', 'GPS', 'ICARUS ALT', 'ICRS ALT 25', 'ADC NO ALT', 'ADC W/ALT', 'SHADIN ALT', 'SHDN ALT 25', 'FADC NO ALT', 'FADC W/ALT', 'REMOTE'];
-const L = (key, x, y, opts, more = {}) => ({ key, kind: 'list', x, y, f: 'b', opts, ...more });
-const N = (key, x, y, digits, more = {}) => ({ key, kind: 'num', x, y, f: 'b', digits, ...more });
+export const L = (key, x, y, opts, more = {}) => ({ key, kind: 'list', x, y, f: 'b', opts, ...more });
+export const N = (key, x, y, digits, more = {}) => ({ key, kind: 'num', x, y, f: 'b', digits, ...more });
 
 export const PAGES = [
   { id: 'JUMP', labels: [T('s', 40, 13, 'JUMP'), T('s', 67, 13, 'TO')],
@@ -117,7 +117,7 @@ export const JUMP_TARGET = { DIAGNOSTICS: 'GRAY', 'DISPLAY/AUDIO': 'AUDIO1', 'I/
 const FLT_WORDS = { 'PWR-UP ENTRY': [['PWR-UP', 0], ['ENTRY', 47]], 'CONFIG ENTRY': [['CONFIG', 0], ['ENTRY', 43]], 'SAME AS TAIL': [['SAME', 0], ['AS', 32], ['TAIL', 50]] };
 const ADDR_WORDS = { 'US TAIL#': [['US', 0], ['TAIL#', 18]], HEX: [['HEX', 0]] };
 function optionOps(field, v) {
-  const words = field.key === 'fltMode' ? FLT_WORDS[v] : field.key === 'addrType' ? ADDR_WORDS[v] : null;
+  const words = field.words?.[v] ?? (field.key === 'fltMode' ? FLT_WORDS[v] : field.key === 'addrType' ? ADDR_WORDS[v] : null);
   if (words) return words.map(([s, dx]) => T(field.f, field.x + dx, field.y, s));
   return [T(field.f, field.x, field.y, String(v))];
 }
@@ -152,7 +152,7 @@ export function pageOps(page, c, dev, edit) {
     const s = field.digits ? fmtNum(v, field.digits) : String(v);
     ops.push(...optionOps(field, s));
     const u = field.unitAfter && field.unitAfter(s);
-    if (u) ops.push({ t: 'unit', id: u, x: field.x + textWidth('b', s) + 2, y: field.y });
+    if (u) ops.push({ t: 'unit', id: u, x: field.x + optWidth(field, s) + 2 + (field.unitOff?.[0] ?? 0), y: field.y + (field.unitOff?.[1] ?? 0) });
     if (hl) {
       const w = field.opts ? Math.max(...field.opts.map(o => optWidth(field, o))) : textWidth(field.f, s);
       ops.push({ t: 'inv', x: field.x - 1, y: field.y - 1, w: w + 2, h: 12 });

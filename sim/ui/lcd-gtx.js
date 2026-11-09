@@ -16,9 +16,9 @@ function glyph(f, ch) {
 }
 const unitRows = id => UNITS[id].split('|');
 
-// Spacing as measured in the figures: digits are tabular (centered in the font's digit cell), the small font's
-// capitals sit in a 5-dot cell, everything else is proportional (ink + 1 dot); fixed-pitch fonts (code digits,
-// entry field) take one cell per character.
+// Spacing as measured in the figures: digits are tabular (centered in the font's digit cell), the small and
+// medium fonts' capitals sit in the digit cell (5 / 8 dots), everything else is proportional (ink + 1 dot);
+// fixed-pitch fonts (code digits, entry field) take one cell per character.
 const BEARING = { s: { '.': [2, 6] } };   // [left bearing, advance] seen in the figures
 function layout(f, s) {
   const m = FONT_META[f], out = [];
@@ -36,7 +36,7 @@ function layout(f, s) {
     let lb = 0, adv = g.w + 1;
     const fixed = BEARING[f]?.[ch];
     if (fixed) [lb, adv] = fixed;
-    else if (/[0-9]/.test(ch) || (f === 's' && /[A-Z?]/.test(ch))) { const cell = Math.max(g.w, m.cell); lb = Math.floor((cell - g.w) / 2); adv = cell + 1; }
+    else if (/[0-9]/.test(ch) || ((f === 's' || f === 'm') && /[A-Z?]/.test(ch))) { const cell = Math.max(g.w, m.cell); lb = Math.floor((cell - g.w) / 2); adv = cell + 1; }
     out.push({ g, x: x + lb });
     x += adv;
   }

@@ -1,14 +1,13 @@
-// GTX 328 audio output (IM 5.2.2): tones and the voice messages "Leaving Altitude" and "Timer Expired",
+// GTX 328 / GTX 330 audio output (IM 5.2.2): tones and the voice messages (clipUrl(voice, id) locates each),
 // male or female voice, at the configured volume. The continuous tone (AUDIO MODE message 0) and the
 // tone frequency come from the Maintenance Manual audio test (Table 5-2: 490 Hz).
 const TONE_HZ = 490;
 const ATTENTION_S = 0.4;          // attention tone length (not stated)
 const MASTER = 0.3;
 
-export function createSound(xpdr, { toggle, base }) {
+export function createSound(xpdr, { toggle, clipUrl }) {
   let ctx = null, out = null, toneGain = null, beepGain = null, enabled = toggle.checked, lastSeq = xpdr.alertSeq;
   const buffers = {};
-  const clipUrl = (voice, id) => new URL(`${voice.toLowerCase()}-${id}.mp3`, base).href;
   function init() {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     out = ctx.createGain(); out.gain.value = MASTER; out.connect(ctx.destination);

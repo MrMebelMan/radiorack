@@ -12,6 +12,7 @@ export const PAGES = {
   gnc255: ['gnc255', 'Garmin GNC 255A', 'Simulator'],
   tt31: ['tt31', 'Trig TT31', 'Simulator'],
   gtx328: ['gtx328', 'Garmin GTX 328', 'Simulator'],
+  gtx330: ['gtx330', 'Garmin GTX 330', 'Simulator'],
   kn64: ['kn64', 'Bendix/King KN 64', 'Simulator'],
   kma20: ['kma20', 'King KMA 20 TSO', 'Simulator'],
   ar6201: ['ar6201', 'Becker AR6201', 'Simulator'],

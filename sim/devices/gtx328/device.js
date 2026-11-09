@@ -32,11 +32,12 @@ export function defaultSettings() {
 }
 
 export class GTX328 {
+  static PERSIST_KEY = PERSIST_KEY;
   constructor({ now = () => performance.now(), storage = null } = {}) {
     this.now = now;
-    this.store = makeStore(storage, PERSIST_KEY);
-    this.unitInfo = UNIT_INFO;
-    this.s = defaultSettings();
+    this.store = makeStore(storage, this.constructor.PERSIST_KEY);
+    this.unitInfo = this.constructor.UNIT_INFO ?? UNIT_INFO;
+    this.s = this.defaults();
     const saved = this.store.load();
     if (saved) Object.assign(this.s, saved, { cfg: { ...this.s.cfg, ...(saved.cfg || {}) }, sim: { ...this.s.sim, ...(saved.sim || {}) } });
     this.bus = true;              // aircraft power
@@ -54,8 +55,15 @@ export class GTX328 {
     this.lit = { disp: 0.6, key: 0.6 };
   }
 
+  // configuration page table, JUMP TO targets and the extra page ops (a sibling model overrides them)
+  get cfgPages() { return PAGES; }
+  get jumpTarget() { return JUMP_TARGET; }
+  cfgExtraOps(page) { return extraOps(page, this.c); }
+  get stbyHoldGnd() { return true; }
+
   save() { this.store.save(this.s); }
-  factoryReset() { const sim = this.s.sim; this.s = defaultSettings(); this.s.sim = sim; this.save(); }
+  defaults() { return defaultSettings(); }
+  factoryReset() { const sim = this.s.sim; this.s = this.defaults(); this.s.sim = sim; this.save(); }
   get c() { return this.s.cfg; }
 
   // ---------- power ----------
@@ -279,7 +287,7 @@ export class GTX328 {
 
   // ---------- configuration pages (IM 5.2) ----------
   configKey(k) {
-    const pages = PAGES, page = pages[this.cfgPage], e = this.cfgEdit;
+    const pages = this.cfgPages, page = pages[this.cfgPage], e = this.cfgEdit;
     if (k === 'FUNC') { this.cfgEdit = null; this.cfgPage = (this.cfgPage + 1) % pages.length; return; }   // next page; a highlighted change is not saved
     if (k === 'START') { this.cfgEdit = null; this.cfgPage = Math.max(0, this.cfgPage - 1); return; }      // back, stopping at the menu page
     if (k === 'CRSR') {
@@ -289,7 +297,7 @@ export class GTX328 {
       this.commitEdit(page, e);
       const i = this.editable(page, e.field + 1);
       this.cfgEdit = null;
-      if (page.id === 'JUMP') { this.cfgPage = pages.findIndex(p => p.id === JUMP_TARGET[e.draft]); return; }
+      if (page.id === 'JUMP') { this.cfgPage = pages.findIndex(p => p.id === this.jumpTarget[e.draft]); return; }
       if (i >= 0) this.beginEdit(page, i);
       return;
     }
@@ -358,7 +366,7 @@ export class GTX328 {
     if (this.booting || this.config) return;
     // STBY held -> GND (only without automatic airborne determination)
     const h = this.held.STBY;
-    if (h && !h.done && now - h.at >= STBY_HOLD_MS) { h.done = true; if (!this.autoSource && this.mode === 'STBY') this.gnd = true; }
+    if (h && !h.done && now - h.at >= STBY_HOLD_MS) { h.done = true; if (this.stbyHoldGnd && !this.autoSource && this.mode === 'STBY') this.gnd = true; }
     if (this.s.sim.extIdent && !this.extIdentWas) this.identUntil = now + IDENT_MS;
     this.extIdentWas = this.s.sim.extIdent;
     this.airGround(now);
@@ -375,11 +383,13 @@ export class GTX328 {
       if (this.landedAt == null) this.landedAt = this.wasAirborne ? now : now - this.c.delay * 1000;   // on the ground at power-up: GND at once
       this.autoGnd = now - this.landedAt >= this.c.delay * 1000;   // IM 5.2.10 DELAY TIME after landing
     }
-    // automatic flight timer: starts at lift-off, stops on the ground (PG Timer Operation 2, 5)
-    if (this.c.autoFlt === 'YES' && this.wasAirborne !== null && air !== this.wasAirborne) {
-      if (air) { this.flightTimer.reset(); this.flightTimer.start(now); } else this.flightTimer.stop(now);
-    }
+    if (this.wasAirborne !== null && air !== this.wasAirborne) this.liftOffLanding(air, now);
     this.wasAirborne = air;
+  }
+  // automatic flight timer: starts at lift-off, stops on the ground (PG Timer Operation 2, 5)
+  liftOffLanding(air, now) {
+    if (this.c.autoFlt !== 'YES') return;
+    if (air) { this.flightTimer.reset(); this.flightTimer.start(now); } else this.flightTimer.stop(now);
   }
   timers(now) {
     const cd = this.cd;
@@ -442,7 +452,7 @@ export class GTX328 {
   view() {
     const now = this.now();
     if (!this.power) return { off: true };
-    const ops = this.booting ? bootOps(this.unitInfo)
+    const ops = this.booting ? this.bootOps()
       : this.config ? this.configOps()
       : this.addrPrompt ? this.addrPromptOps()
       : this.fltEntry ? this.fltEntryOps(now)
@@ -450,8 +460,8 @@ export class GTX328 {
     return { gtx: { ops, pos: this.positive, lit: this.lit.disp, contrast: this.contrastLevel } };
   }
   configOps() {
-    const page = PAGES[this.cfgPage];
-    const ops = [...pageOps(page, this.c, this, this.cfgEdit), ...extraOps(page, this.c)];
+    const page = this.cfgPages[this.cfgPage];
+    const ops = [...pageOps(page, this.c, this, this.cfgEdit), ...this.cfgExtraOps(page)];
     if (page.diag) ops.push(...this.diagOps(page.id));
     return ops;
   }
@@ -606,11 +616,12 @@ export class GTX328 {
     return [];
   }
   squatActive() { return this.c.squat === 'YES' && this.s.sim.onGround; }
+  bootOps() { return bootOps(this.unitInfo); }
 }
 
 // a number key pressed repeatedly scrolls through the digit/alpha characters of that key (IM 5.2.12.1 step 6;
 // PG: "to enter the letter R press the 5 Key four times" -> the digit comes first)
-function cycleChar(e, k, table) {
+export function cycleChar(e, k, table) {
   const set = table[+k];
   if (e.key === k) e.idx = (e.idx + 1) % set.length;
   else { e.key = k; e.idx = 0; }

@@ -8,6 +8,8 @@ export const MANUALS = {
   'gtx328-pilots-guide': { source: 'https://static.garmin.com/pumac/GTX328Transponder_PilotsGuide.pdf' },
   'gtx328-installation-manual': { source: 'https://www.scribd.com/document/690272720/60004460-GTX328-InstallationManual' },
   'gtx328-maintenance-manual': { source: 'https://static.garmin.com/pumac/GTX328Transponder_MaintenanceManual.pdf' },
+  'gtx330-pilots-guide': { source: 'https://static.garmin.com/pumac/190-00207-00_K.pdf' },
+  'gtx330-installation-manual': { source: 'https://www.scribd.com/document/744881804/IM-GTX-330-190-00207-02-ae' },
   'tt31-operating-manual': { source: 'https://trig-avionics.com/library/00454-00%20AF%20TT31%20Operating%20Handbook.pdf' },
   'tt31-installation-manual': { source: 'https://trig-avionics.com/library/00455-00%20AR%20TT31%20Installation%20Manual%20-%20Full.pdf' },
   'ar6201-operating-instructions': { source: 'https://www.becker-avionics.com/wp-content/uploads/2017/08/AR6201_OI.pdf' },

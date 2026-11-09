@@ -15,4 +15,6 @@ export default {
   'landing.audio-control-panel-with-marker-beacon': 'Audio panel s přijímačem polohových návěstidel: volič mikrofonu, přepínače reproduktor / sluchátka pro každý přijímač, přepínač AUTO a kontrolky a tóny návěstidel na skutečném českém přiblížení ILS.',
   'landing.tip.becker-ar6201-bezel': 'Čelní panel Becker AR6201',
   'landing.57-mm-vhf-com-standard-direct': 'VKV radiostanice COM 57 mm: standardní režim, přímé ladění a kanály, skenování, 99 pojmenovaných kanálů, poslední kanály, menu interkomu a pilota a nastavení instalace.',
+  'landing.tip.garmin-gtx-330-bezel': 'Přední panel Garmin GTX 330',
+  'landing.mode-s-transponder-with-ads-b-out': 'Odpovídač Mode S s ADS-B Out: obsluha GTX 328 a navíc dialog Flight ID, zapnutí / vypnutí ADS-B, NO ADSB a hlasové výstrahy TIS na provoz.',
 };

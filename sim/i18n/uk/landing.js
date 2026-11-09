@@ -15,4 +15,6 @@ export default {
   'landing.audio-control-panel-with-marker-beacon': 'Аудіопанель із приймачем маркерних маяків: перемикач мікрофона, перемикачі динаміка / навушників для кожного приймача, перемикач AUTO, а також лампи і тони маркерів на справжньому чеському заході ILS.',
   'landing.tip.becker-ar6201-bezel': 'Передня панель Becker AR6201',
   'landing.57-mm-vhf-com-standard-direct': 'УКХ радіостанція COM 57 мм: стандартний режим, пряме налаштування і канали, сканування, 99 каналів з назвами, останні канали, меню інтеркому і пілота та налаштування встановлення.',
+  'landing.tip.garmin-gtx-330-bezel': 'Передня панель Garmin GTX 330',
+  'landing.mode-s-transponder-with-ads-b-out': 'Транспондер Mode S з ADS-B Out: робота GTX 328, а також діалог Flight ID, увімкнення / вимкнення ADS-B, NO ADSB і голосові попередження TIS про рух.',
 };
