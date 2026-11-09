@@ -5,7 +5,7 @@ This file covers everything the simulators do that the Pilot's Guides **don't sp
 - GTR 225: Pilot's Guide 190-01182-00 Rev D (SW 2.10), `sim/manuals/gtr225-pilots-guide.pdf`
 - GNC 255: Pilot's Guide 190-01182-01 Rev E, `sim/manuals/gnc255-pilots-guide.pdf`
 - Both: TSO Installation Manual 190-01182-02 Rev L, `sim/manuals/gtr225-gnc255-installation-manual.pdf`
-- Trig TT31, Garmin GTX 328, Becker AR6201, King KMA 20 and Bendix/King KN 64: see their sections.
+- Trig TT31, Garmin GTX 328, Garmin GTX 330, Becker AR6201, King KMA 20 and Bendix/King KN 64: see their sections.
 
 **Rule:** screen text that isn't in a manual screenshot or photo has been **removed**. Where a screen has to show *something* but its look is undocumented, it is kept to the bare minimum and listed here.
 
@@ -181,7 +181,7 @@ Sources:
 - for gaps only: GTX 330 Pilot's Guide 190-00207-00 Rev G (same firmware family), marked GTX330;
 - the bezel is laid out from a shop photo of a GTX 327 (same front panel, Maintenance Manual Table 6-2).
 
-The display fonts are copied dot by dot from the manual figures. Glyphs that appear in no figure were drawn in the same style (list in `sim/ui/fonts-gtx.js`, `DESIGNED`): medium 4 7 9 -, bold J Q Z / > and the lowercase of "Garmin", annunciator O N S B Y G D I E R, small lowercase of the start-up page, code digits 0 1 2 3 6 and the dash, the trend arrows, °F and the meters unit.
+The display fonts are copied dot by dot from the manual figures (these and the GTX 330 ones, section 4g). Glyphs that appear in no figure were drawn in the same style (list in `sim/ui/fonts-gtx.js`, `DESIGNED`): medium 4 7 9 - and the letters listed in 4g, bold + J Q Z and the lowercase of "Garmin", annunciator O N S B Y G D I E R, small lowercase of the start-up page, code digits 0 1 2 3 6 and the dash, the trend arrows, °F and the meters unit.
 
 Everything below is **not** stated in the three manuals.
 
@@ -206,6 +206,37 @@ Everything below is **not** stated in the three manuals.
 - [ ] **Automatic airborne determination.** Sim: squat switch (SQUAT SWITCH? YES) or GPS ground speed on a GPS input (< 35 kt = ground); SENSE is shown but not used; on the ground at power-up GND comes at once, after landing after DELAY TIME. Real:
 - [ ] **Address and Flight ID defaults.** Sim installation: HEX 49D3A5, CONFIG ENTRY "OKABC". Real: the aircraft's.
 - [ ] **Not simulated:** LOOPBACK STATE (test mode), ARINC 429 / RS-232 data, Comm-A / Comm-B, density altitude from an air data computer (Sim: from the probe OAT and pressure altitude, 120 ft per °C above ISA).
+
+## 4g. Garmin GTX 330 ES transponder
+Sources:
+- Pilot's Guide 190-00207-00 Rev K (`sim/manuals/gtx330-pilots-guide.pdf`), SW 8.01 and later: native figures of the main screen, every FUNC page and the Flight ID dialog;
+- Installation Manual 190-00207-02 Rev AE (`sim/manuals/gtx330-installation-manual.pdf`), SW up to 8.04: every configuration page figure at the LCD's native 200 x 33 dots;
+- for gaps only: Installation Manual Rev U (SW 7, ManualsLib copy), marked RevU;
+- the front panel is the GTX 328 one (Pilot's Guide cover, a dealer photo of a real unit); the GTX 328 bezel is used with the "GTX 330" print.
+
+The unit is the GTX 328 simulation (section 4b) with the GTX 330 pages; the 4b items on shared behavior (avionics master turn-on, IDENT, reply symbol, code entry, VFR advisory, PRESSURE ALT, ALT MONITOR, COUNT DOWN, CONTRAST / DISPLAY, audio, configuration editing, lighting, diagnostics) apply here too.
+
+Fonts: the medium-font letters A D F G H I L N O R T and the underscore and the small "=" are copied from the Pilot's Guide figures; medium B C E J K M P Q S U V W X Y Z and bold + are drawn in the same style. Three configuration figures added in later revisions (GPS INTEGRITY, STALL SPEED, AIRCRAFT SIZE) draw E, L and W wider than every other figure; the sim keeps the font of the other figures. The ADS-B TX OFF figure draws the F with its bar one row higher than the F of "FLIGHT ID:" in both dialog figures; the sim uses the dialog F.
+
+Everything below is **not** stated in the two manuals.
+
+- [ ] **Start-up page.** No GTX 330 figure. Sim: "Garmin GTX 330" and "Self Test In Progress" in the GTX 328 layout, 3 s. Real (copyright, software version lines):
+- [ ] **Hold STBY for GND.** Rev AE has no such function (RevU 5.1.1 had it). Sim: holding STBY does nothing more. Real:
+- [ ] **GND annunciation.** Rev AE does not describe it and has no DELAY TIME field. Sim (RevU): GND shown on the ground with automatic airborne determination, at once at power-up and 24 s after landing. Real:
+- [ ] **AUTO ALT.** Sim: only STBY switches to ALT at lift-off; ON stays ON. Real:
+- [ ] **FUNC page at power-up.** Sim: PRESSURE ALT. Real:
+- [ ] **FLIGHT ID page.** Sim: the Flight ID centered under the title (figure: AIR123). Real (longer IDs):
+- [ ] **Flight ID dialog.** Sim: 9-dot cells from the editing figure, the letter under the cursor one dot left of the others (as in the figure); the help line ends at the right edge, without a default only "CLR=CANCEL  CRSR=EDIT"; while it is open only the number keys, CRSR, CLR, 8, IDENT and VFR act; a blank entry leaves the editing with the last Flight ID shown. Real:
+- [ ] **Crew Flight ID after power-off.** Sim: kept until changed (the dialog's "last Flight ID entered"). Real:
+- [ ] **Default Flight ID with US TAIL.** Sim: "N" + the address when the address type is US TAIL#, otherwise no default (no "8=" option). Real:
+- [ ] **NO ADSB.** Sim: mode-annunciator font, top left like IDENT, which wins while active; in every mode including STBY; when ADS-B is ENABLE or PILOT SET ON and no GPS input is configured or the GPS has no position, and when the pilot turns ADS-B off. Real (font, position, STBY):
+- [ ] **ADS-B failure.** Sim: FAIL only while ADS-B is transmitting. Real:
+- [ ] **TIS alerts.** Sim: only with a TIS output configured (429 OUTPUT GARMIN W/TIS or RS-232 REMOTE + TIS) and while replying; "Traffic Not Available" when leaving the coverage. TRAFFIC MESSAGES options shown as TONE / MSG (figure: TONE). Real:
+- [ ] **Option words without a figure.** Sim: GPS X OFST 6R 4R 2R 0 2L 4L 6L, GPS Y OFST 2-60, STALL SPEED >=30 to >=200, LENGTH / WIDTH "<= 15" etc. in the figure's columns, ARINC 429 input names as in Table 5-11, ICRS ALT 25 / SHDN ALT 25 (GTX 328 wording). Real:
+- [ ] **Flight timer CLR while running.** Sim: resets to zero and stops (as the GTX 328). Real:
+- [ ] **Simulated installation.** ES with ADS-B TX PILOT SET, RS-232 1 input REMOTE (GPS position), 429 OUTPUT 2 GARMIN W/TIS, OAT probe, Default Flight ID ENTRY "OKABC", ALLOW PILOT TO EDIT FLT ID YES, AUTO ALT ON, AUTO FLT TMR MAN, VFR ID 7000 (factory 1200), audio MSG and volume 50 (figures: TONE; Table 5-2: volume 0 by default). Real: the aircraft's.
+- [ ] **Voice clips.** "Traffic" and "Traffic Not Available" are owner-supplied recordings (`sim/sounds/gtx330/`); without them only the attention tone sounds. Leaving Altitude / Timer Expired use the GTX 328 recordings. Real (wording, voice):
+- [ ] **Not simulated:** the TIS traffic picture (on a multifunction display), the ATC notification of a code or Flight ID change, dual transponder installations, 1090 IN / UAT IN, EHS, GPS antenna offsets, aircraft size and stall speed (configuration values only).
 
 ## 4c. Becker AR6201 transceiver
 Sources:
@@ -299,7 +330,7 @@ Everything below is **not** stated in the PG or the IM (no public maintenance ma
 - [ ] **Switch positions.** Sim: ON/OFF slide right = on (Fig 3-1); function slider RMT left, FREQ center, GS/T right. Real:
 
 ## 4d. Cockpit light (photocell), all units that have one
-The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11) and GTX 328 set their display (and key) lighting from a photocell; the KMA 20 dims its marker lamps with one (see 4e), the KN 64 its display (see 4f). The AR6201 manuals mention none, so it has no slider.
+The GTR 225 / GNC 255 (Installation Manual 190-01182-02 6.4.1.4–5), TT31 (Installation Manual 6.1.11), GTX 328 and GTX 330 (Installation Manual 190-00207-02 5.2.4-5.2.6) set their display (and key) lighting from a photocell; the KMA 20 dims its marker lamps with one (see 4e), the KN 64 its display (see 4f). The AR6201 manuals mention none, so it has no slider.
 - [ ] **GTR / GNC.** Sim: brightness 0.55 + 0.75 × light (about unchanged at 60 %), times the pilot DSPL BRT offset; key lighting fades in below the KEY CO default 80 %. Real:
 - [ ] **TT31.** Sim: LCD brightness 0.55 + 0.75 × light. Real:
 

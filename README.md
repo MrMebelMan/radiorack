@@ -30,6 +30,12 @@ Mode knob, squawk and Flight ID entry, IDENT, the VFR conspicuity code, flight t
 
 The mode keys, squawk entry with dashes and the cursor, IDENT, VFR, pressure altitude with the trend arrow, flight time, altitude monitor with "Leaving Altitude", count up and count down timers, Flight ID entry at power-up and all the installer configuration pages. Built from the [Pilot's Guide 190-00420-03](https://static.garmin.com/pumac/GTX328Transponder_PilotsGuide.pdf), the [Installation Manual 190-00420-04](https://www.scribd.com/document/690272720/60004460-GTX328-InstallationManual) (not published by Garmin) and the [Maintenance Manual 190-00420-05](https://static.garmin.com/pumac/GTX328Transponder_MaintenanceManual.pdf).
 
+### Garmin GTX 330 ES — Mode S transponder with ADS-B Out
+
+![Garmin GTX 330](sim/previews/gtx330.png)
+
+Everything of the GTX 328 plus the software 8 functions: the FLIGHT ID page and the Flight ID dialog, ADS-B on / off with NO ADSB, automatic ALT at lift-off, the "Traffic" and "Traffic Not Available" TIS voice alerts and the GTX 330 configuration pages. Built from the [Pilot's Guide 190-00207-00 Rev K](https://static.garmin.com/pumac/190-00207-00_K.pdf) and the [Installation Manual 190-00207-02 Rev AE](https://www.scribd.com/document/744881804/IM-GTX-330-190-00207-02-ae) (not published by Garmin).
+
 ### Becker AR6201 — 57 mm VHF COM
 
 ![Becker AR6201](sim/previews/ar6201.png)
@@ -64,7 +70,7 @@ Open <http://localhost:8225> and pick a unit.
 - **Push a knob:** click it. On the KN 64 a click pulls the small knob out or pushes it in.
 - **Move a slide switch:** drag it sideways, click where you want it, or scroll over it (KN 64).
 - **Press a key:** click it. Hold it for a long press where the unit has one.
-- **Keep a key pressed:** right-click it (GTX 328), click again to release.
+- **Keep a key pressed:** right-click it (GTX 328, GTX 330), click again to release.
 - **Flip a toggle switch:** click its upper or lower half, or scroll over it (KMA 20). On a touch screen, swipe it up or down, or tap a half.
 - **Hover anything** for a tooltip that says what it does.
 
